@@ -26,7 +26,7 @@ To use the Vaadin embed in your own projects, add the jar to your project's clas
     <dependency>
         <groupId>com.bsb.common</groupId>
         <artifactId>com.bsb.common.vaadin.embed</artifactId>
-        <version>0.1-SNAPSHOT
+        <version>0.1-SNAPSHOT</version>
     </dependency>
 
 To visualize a component that you have built, simply pass it to the `VaadinEmbed` builder.
@@ -41,23 +41,24 @@ You can as easily embed a Layout or a Window. Note that this mode is purely for 
 
 It is also possible to specify the `Class` of an `Application`. In that case, the server starts closer to the full thing.
 
+    EmbedVaadin.forApplication(MyVaadinApplication.class).start();
+
 ## Configuration
 
 There are two ways to change the default values of the embed server:
 
- - Through the presence of a `vaadin-embed.properties` file at the root of the classpath overriding the default values
+ - Through the presence of a `vaadin-embed.properties` file at the root of the classpath overriding default values
  - By using the API
 
-At this stage the following can be customized
+At this stage the following can be customized:
 
  - `http.port`: the HTTP port the server listens to (an available port is taken by default)
  - `context.path`: the context of the generated web application (by default, the *root* context)
- - `context.rootDir`: the root directory of the generated web application to serve static files such as CSS and images
+ - `context.rootDir`: the root directory of the generated web application to serve static files such as CSS and images (not necessary, unless you want to use themes or static resources)
  - `server.await`: to block the thread that started the server (by default, *true*)
- - `vaadin.theme`: the vaadin theme to apply to the generated application. Not used if an application class is used (by default, *reindeer*)
+ - `vaadin.theme`: the vaadin theme to apply to the generated application. Ignored if an application class is used (by default, *reindeer*)
 
 And this showcase how the API can be used to customize these settings
-
 
         EmbedVaadin.forComponent(new Label("Hello World!"))
             .withContextPath("/foo")
