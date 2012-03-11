@@ -21,7 +21,7 @@ Make sure you have access to the central repository.
 
 ## Usage
 
-To use the Vaadin embed in your own projects, add the jar to your project's classpath or simply add the following depedency to your Maven project:
+To use the Vaadin embed in your own projects, add the jar to your project's classpath or simply add the following dependency to your Maven project:
 
     <dependency>
         <groupId>com.bsb.common</groupId>
