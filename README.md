@@ -59,10 +59,11 @@ At this stage the following can be customized
 And this showcase how the API can be used to customize these settings
 
 
-   EmbedVaadin.forComponent(new Label("Hello World!"))
+        EmbedVaadin.forComponent(new Label("Hello World!"))
             .withContextPath("/foo")
             .withHttpPort(7070)
             .withContextRootDirectory("src/main/webapp")
             .withVaadinTheme("default")
             .openBrowser(true)
             .start();
+
