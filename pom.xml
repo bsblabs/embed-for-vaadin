@@ -3,11 +3,17 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+    </parent>
     <groupId>com.bsb.common</groupId>
     <artifactId>com.bsb.common.vaadin.embed</artifactId>
     <version>0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>Vaadin Embed</name>
+    <url>https://github.com/bsblabs/vaadin-embed</url>
     <description>
         A library to run vaadin directly within the IDE by starting an embedded tomcat container.
     </description>
@@ -19,8 +25,8 @@
         </license>
     </licenses>
     <scm>
-        <url>https://github.com/bsblabs/vaadin-embed</url>
-        <connection>scm:git:git://github.com/bsblabs/vaadin-embed.git</connection>
+        <url>git@github.com:bsblabs/vaadin-embed.git</url>
+        <connection>scm:git:git@github.com/bsblabs/vaadin-embed.git</connection>
         <developerConnection>scm:git:git@github.com:bsblabs/vaadin-embed.git</developerConnection>
     </scm>
     <developers>
