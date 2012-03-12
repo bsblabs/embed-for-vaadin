@@ -13,8 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.bsb.common.vaadin.embed;
+package com.bsb.common.vaadin.embed.support;
 
+import com.bsb.common.vaadin.embed.AbstractEmbedTest;
+import com.bsb.common.vaadin.embed.EmbedVaadinConfig;
 import com.google.common.io.Files;
 import com.vaadin.ui.Button;
 import org.junit.Test;

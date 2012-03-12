@@ -26,7 +26,7 @@ import java.util.Arrays;
  *
  * @author Stephane Nicoll
  */
-public class BrowserUtils {
+public final class BrowserUtils {
 
     private static final Logger logger = LoggerFactory.getLogger(BrowserUtils.class);
 
@@ -43,12 +43,15 @@ public class BrowserUtils {
      * Specifies if the current OS is Microsoft Windows. Only take recent version of
      * Windows into account.
      */
-    public static final boolean isWindows = LOWER_CASE_OS_NAME.startsWith("windows");
+    public static final boolean IS_WINDOWS = LOWER_CASE_OS_NAME.startsWith("windows");
 
     /**
      * Specifies if the current OS is MacOS X.
      */
-    public static final boolean isMac = LOWER_CASE_OS_NAME.startsWith("mac");
+    public static final boolean IS_MAC = LOWER_CASE_OS_NAME.startsWith("mac");
+
+    private BrowserUtils() {
+    }
 
     /**
      * Opens the specified <tt>url</tt> in the default browser.
@@ -76,9 +79,9 @@ public class BrowserUtils {
      * @return the command to execute to open the url with the default browser
      */
     private static String[] getOpenBrowserCommand(String url) {
-        if (isWindows) {
+        if (IS_WINDOWS) {
             return new String[]{("cmd.exe"), "/c", escapeParameter("start " + url)};
-        } else if (isMac) {
+        } else if (IS_MAC) {
             return new String[]{"/usr/bin/open", url};
         }
         return null;

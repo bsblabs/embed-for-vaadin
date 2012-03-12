@@ -181,7 +181,7 @@ public abstract class AbstractEmbedVaadinTomcat implements EmbedVaadinServer {
         long startTime = System.currentTimeMillis();
         tomcat.stop();
         long duration = System.currentTimeMillis() - startTime;
-        logger.info("Tomcat shutdown finished in " + (duration / 1000) + " seconds.");
+        logger.info("Tomcat shutdown finished in " + duration + " ms.");
     }
 
     /**

@@ -16,7 +16,6 @@
 package com.bsb.common.vaadin.embed.support;
 
 import com.bsb.common.vaadin.embed.AbstractEmbedTest;
-import com.bsb.common.vaadin.embed.EmbedVaadin;
 import com.bsb.common.vaadin.embed.EmbedVaadinServer;
 import com.vaadin.ui.Button;
 import org.junit.Test;

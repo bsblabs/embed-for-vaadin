@@ -13,10 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.bsb.common.vaadin.embed;
+package com.bsb.common.vaadin.embed.support;
 
-import com.bsb.common.vaadin.embed.support.ApplicationBasedEmbedVaadinTomcat;
-import com.bsb.common.vaadin.embed.support.ComponentBasedEmbedVaadinTomcat;
+import com.bsb.common.vaadin.embed.EmbedVaadinConfig;
+import com.bsb.common.vaadin.embed.EmbedVaadinServer;
+import com.bsb.common.vaadin.embed.EmbedVaadinServerBuilder;
 import com.vaadin.Application;
 import com.vaadin.ui.Component;
 
@@ -30,13 +31,13 @@ public class EmbedVaadin extends EmbedVaadinServerBuilder<EmbedVaadin, EmbedVaad
     private Component component;
     private Class<? extends Application> applicationClass;
 
-    private EmbedVaadin(Component component) {
+    protected EmbedVaadin(Component component) {
         super(true);
         assertNotNull(component, "component could not be null.");
         this.component = component;
     }
 
-    private EmbedVaadin(Class<? extends Application> applicationClass) {
+    protected EmbedVaadin(Class<? extends Application> applicationClass) {
         super(true);
         assertNotNull(applicationClass, "applicationClass could not be null.");
         this.applicationClass = applicationClass;
@@ -77,6 +78,11 @@ public class EmbedVaadin extends EmbedVaadinServerBuilder<EmbedVaadin, EmbedVaad
     @Override
     protected EmbedVaadin self() {
         return this;
+    }
+
+    @Override
+    protected EmbedVaadinConfig getConfig() {
+        return super.getConfig();
     }
 
     @Override
