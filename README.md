@@ -26,7 +26,7 @@ To use the Vaadin embed in your own projects, add the jar to your project's clas
     <dependency>
         <groupId>com.bsb.common.vaadin</groupId>
         <artifactId>com.bsb.common.vaadin.embed</artifactId>
-        <version>0.1-SNAPSHOT</version>
+        <version>0.1</version>
     </dependency>
 
 To visualize a component that you have built, simply pass it to the `VaadinEmbed` builder.
@@ -67,4 +67,10 @@ And this showcase how the API can be used to customize these settings
             .withVaadinTheme("default")
             .openBrowser(true)
             .start();
+
+# Release notes
+
+## 0.1
+
+Initial release
 
