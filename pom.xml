@@ -12,8 +12,8 @@
     <artifactId>com.bsb.common.vaadin.embed</artifactId>
     <version>0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>Vaadin Embed</name>
-    <url>https://github.com/bsblabs/vaadin-embed</url>
+    <name>Embed for Vaadin</name>
+    <url>https://github.com/bsblabs/embed-for-vaadin</url>
     <description>
         A library to run vaadin directly within the IDE by starting an embedded tomcat container.
     </description>
@@ -25,9 +25,9 @@
         </license>
     </licenses>
     <scm>
-        <url>git@github.com:bsblabs/vaadin-embed.git</url>
-        <connection>scm:git:git@github.com/bsblabs/vaadin-embed.git</connection>
-        <developerConnection>scm:git:git@github.com:bsblabs/vaadin-embed.git</developerConnection>
+        <url>git@github.com:bsblabs/embed-for-vaadin.git</url>
+        <connection>scm:git:git@github.com/bsblabs/embed-for-vaadin.git</connection>
+        <developerConnection>scm:git:git@github.com:bsblabs/embed-for-vaadin.git</developerConnection>
     </scm>
     <developers>
         <developer>
@@ -157,6 +157,20 @@
                     <target>1.5</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifestEntries>
+                            <Implementation-Title>Embed for Vaadin</Implementation-Title>
+                            <Implementation-Version>${project.version}</Implementation-Version>
+                            <Vaadin-Package-Version>1</Vaadin-Package-Version>
+                            <License-Title>Apache License 2.0</License-Title>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
         </plugins>
 
         <pluginManagement>
@@ -165,6 +179,11 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>2.3.2</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>2.3.1</version>
                 </plugin>
             </plugins>
         </pluginManagement>

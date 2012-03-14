@@ -1,6 +1,6 @@
-# Vaadin embed
+# Embed for Vaadin
 
-The Vaadin embed is a library allowing you to quickly initialize Vaadin from your IDE. It provides an easy-to-use API to initialize an embed Tomcat container running a particular component or Vaadin application.
+Embed for Vaadin is a library allowing you to quickly initialize Vaadin from your IDE. It provides an easy-to-use API to initialize an embed Tomcat container running a particular component or Vaadin application.
 
 The API also allows you to open the default browser automatically and allocates an available HTTP port is none is provided. The API is extensible so that you can it you to your own needs.
 
@@ -8,7 +8,7 @@ The API also allows you to open the default browser automatically and allocates 
 
 Clone the git repository using the URL on the Github home page:
 
-    $ git clone git@github.com:bsblabs/vaadin-embed.git
+    $ git clone git@github.com:bsblabs/embed-for-vaadin.git
     $ cd vaadin-embed
 
 ## Command Line
@@ -24,7 +24,7 @@ Make sure you have access to the central repository.
 To use the Vaadin embed in your own projects, add the jar to your project's classpath or simply add the following dependency to your Maven project:
 
     <dependency>
-        <groupId>com.bsb.common</groupId>
+        <groupId>com.bsb.common.vaadin</groupId>
         <artifactId>com.bsb.common.vaadin.embed</artifactId>
         <version>0.1-SNAPSHOT</version>
     </dependency>
