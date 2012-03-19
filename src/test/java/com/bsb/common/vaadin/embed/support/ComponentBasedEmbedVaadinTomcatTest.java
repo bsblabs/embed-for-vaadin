@@ -36,4 +36,17 @@ public class ComponentBasedEmbedVaadinTomcatTest extends AbstractEmbedTest {
         server.stop();
     }
 
+    @Test
+    public void startWithCustomWidgetSet() {
+        final EmbedVaadinServer server = EmbedVaadin.forComponent(new Button("Hello"))
+                .wait(false).withHttpPort(18002)
+                .withWidgetSet("com.vaadin.terminal.gwt.DefaultWidgetSet").start();
+
+        // HTTP get on the root directory
+        checkVaadinIsDeployed(18002, "");
+
+        server.stop();
+
+    }
+
 }

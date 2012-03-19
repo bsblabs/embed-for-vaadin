@@ -155,6 +155,19 @@ public abstract class EmbedVaadinServerBuilder<B extends EmbedVaadinServerBuilde
     }
 
     /**
+     * Specifies the vaadin widgetSet to use for the application. The
+     * specified <tt>widgetSet</tt> can be <tt>null</tt> to mention that the
+     * default widgetSet should be used.
+     *
+     * @param widgetSet the widgetSet to use
+     * @return this
+     */
+    public B withWidgetSet(String widgetSet) {
+        this.config.setWidgetSet(widgetSet);
+        return self();
+    }
+
+    /**
      * Specifies if the created server should block after startup. This is the
      * default and is suitable to quickly display something while prototyping.
      * <p/>

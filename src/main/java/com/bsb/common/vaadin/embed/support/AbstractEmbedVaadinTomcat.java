@@ -146,7 +146,9 @@ public abstract class AbstractEmbedVaadinTomcat implements EmbedVaadinServer {
         // Setup vaadin servlet
         final Wrapper wrapper = Tomcat.addServlet(getContext(),
                 "vaadin", servlet);
-        // TODO: this is where we would add our custom widgetset
+        if (getConfig().getWidgetSet() != null) {
+            wrapper.addInitParameter("widgetset", getConfig().getWidgetSet());
+        }
 
         wrapper.addMapping("/*");
         return wrapper;

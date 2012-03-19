@@ -27,9 +27,9 @@ public class ApplicationBasedEmbedVaadinTomcatTest extends AbstractEmbedTest {
     @Test
     public void start() {
         final EmbedVaadinServer server = EmbedVaadin.forApplication(
-                TestApplication.class).wait(false).withHttpPort(18002).start();
+                TestApplication.class).wait(false).withHttpPort(18101).start();
 
-        checkVaadinIsDeployed(18002, "");
+        checkVaadinIsDeployed(18101, "");
 
         server.stop();
     }

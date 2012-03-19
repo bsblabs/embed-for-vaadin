@@ -114,6 +114,18 @@ public class EmbedVaadinTest extends AbstractEmbedTest {
     }
 
     @Test
+    public void withWidgetSet() {
+        final EmbedVaadin embed = EmbedVaadin.forComponent(component).withWidgetSet("com.bsb.foo.MyWidgetSet");
+        assertEquals("was not detected as expected", "com.bsb.foo.MyWidgetSet", embed.getConfig().getWidgetSet());
+    }
+
+    @Test
+    public void withNullWidgetSet() {
+        final EmbedVaadin embed = EmbedVaadin.forComponent(component).withWidgetSet(null);
+        assertEquals("was not detected as expected", null, embed.getConfig().getWidgetSet());
+    }
+
+    @Test
     public void withOpenBrowser() {
         final EmbedVaadin embed = EmbedVaadin.forComponent(component).openBrowser(true);
         assertEquals("was not detected as expected", true, embed.getConfig().shouldOpenBrowser());
@@ -125,7 +137,7 @@ public class EmbedVaadinTest extends AbstractEmbedTest {
         final EmbedVaadin embed = EmbedVaadin.forComponent(component).withConfig(config);
 
         assertServerConfig(embed.getConfig(), 12345, "/foo", false);
-        assertVaadinConfig(embed.getConfig(), "myTheme");
+        assertVaadinConfig(embed.getConfig(), "myTheme", "com.bsb.foo.MyWidgetSet");
     }
 
 

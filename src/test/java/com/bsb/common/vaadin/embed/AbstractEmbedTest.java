@@ -36,9 +36,10 @@ public abstract class AbstractEmbedTest {
         assertEquals("Wrong waiting flag", waiting, config.isWaiting());
     }
 
-    protected void assertVaadinConfig(EmbedVaadinConfig config, String theme) {
+    protected void assertVaadinConfig(EmbedVaadinConfig config, String theme, String widgetSet) {
         assertConfigIsNotNull(config);
         assertEquals("Wrong theme", theme, config.getTheme());
+        assertEquals("Wrong widgetSet", widgetSet, config.getWidgetSet());
     }
 
     protected void assertBrowserConfig(EmbedVaadinConfig config, boolean openBrowser) {

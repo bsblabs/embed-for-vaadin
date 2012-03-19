@@ -37,6 +37,7 @@ import java.util.Properties;
  * <li><tt>context.rootDir</tt>: to specify the root directory of the web application</li>
  * <li><tt>server.await</tt>: to specify if the thread should block when the server has started</li>
  * <li><tt>vaadin.theme</tt>: to specify the theme to use for the vaadin application</li>
+ * <li><tt>vaadin.widgetSet</tt>: to specify the widgetSet to use for the vaadin application</li>
  * </ul>
  *
  * @author Stephane Nicoll
@@ -80,6 +81,7 @@ public class EmbedVaadinConfig {
     private boolean waiting;
 
     private String theme;
+    private String widgetSet;
 
     private boolean openBrowser;
 
@@ -95,6 +97,7 @@ public class EmbedVaadinConfig {
         waiting = Boolean.valueOf(properties.getProperty("server.await", String.valueOf(DEFAULT_WAITING)));
 
         theme = properties.getProperty("vaadin.theme", DEFAULT_THEME);
+        widgetSet = properties.getProperty("vaadin.widgetSet");
 
         openBrowser = Boolean.valueOf(properties.getProperty("open.browser", String.valueOf(DEFAULT_START_BROWSER)));
 
@@ -115,6 +118,7 @@ public class EmbedVaadinConfig {
         this.contextRootDirectory = clone.contextRootDirectory;
         this.waiting = clone.waiting;
         this.theme = clone.theme;
+        this.widgetSet = clone.widgetSet;
         this.openBrowser = clone.openBrowser;
     }
 
@@ -207,13 +211,23 @@ public class EmbedVaadinConfig {
     }
 
     /**
-     * Returns the vaadin theme to use fo the application.
+     * Returns the vaadin theme to use for the application.
      *
      * @return the theme to use
      * @see #DEFAULT_THEME
      */
     public String getTheme() {
         return theme;
+    }
+
+    /**
+     * Returns the vaadin widgetSet to use for the application. Returns <tt>null</tt>
+     * if no specific widgetSet is configured and the default one should be used.
+     *
+     * @return the widgetSet to use or <tt>null</tt> if none is set
+     */
+    public String getWidgetSet() {
+        return widgetSet;
     }
 
     /**
@@ -243,6 +257,10 @@ public class EmbedVaadinConfig {
 
     protected void setTheme(String theme) {
         this.theme = theme;
+    }
+
+    protected void setWidgetSet(String widgetSet) {
+        this.widgetSet = widgetSet;
     }
 
     protected void setOpenBrowser(boolean openBrowser) {
