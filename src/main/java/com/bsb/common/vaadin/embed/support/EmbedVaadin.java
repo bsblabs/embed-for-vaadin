@@ -85,6 +85,24 @@ public class EmbedVaadin extends EmbedVaadinServerBuilder<EmbedVaadin, EmbedVaad
         return super.getConfig();
     }
 
+    /**
+     * Returns the {@link Component} that was used to initialize this instance, if any.
+     * 
+     * @return the component or <tt>null</tt> if an application was set
+     */
+    protected Component getComponent() {
+        return component;
+    }
+
+    /**
+     * Returns the {@link Application} type that was used to initialize this instance, if any.
+     *
+     * @return the application class or <tt>null</tt> if a component was set
+     */
+    protected Class<? extends Application> getApplicationClass() {
+        return applicationClass;
+    }
+
     @Override
     public EmbedVaadinServer build() {
         if (component != null) {
