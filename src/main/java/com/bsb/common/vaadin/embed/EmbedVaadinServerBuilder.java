@@ -141,18 +141,6 @@ public abstract class EmbedVaadinServerBuilder<B extends EmbedVaadinServerBuilde
         return withContextRootDirectory(new File(".", relativeDirectory));
     }
 
-    /**
-     * Specifies the vaadin theme to use for the application.
-     *
-     * @param theme the theme to use
-     * @return this
-     */
-    public B withVaadinTheme(String theme) {
-        assertNotNull(theme, "theme could not be null.");
-
-        this.config.setTheme(theme);
-        return self();
-    }
 
     /**
      * Specifies the vaadin widgetSet to use for the application. The

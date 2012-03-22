@@ -211,7 +211,8 @@ public class EmbedVaadinConfig {
     }
 
     /**
-     * Returns the vaadin theme to use for the application.
+     * Returns the vaadin theme to use for the application. Only taken into account
+     * when a wrapper application is created for a component.
      *
      * @return the theme to use
      * @see #DEFAULT_THEME

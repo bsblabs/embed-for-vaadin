@@ -13,10 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.bsb.common.vaadin.embed.support;
+package com.bsb.common.vaadin.embed;
 
-import com.bsb.common.vaadin.embed.EmbedVaadinConfig;
-import com.bsb.common.vaadin.embed.EmbedVaadinServer;
+import com.bsb.common.vaadin.embed.util.BrowserUtils;
 import com.google.common.io.Files;
 import com.vaadin.terminal.gwt.server.AbstractApplicationServlet;
 import org.apache.catalina.Context;

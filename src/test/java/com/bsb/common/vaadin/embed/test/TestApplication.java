@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.bsb.common.vaadin.embed.support;
+package com.bsb.common.vaadin.embed.test;
 
 import com.vaadin.Application;
 import com.vaadin.ui.Alignment;
