@@ -26,23 +26,23 @@ import com.vaadin.ui.Window;
  */
 public class DevApplication extends Application {
 
-    private final transient EmbedVaadinConfig config;
+    private final transient EmbedVaadinServer server;
     private final Window mainWindow;
 
     /**
      * Creates a new instance.
      *
-     * @param config the config to use
+     * @param server the server handling this application
      * @param mainWindow the main window
      */
-    public DevApplication(EmbedVaadinConfig config, Window mainWindow) {
-        this.config = config;
+    public DevApplication(EmbedVaadinServer server, Window mainWindow) {
+        this.server = server;
         this.mainWindow = mainWindow;
     }
 
     @Override
     public void init() {
-        setTheme(config.getTheme());
+        setTheme(server.getConfig().getTheme());
 
         setMainWindow(mainWindow);
     }

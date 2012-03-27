@@ -47,7 +47,7 @@ public class ComponentBasedEmbedVaadinTomcat extends AbstractEmbedVaadinTomcat {
 
         // Setup vaadin servlet
         final Wrapper wrapper = initializeVaadinServlet(
-                new DevApplicationServlet(getConfig(), component));
+                new DevApplicationServlet(this, component));
         // Silly but otherwise the parent class will complain
         wrapper.addInitParameter("application", DevApplication.class.getName());
     }

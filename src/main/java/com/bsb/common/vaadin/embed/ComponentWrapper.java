@@ -16,9 +16,11 @@
 package com.bsb.common.vaadin.embed;
 
 import com.vaadin.Application;
+import com.vaadin.terminal.Sizeable;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.VerticalSplitPanel;
 import com.vaadin.ui.Window;
 
 /**
@@ -28,15 +30,15 @@ import com.vaadin.ui.Window;
  */
 public class ComponentWrapper {
 
-    private final EmbedVaadinConfig config;
+    private final EmbedVaadinServer server;
 
     /**
      * Creates a new instance.
      *
-     * @param config the config to use
+     * @param server the server handling this application
      */
-    public ComponentWrapper(EmbedVaadinConfig config) {
-        this.config = config;
+    public ComponentWrapper(EmbedVaadinServer server) {
+        this.server = server;
     }
 
     /**
@@ -72,11 +74,23 @@ public class ComponentWrapper {
      */
     public Application wrapLayout(Layout layout) {
         // TODO: add a header to switch the style, etc
-        // TODO: add bookmark to set tye style
+        // TODO: add bookmark to set the style
         final Window mainWindow = new Window("Dev");
-        mainWindow.setContent(layout);
 
-        return new DevApplication(config, mainWindow);
+        final VerticalSplitPanel mainLayout = new VerticalSplitPanel();
+        mainLayout.setSizeFull();
+        mainLayout.setSplitPosition(20, Sizeable.UNITS_PIXELS);
+        mainLayout.setLocked(true);
+
+        final DevApplicationHeader header = new DevApplicationHeader(server);
+        header.setSpacing(true);
+        mainLayout.setFirstComponent(header);
+
+        mainLayout.setSecondComponent(layout);
+
+        mainWindow.setContent(mainLayout);
+
+        return new DevApplication(server, mainWindow);
     }
 
     /**
@@ -86,7 +100,7 @@ public class ComponentWrapper {
      * @return an application using that window as primary window
      */
     public Application wrapWindow(Window window) {
-        return new DevApplication(config, window);
+        return new DevApplication(server, window);
     }
 
 }

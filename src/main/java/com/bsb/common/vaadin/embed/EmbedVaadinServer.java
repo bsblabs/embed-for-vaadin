@@ -38,6 +38,14 @@ public interface EmbedVaadinServer {
     boolean isWaiting();
 
     /**
+     * Returns the {@link EmbedVaadinConfig configuration} that was used to create
+     * this instance.
+     *
+     * @return the configuration
+     */
+    EmbedVaadinConfig getConfig();
+
+    /**
      * Stops the server.
      */
     void stop();

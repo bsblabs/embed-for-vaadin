@@ -39,11 +39,11 @@ public class DevApplicationServlet extends ApplicationServlet {
     /**
      * Creates a new instance.
      *
-     * @param config the config to use
+     * @param server the server handling this application
      * @param component the component to display
      */
-    public DevApplicationServlet(EmbedVaadinConfig config, Component component) {
-        this.application = new ComponentWrapper(config).wrap(component);
+    public DevApplicationServlet(EmbedVaadinServer server, Component component) {
+        this.application = new ComponentWrapper(server).wrap(component);
     }
 
     @Override

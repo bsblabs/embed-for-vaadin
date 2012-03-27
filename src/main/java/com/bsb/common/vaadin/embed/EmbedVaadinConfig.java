@@ -23,6 +23,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.util.Properties;
 
 /**
@@ -42,7 +43,7 @@ import java.util.Properties;
  *
  * @author Stephane Nicoll
  */
-public class EmbedVaadinConfig {
+public class EmbedVaadinConfig implements Serializable {
 
     private static final Logger logger = LoggerFactory.getLogger(EmbedVaadinConfig.class);
 

@@ -15,15 +15,15 @@
  */
 package com.bsb.common.vaadin.embed;
 
-import com.bsb.common.vaadin.embed.ComponentWrapper;
-import com.bsb.common.vaadin.embed.EmbedVaadinConfig;
 import com.vaadin.Application;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import org.junit.Test;
 
+import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -32,7 +32,8 @@ import static org.junit.Assert.assertNotNull;
  */
 public class ComponentWrapperTest {
 
-    private final ComponentWrapper instance = new ComponentWrapper(EmbedVaadinConfig.defaultConfig());
+    private final ComponentWrapper instance = new ComponentWrapper(
+            new TestableEmbedVaadinServer(EmbedVaadinConfig.defaultConfig()));
 
     @Test
     public void wrapWindow() {
@@ -45,21 +46,48 @@ public class ComponentWrapperTest {
     public void wrapLayout() {
         final HorizontalLayout layout = new HorizontalLayout();
         final Application app = instance.wrap(layout);
-        assertNotNull("Main window must not be null", app.getMainWindow());
-        assertEquals("Layout was not set properly", layout, app.getMainWindow().getContent());
+
+        final Layout l = assertWrappingLayout(app);
+
+        assertEquals("Layout was not set properly", layout, l);
     }
 
     @Test
     public void wrapSimpleComponent() {
         final Button component = new Button("Hello");
         final Application app = instance.wrap(component);
-        assertNotNull("Main window must not be null", app.getMainWindow());
-        assertNotNull("Main content of window must not be null", app.getMainWindow().getContent());
+
+        final Layout l = assertWrappingLayout(app);
         assertEquals("Main content must be vertical layout", VerticalLayout.class,
-                app.getMainWindow().getContent().getClass());
-        final VerticalLayout layout = (VerticalLayout) app.getMainWindow().getContent();
+                l.getClass());
+        final VerticalLayout layout = (VerticalLayout) l;
         assertEquals("Should have a single component", 1, layout.getComponentCount());
         assertEquals("Component was not set properly", component, layout.getComponent(0));
+    }
+
+    private Layout assertWrappingLayout(Application app) {
+        assertNotNull("Main window must not be null", app.getMainWindow());
+        assertEquals("VerticalLayout with header was expected", VerticalLayout.class,
+                app.getMainWindow().getContent().getClass());
+        final VerticalLayout mainLayout = (VerticalLayout) app.getMainWindow().getContent();
+        assertEquals("Two components were expected, header and actual layout", 2, mainLayout.getComponentCount());
+        assertEquals("Header was not set properly", DevApplicationHeader.class, mainLayout.getComponent(0).getClass());
+        assertTrue("Layout to display was not set properly [" + mainLayout.getComponent(1) + "]",
+                mainLayout.getComponent(1) instanceof Layout);
+        return (Layout) mainLayout.getComponent(1);
+    }
+
+
+    // A testable server that does not need any vaadin component
+    private static final class TestableEmbedVaadinServer extends AbstractEmbedVaadinTomcat {
+
+        private TestableEmbedVaadinServer(EmbedVaadinConfig config) {
+            super(config);
+        }
+
+        @Override
+        protected void configure() {
+        }
     }
 
 

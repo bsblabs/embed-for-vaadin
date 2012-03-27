@@ -26,22 +26,26 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.Serializable;
 
 /**
  * A based {@link EmbedVaadinServer} implementation based on Apache Tomcat.
  *
  * @author Stephane Nicoll
  */
-public abstract class AbstractEmbedVaadinTomcat implements EmbedVaadinServer {
+public abstract class AbstractEmbedVaadinTomcat implements EmbedVaadinServer, Serializable {
 
     private static final Logger logger = LoggerFactory.getLogger(AbstractEmbedVaadinTomcat.class);
 
     private final EmbedVaadinConfig config;
 
-    private final Tomcat tomcat;
-    private final Thread shutdownThread;
-    private final File baseDir;
-    private Context context;
+    // Note this class has to be serializable to make sure the session can be saved when
+    // Tomcat stops
+
+    private final transient Tomcat tomcat;
+    private final transient Thread shutdownThread;
+    private final transient File baseDir;
+    private transient Context context;
 
     /**
      * Creates a new instance with the specified config.
@@ -83,6 +87,10 @@ public abstract class AbstractEmbedVaadinTomcat implements EmbedVaadinServer {
         return config.isWaiting();
     }
 
+    public EmbedVaadinConfig getConfig() {
+        return config;
+    }
+
     public void stop() {
         try {
             doStop();
@@ -92,13 +100,6 @@ public abstract class AbstractEmbedVaadinTomcat implements EmbedVaadinServer {
             // Prevents a second stop when the VM exit since we already stopped it manually
             removeShutdownHook();
         }
-    }
-
-    /**
-     * Returns the configuration.
-     */
-    protected EmbedVaadinConfig getConfig() {
-        return config;
     }
 
     /**
