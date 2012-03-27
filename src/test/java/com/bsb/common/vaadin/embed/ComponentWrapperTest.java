@@ -20,6 +20,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.VerticalSplitPanel;
 import com.vaadin.ui.Window;
 import org.junit.Test;
 
@@ -67,14 +68,14 @@ public class ComponentWrapperTest {
 
     private Layout assertWrappingLayout(Application app) {
         assertNotNull("Main window must not be null", app.getMainWindow());
-        assertEquals("VerticalLayout with header was expected", VerticalLayout.class,
+        assertEquals("VerticalSplitPanel with header was expected", VerticalSplitPanel.class,
                 app.getMainWindow().getContent().getClass());
-        final VerticalLayout mainLayout = (VerticalLayout) app.getMainWindow().getContent();
+        final VerticalSplitPanel mainLayout = (VerticalSplitPanel) app.getMainWindow().getContent();
         assertEquals("Two components were expected, header and actual layout", 2, mainLayout.getComponentCount());
-        assertEquals("Header was not set properly", DevApplicationHeader.class, mainLayout.getComponent(0).getClass());
-        assertTrue("Layout to display was not set properly [" + mainLayout.getComponent(1) + "]",
-                mainLayout.getComponent(1) instanceof Layout);
-        return (Layout) mainLayout.getComponent(1);
+        assertEquals("Header was not set properly", DevApplicationHeader.class, mainLayout.getFirstComponent().getClass());
+        assertTrue("Layout to display was not set properly [" + mainLayout.getSecondComponent() + "]",
+                mainLayout.getSecondComponent() instanceof Layout);
+        return (Layout) mainLayout.getSecondComponent();
     }
 
 
