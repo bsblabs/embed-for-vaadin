@@ -143,11 +143,12 @@ public abstract class EmbedVaadinServerBuilder<B extends EmbedVaadinServerBuilde
 
 
     /**
-     * Specifies the vaadin widgetSet to use for the application. The
-     * specified <tt>widgetSet</tt> can be <tt>null</tt> to mention that the
+     * Specifies the vaadin widgetSet to use for the application.
+     * For example <code>"com.vaadin.terminal.gwt.DefaultWidgetSet"</code>
+     * The specified <tt>widgetSet</tt> can be <tt>null</tt> to mention that the
      * default widgetSet should be used.
      *
-     * @param widgetSet the widgetSet to use
+     * @param widgetSet fully qualified name of the widgetSet to use.
      * @return this
      */
     public B withWidgetSet(String widgetSet) {

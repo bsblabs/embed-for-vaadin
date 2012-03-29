@@ -15,7 +15,6 @@
  */
 package com.bsb.common.vaadin.embed;
 
-import com.bsb.common.vaadin.embed.EmbedVaadinConfig;
 import com.vaadin.Application;
 import com.vaadin.ui.Window;
 
