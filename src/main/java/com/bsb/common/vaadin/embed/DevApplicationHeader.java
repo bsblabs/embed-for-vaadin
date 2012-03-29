@@ -38,7 +38,18 @@ public class DevApplicationHeader extends HorizontalLayout {
 
         shutdown.addListener(new Button.ClickListener() {
             public void buttonClick(Button.ClickEvent event) {
-                server.stop();
+                // Stop the server in a separate thread.
+                final Thread thread =  new Thread(new Runnable() {
+                    public void run() {
+                        server.stop();
+                    }
+                });
+                // avoid that catalina's WebappClassLoader.clearReferencesThreads warns about the thread because it is
+                // part of the web application being stopped.
+                thread.setContextClassLoader(null);
+
+                thread.start();
+
                 // Close the browser tab
                 getWindow().executeJavaScript("close();");
             }
