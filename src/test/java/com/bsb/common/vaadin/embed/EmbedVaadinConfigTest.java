@@ -29,26 +29,27 @@ public class EmbedVaadinConfigTest extends AbstractEmbedTest {
         final EmbedVaadinConfig config = EmbedVaadinConfig.defaultConfig();
         assertServerConfig(config, EmbedVaadinConfig.DEFAULT_PORT, EmbedVaadinConfig.DEFAULT_CONTEXT_PATH,
                 EmbedVaadinConfig.DEFAULT_WAITING);
-        assertVaadinConfig(config, EmbedVaadinConfig.DEFAULT_THEME, null);
+        assertVaadinConfig(config, null);
         assertBrowserConfig(config, EmbedVaadinConfig.DEFAULT_START_BROWSER);
     }
 
     @Test(expected = IllegalStateException.class)
     public void loadUnknownFile() {
-        EmbedVaadinConfig.load("/foo/bar/does-not-exist.properties");
+        EmbedVaadinConfig.loadProperties("/foo/bar/does-not-exist.properties");
     }
 
     @Test
     public void load() {
-        final EmbedVaadinConfig config = EmbedVaadinConfig.load("/config/simple-embed-vaadin.properties");
+        final EmbedVaadinConfig config = new EmbedVaadinConfig(
+                EmbedVaadinConfig.loadProperties("/config/simple-embed-vaadin.properties"));
         assertServerConfig(config, 12345, "/foo", false);
-        assertVaadinConfig(config, "myTheme", "com.bsb.foo.MyWidgetSet");
+        assertVaadinConfig(config, "com.bsb.foo.MyWidgetSet");
         assertBrowserConfig(config, true);
     }
 
     @Test(expected = IllegalStateException.class)
     public void loadWithInvalidRootWebDir() {
-        EmbedVaadinConfig.load("/config/root-dir-embed-vaadin.properties");
+        new EmbedVaadinConfig(EmbedVaadinConfig.loadProperties("/config/root-dir-embed-vaadin.properties"));
     }
 
     @Test
@@ -60,7 +61,6 @@ public class EmbedVaadinConfigTest extends AbstractEmbedTest {
         config.setPort(1);
         config.setContextPath("/foo/bar");
         config.setContextRootDirectory(new File("."));
-        config.setTheme("fooBarTheme");
         config.setWidgetSet("com.bar.MyAnotherWidgetSet");
         config.setWaiting(true);
         config.setOpenBrowser(true);
@@ -68,7 +68,7 @@ public class EmbedVaadinConfigTest extends AbstractEmbedTest {
         // Now validate the clone has not changed
         assertServerConfig(clone, EmbedVaadinConfig.DEFAULT_PORT, EmbedVaadinConfig.DEFAULT_CONTEXT_PATH,
                 EmbedVaadinConfig.DEFAULT_WAITING);
-        assertVaadinConfig(clone, EmbedVaadinConfig.DEFAULT_THEME, null);
+        assertVaadinConfig(clone, null);
         assertBrowserConfig(clone, EmbedVaadinConfig.DEFAULT_START_BROWSER);
 
     }

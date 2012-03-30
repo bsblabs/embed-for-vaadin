@@ -13,8 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.bsb.common.vaadin.embed;
+package com.bsb.common.vaadin.embed.component;
 
+import com.bsb.common.vaadin.embed.AbstractEmbedVaadinTomcat;
 import com.vaadin.Application;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
@@ -34,7 +35,7 @@ import static org.junit.Assert.assertNotNull;
 public class ComponentWrapperTest {
 
     private final ComponentWrapper instance = new ComponentWrapper(
-            new TestableEmbedVaadinServer(EmbedVaadinConfig.defaultConfig()));
+            new TestableEmbedVaadinServer(EmbedComponentConfig.defaultConfig()));
 
     @Test
     public void wrapWindow() {
@@ -80,14 +81,21 @@ public class ComponentWrapperTest {
 
 
     // A testable server that does not need any vaadin component
-    private static final class TestableEmbedVaadinServer extends AbstractEmbedVaadinTomcat {
+    private static final class TestableEmbedVaadinServer extends AbstractEmbedVaadinTomcat
+            implements ComponentBasedVaadinServer{
+        private final EmbedComponentConfig config;
 
-        private TestableEmbedVaadinServer(EmbedVaadinConfig config) {
+        private TestableEmbedVaadinServer(EmbedComponentConfig config) {
             super(config);
+            this.config = config;
         }
 
         @Override
         protected void configure() {
+        }
+
+        public EmbedComponentConfig getConfig() {
+            return config;
         }
     }
 

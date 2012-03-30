@@ -13,8 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.bsb.common.vaadin.embed;
+package com.bsb.common.vaadin.embed.component;
 
+import com.bsb.common.vaadin.embed.AbstractEmbedVaadinTomcat;
 import com.vaadin.ui.Component;
 import org.apache.catalina.Wrapper;
 
@@ -26,8 +27,9 @@ import org.apache.catalina.Wrapper;
  *
  * @author Stephane Nicoll
  */
-public class ComponentBasedEmbedVaadinTomcat extends AbstractEmbedVaadinTomcat {
+public class ComponentBasedEmbedVaadinTomcat extends AbstractEmbedVaadinTomcat implements ComponentBasedVaadinServer {
 
+    private final EmbedComponentConfig config;
     private final Component component;
 
     /**
@@ -36,9 +38,14 @@ public class ComponentBasedEmbedVaadinTomcat extends AbstractEmbedVaadinTomcat {
      * @param config the config to use
      * @param component the component to display
      */
-    public ComponentBasedEmbedVaadinTomcat(EmbedVaadinConfig config, Component component) {
+    public ComponentBasedEmbedVaadinTomcat(EmbedComponentConfig config, Component component) {
         super(config);
+        this.config = config;
         this.component = component;
+    }
+
+    public EmbedComponentConfig getConfig() {
+        return config;
     }
 
     @Override

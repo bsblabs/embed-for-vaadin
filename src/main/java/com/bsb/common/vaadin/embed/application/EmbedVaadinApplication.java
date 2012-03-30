@@ -1,6 +1,11 @@
-package com.bsb.common.vaadin.embed;
+package com.bsb.common.vaadin.embed.application;
 
+import com.bsb.common.vaadin.embed.EmbedVaadinConfig;
+import com.bsb.common.vaadin.embed.EmbedVaadinServer;
+import com.bsb.common.vaadin.embed.EmbedVaadinServerBuilder;
 import com.vaadin.Application;
+
+import java.util.Properties;
 
 /**
  * A builder for a server embedding an application.
@@ -10,11 +15,13 @@ import com.vaadin.Application;
 public class EmbedVaadinApplication extends EmbedVaadinServerBuilder<EmbedVaadinApplication, EmbedVaadinServer> {
 
     private final Class<? extends Application> applicationClass;
+    private EmbedVaadinConfig config;
 
     public EmbedVaadinApplication(Class<? extends Application> applicationClass) {
-        super(true);
+        super();
         assertNotNull(applicationClass, "applicationClass could not be null.");
         this.applicationClass = applicationClass;
+        withConfigProperties(EmbedVaadinConfig.loadProperties());
     }
 
     /**
@@ -34,5 +41,16 @@ public class EmbedVaadinApplication extends EmbedVaadinServerBuilder<EmbedVaadin
     @Override
     public EmbedVaadinServer build() {
         return new ApplicationBasedEmbedVaadinTomcat(getConfig(), getApplicationClass());
+    }
+
+    @Override
+    public EmbedVaadinApplication withConfigProperties(Properties properties) {
+        this.config = new EmbedVaadinConfig(properties);
+        return self();
+    }
+
+    @Override
+    protected EmbedVaadinConfig getConfig() {
+        return config;
     }
 }

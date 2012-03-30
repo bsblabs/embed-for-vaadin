@@ -13,8 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.bsb.common.vaadin.embed;
+package com.bsb.common.vaadin.embed.support;
 
+import com.bsb.common.vaadin.embed.AbstractEmbedTest;
+import com.bsb.common.vaadin.embed.component.EmbedComponentConfig;
+import com.bsb.common.vaadin.embed.component.EmbedVaadinComponent;
 import com.google.common.io.Files;
 import com.vaadin.ui.Button;
 import org.junit.Test;
@@ -47,9 +50,14 @@ public class EmbedVaadinTest extends AbstractEmbedTest {
         EmbedVaadin.forComponent(component).withContextRootDirectory((String) null);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void withNullConfig() {
-        EmbedVaadin.forComponent(component).withConfig(null);
+    @Test(expected = NullPointerException.class)
+    public void withNullConfigPath() {
+        EmbedVaadin.forComponent(component).withConfigPath(null);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void withNullConfigProperties() {
+        EmbedVaadin.forComponent(component).withConfigProperties(null);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -60,33 +68,33 @@ public class EmbedVaadinTest extends AbstractEmbedTest {
     @Test
     public void withPort() {
         final EmbedVaadinComponent embed = EmbedVaadin.forComponent(component).withHttpPort(8080);
-        assertEquals("was not detected as expected", 8080, embed.getConfig().getPort());
+        assertEquals("was not detected as expected", 8080, embed.build().getConfig().getPort());
     }
 
     @Test
     public void withRootContextPath() {
         final EmbedVaadinComponent embed = EmbedVaadin.forComponent(component).withContextPath("/");
-        assertEquals("/ was not detected as root context properly", "", embed.getConfig().getContextPath());
+        assertEquals("/ was not detected as root context properly", "", embed.build().getConfig().getContextPath());
     }
 
     @Test
     public void withEmptyContextPath() {
         final EmbedVaadinComponent embed = EmbedVaadin.forComponent(component).withContextPath(" ");
         assertEquals("empty string was not detected as root context properly",
-                "", embed.getConfig().getContextPath());
+                "", embed.build().getConfig().getContextPath());
     }
 
     @Test
     public void withContextWithoutForwardSlash() {
         final EmbedVaadinComponent embed = EmbedVaadin.forComponent(component).withContextPath("foo");
         assertEquals("forward slash was not added to context as expected",
-                "/foo", embed.getConfig().getContextPath());
+                "/foo", embed.build().getConfig().getContextPath());
     }
 
     @Test
     public void withSimpleContextPath() {
         final EmbedVaadinComponent embed = EmbedVaadin.forComponent(component).withContextPath("/bar");
-        assertEquals("was not detected as expected", "/bar", embed.getConfig().getContextPath());
+        assertEquals("was not detected as expected", "/bar", embed.build().getConfig().getContextPath());
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -103,7 +111,7 @@ public class EmbedVaadinTest extends AbstractEmbedTest {
     public void withContextRootDirectoryAsFile() {
         final File rootContextDir = Files.createTempDir();
         final EmbedVaadinComponent embed = EmbedVaadin.forComponent(component).withContextRootDirectory(rootContextDir);
-        assertEquals("was not detected as expected", rootContextDir, embed.getConfig().getContextRootDirectory());
+        assertEquals("was not detected as expected", rootContextDir, embed.build().getConfig().getContextRootDirectory());
     }
 
     @Test
@@ -112,40 +120,41 @@ public class EmbedVaadinTest extends AbstractEmbedTest {
         assertTrue("src/main/java should exist [" + f.getAbsolutePath() + "] make sure you are running " +
                 "the tests with the working directory set to this module.", f.exists());
         final EmbedVaadinComponent embed = EmbedVaadin.forComponent(component).withContextRootDirectory("src/main/java");
-        assertEquals("was not detected as expected", f, embed.getConfig().getContextRootDirectory());
+        assertEquals("was not detected as expected", f, embed.build().getConfig().getContextRootDirectory());
     }
 
     @Test
     public void withVaadinTheme() {
         final EmbedVaadinComponent embed = EmbedVaadin.forComponent(component).withTheme("showcase");
-        assertEquals("was not detected as expected", "showcase", embed.getConfig().getTheme());
+        assertEquals("was not detected as expected", "showcase", embed.build().getConfig().getTheme());
     }
 
     @Test
     public void withWidgetSet() {
         final EmbedVaadinComponent embed = EmbedVaadin.forComponent(component).withWidgetSet("com.bsb.foo.MyWidgetSet");
-        assertEquals("was not detected as expected", "com.bsb.foo.MyWidgetSet", embed.getConfig().getWidgetSet());
+        assertEquals("was not detected as expected", "com.bsb.foo.MyWidgetSet", embed.build().getConfig().getWidgetSet());
     }
 
     @Test
     public void withNullWidgetSet() {
         final EmbedVaadinComponent embed = EmbedVaadin.forComponent(component).withWidgetSet(null);
-        assertEquals("was not detected as expected", null, embed.getConfig().getWidgetSet());
+        assertEquals("was not detected as expected", null, embed.build().getConfig().getWidgetSet());
     }
 
     @Test
     public void withOpenBrowser() {
         final EmbedVaadinComponent embed = EmbedVaadin.forComponent(component).openBrowser(true);
-        assertEquals("was not detected as expected", true, embed.getConfig().shouldOpenBrowser());
+        assertEquals("was not detected as expected", true, embed.build().getConfig().shouldOpenBrowser());
     }
 
     @Test
     public void withCustomConfig() {
-        final EmbedVaadinConfig config = EmbedVaadinConfig.load("/config/simple-embed-vaadin.properties");
-        final EmbedVaadinComponent embed = EmbedVaadin.forComponent(component).withConfig(config);
+        final EmbedVaadinComponent embed = EmbedVaadin.forComponent(component)
+                .withConfigPath("/config/simple-embed-vaadin.properties");
 
-        assertServerConfig(embed.getConfig(), 12345, "/foo", false);
-        assertVaadinConfig(embed.getConfig(), "myTheme", "com.bsb.foo.MyWidgetSet");
+        final EmbedComponentConfig config = embed.build().getConfig();
+        assertServerConfig(config, 12345, "/foo", false);
+        assertVaadinConfig(config, "com.bsb.foo.MyWidgetSet");
     }
 
 

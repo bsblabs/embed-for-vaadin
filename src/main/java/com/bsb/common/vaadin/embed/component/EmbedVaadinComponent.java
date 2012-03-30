@@ -1,6 +1,11 @@
-package com.bsb.common.vaadin.embed;
+package com.bsb.common.vaadin.embed.component;
 
+import com.bsb.common.vaadin.embed.EmbedVaadinConfig;
+import com.bsb.common.vaadin.embed.EmbedVaadinServer;
+import com.bsb.common.vaadin.embed.EmbedVaadinServerBuilder;
 import com.vaadin.ui.Component;
+
+import java.util.Properties;
 
 /**
  * A builder for a server embedding a component.
@@ -10,11 +15,13 @@ import com.vaadin.ui.Component;
 public class EmbedVaadinComponent extends EmbedVaadinServerBuilder<EmbedVaadinComponent, EmbedVaadinServer> {
 
     private final Component component;
+    private EmbedComponentConfig config;
 
     public EmbedVaadinComponent(Component component) {
-        super(true);
+        super();
         assertNotNull(component, "component could not be null.");
         this.component = component;
+        withConfigProperties(EmbedVaadinConfig.loadProperties());
     }
 
     /**
@@ -25,7 +32,6 @@ public class EmbedVaadinComponent extends EmbedVaadinServerBuilder<EmbedVaadinCo
      */
     public EmbedVaadinComponent withTheme(String theme) {
         assertNotNull(theme, "theme could not be null.");
-
         getConfig().setTheme(theme);
         return self();
     }
@@ -45,7 +51,18 @@ public class EmbedVaadinComponent extends EmbedVaadinServerBuilder<EmbedVaadinCo
     }
 
     @Override
-    public EmbedVaadinServer build() {
-        return new ComponentBasedEmbedVaadinTomcat(getConfig(), getComponent());
+    public ComponentBasedVaadinServer build() {
+        return new ComponentBasedEmbedVaadinTomcat(config, getComponent());
+    }
+
+    @Override
+    public EmbedVaadinComponent withConfigProperties(Properties properties) {
+        this.config = new EmbedComponentConfig(properties);
+        return self();
+    }
+
+    @Override
+    protected EmbedComponentConfig getConfig() {
+        return config;
     }
 }

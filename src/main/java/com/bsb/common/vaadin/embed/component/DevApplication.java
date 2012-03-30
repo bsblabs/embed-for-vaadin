@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.bsb.common.vaadin.embed;
+package com.bsb.common.vaadin.embed.component;
 
 import com.vaadin.Application;
 import com.vaadin.ui.Window;
@@ -25,7 +25,7 @@ import com.vaadin.ui.Window;
  */
 public class DevApplication extends Application {
 
-    private final transient EmbedVaadinServer server;
+    private final transient ComponentBasedVaadinServer server;
     private final Window mainWindow;
 
     /**
@@ -34,7 +34,7 @@ public class DevApplication extends Application {
      * @param server the server handling this application
      * @param mainWindow the main window
      */
-    public DevApplication(EmbedVaadinServer server, Window mainWindow) {
+    public DevApplication(ComponentBasedVaadinServer server, Window mainWindow) {
         this.server = server;
         this.mainWindow = mainWindow;
     }

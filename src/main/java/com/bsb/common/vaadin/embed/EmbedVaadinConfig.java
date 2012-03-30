@@ -37,7 +37,6 @@ import java.util.Properties;
  * <li><tt>context.path</tt>: to specify the context path of the deployed application</li>
  * <li><tt>context.rootDir</tt>: to specify the root directory of the web application</li>
  * <li><tt>server.await</tt>: to specify if the thread should block when the server has started</li>
- * <li><tt>vaadin.theme</tt>: to specify the theme to use for the vaadin application</li>
  * <li><tt>vaadin.widgetSet</tt>: to specify the widgetSet to use for the vaadin application</li>
  * </ul>
  *
@@ -66,11 +65,6 @@ public class EmbedVaadinConfig implements Serializable {
     public static final boolean DEFAULT_WAITING = true;
 
     /**
-     * The default theme if none is set.
-     */
-    public static final String DEFAULT_THEME = "reindeer";
-
-    /**
      * Do not start the browser by default.
      */
     public static final boolean DEFAULT_START_BROWSER = false;
@@ -81,12 +75,16 @@ public class EmbedVaadinConfig implements Serializable {
     private File contextRootDirectory;
     private boolean waiting;
 
-    private String theme;
     private String widgetSet;
 
     private boolean openBrowser;
 
-    private EmbedVaadinConfig(Properties properties) {
+    /**
+     * Creates a new instance using the configuration in the given {@link Properties}
+     * 
+     * @param properties configuration properties
+     */
+    public EmbedVaadinConfig(Properties properties) {
         port = Integer.valueOf(properties.getProperty("server.port", String.valueOf(DEFAULT_PORT)));
         contextPath = properties.getProperty("context.path", DEFAULT_CONTEXT_PATH);
         final String contextBase = properties.getProperty("context.rootDir");
@@ -97,7 +95,6 @@ public class EmbedVaadinConfig implements Serializable {
         }
         waiting = Boolean.valueOf(properties.getProperty("server.await", String.valueOf(DEFAULT_WAITING)));
 
-        theme = properties.getProperty("vaadin.theme", DEFAULT_THEME);
         widgetSet = properties.getProperty("vaadin.widgetSet");
 
         openBrowser = Boolean.valueOf(properties.getProperty("open.browser", String.valueOf(DEFAULT_START_BROWSER)));
@@ -113,41 +110,13 @@ public class EmbedVaadinConfig implements Serializable {
      *
      * @param clone the instance to clone
      */
-    public EmbedVaadinConfig(EmbedVaadinConfig clone) {
+    protected EmbedVaadinConfig(EmbedVaadinConfig clone) {
         this.port = clone.port;
         this.contextPath = clone.contextPath;
         this.contextRootDirectory = clone.contextRootDirectory;
         this.waiting = clone.waiting;
-        this.theme = clone.theme;
         this.widgetSet = clone.widgetSet;
         this.openBrowser = clone.openBrowser;
-    }
-
-    /**
-     * Loads a configuration file from the default {@link #CONFIG_LOCATION config location}.
-     * <p/>
-     * If no file is found, only the standard default are available.
-     *
-     * @return a new instance with the default settings, potentially customized by an
-     *         external properties file at the default location
-     * @see #CONFIG_LOCATION
-     */
-    public static EmbedVaadinConfig load() {
-        return new EmbedVaadinConfig(loadProperties(CONFIG_LOCATION, false));
-    }
-
-
-    /**
-     * Loads a configuration file from the specified location. Fails if the
-     * specified <tt>path</tt> does not exist.
-     *
-     * @param path the location of a properties file in the classpath
-     * @return a new instance with the default settings customized by an
-     *         external properties file at the specified location
-     * @throws IllegalStateException if no such properties file is found
-     */
-    public static EmbedVaadinConfig load(String path) {
-        return new EmbedVaadinConfig(loadProperties(path, true));
     }
 
     /**
@@ -212,17 +181,6 @@ public class EmbedVaadinConfig implements Serializable {
     }
 
     /**
-     * Returns the vaadin theme to use for the application. Only taken into account
-     * when a wrapper application is created for a component.
-     *
-     * @return the theme to use
-     * @see #DEFAULT_THEME
-     */
-    public String getTheme() {
-        return theme;
-    }
-
-    /**
      * Returns the vaadin widgetSet to use for the application. Returns <tt>null</tt>
      * if no specific widgetSet is configured and the default one should be used.
      *
@@ -241,31 +199,27 @@ public class EmbedVaadinConfig implements Serializable {
         return openBrowser;
     }
 
-    protected void setPort(int port) {
+    void setPort(int port) {
         this.port = port;
     }
 
-    protected void setContextPath(String contextPath) {
+    void setContextPath(String contextPath) {
         this.contextPath = contextPath;
     }
 
-    protected void setContextRootDirectory(File contextRootDirectory) {
+    void setContextRootDirectory(File contextRootDirectory) {
         this.contextRootDirectory = contextRootDirectory;
     }
 
-    protected void setWaiting(boolean waiting) {
+    void setWaiting(boolean waiting) {
         this.waiting = waiting;
     }
 
-    protected void setTheme(String theme) {
-        this.theme = theme;
-    }
-
-    protected void setWidgetSet(String widgetSet) {
+    void setWidgetSet(String widgetSet) {
         this.widgetSet = widgetSet;
     }
 
-    protected void setOpenBrowser(boolean openBrowser) {
+    void setOpenBrowser(boolean openBrowser) {
         this.openBrowser = openBrowser;
     }
 
@@ -276,6 +230,30 @@ public class EmbedVaadinConfig implements Serializable {
         }
     }
 
+    /**
+     * Loads a configuration file from the default {@link #CONFIG_LOCATION config location}.
+     * <p/>
+     * If no file is found, only the standard default are available.
+     *
+     * @return Properties loaded from the default locations, or empty Properties if the file doesn't exist.
+     * @see #CONFIG_LOCATION
+     */
+    public static Properties loadProperties() {
+        return loadProperties(CONFIG_LOCATION, false);
+    }
+
+    /**
+     * Loads a configuration file from the specified location. Fails if the
+     * specified <tt>path</tt> does not exist.
+     *
+     * @param path the location of a properties file in the classpath
+     * @return Properties Properties loaded from the <code>.properties</code> file at the specified location
+     * @throws IllegalStateException if no such properties file is found
+     */
+    public static Properties loadProperties(String path) {
+        return loadProperties(path, true);
+    }
+    
     private static Properties loadProperties(String path, boolean failIfNotFound) {
         try {
             final Properties properties = new Properties();

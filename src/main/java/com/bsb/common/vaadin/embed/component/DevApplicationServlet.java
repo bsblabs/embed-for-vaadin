@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.bsb.common.vaadin.embed;
+package com.bsb.common.vaadin.embed.component;
 
 import com.vaadin.Application;
 import com.vaadin.terminal.gwt.server.ApplicationServlet;
@@ -42,7 +42,7 @@ public class DevApplicationServlet extends ApplicationServlet {
      * @param server the server handling this application
      * @param component the component to display
      */
-    public DevApplicationServlet(EmbedVaadinServer server, Component component) {
+    public DevApplicationServlet(ComponentBasedVaadinServer server, Component component) {
         this.application = new ComponentWrapper(server).wrap(component);
     }
 

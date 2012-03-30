@@ -1,5 +1,6 @@
 package com.bsb.common.vaadin.embed;
 
+import com.bsb.common.vaadin.embed.support.EmbedVaadin;
 import com.vaadin.ui.Button;
 
 /**

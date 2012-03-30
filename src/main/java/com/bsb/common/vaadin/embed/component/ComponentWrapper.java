@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.bsb.common.vaadin.embed;
+package com.bsb.common.vaadin.embed.component;
 
 import com.vaadin.Application;
 import com.vaadin.terminal.Sizeable;
@@ -30,14 +30,14 @@ import com.vaadin.ui.Window;
  */
 public class ComponentWrapper {
 
-    private final EmbedVaadinServer server;
+    private final ComponentBasedVaadinServer server;
 
     /**
      * Creates a new instance.
      *
      * @param server the server handling this application
      */
-    public ComponentWrapper(EmbedVaadinServer server) {
+    public ComponentWrapper(ComponentBasedVaadinServer server) {
         this.server = server;
     }
 

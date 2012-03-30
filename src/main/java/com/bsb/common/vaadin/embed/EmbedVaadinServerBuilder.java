@@ -16,6 +16,7 @@
 package com.bsb.common.vaadin.embed;
 
 import java.io.File;
+import java.util.Properties;
 
 /**
  * A basic builder for an {@link EmbedVaadinServer}.
@@ -25,21 +26,10 @@ import java.io.File;
 public abstract class EmbedVaadinServerBuilder<B extends EmbedVaadinServerBuilder<B, S>,
         S extends EmbedVaadinServer> {
 
-    private EmbedVaadinConfig config;
-
     /**
-     * Creates a new instance, initializing the properties with a default
-     * {@link EmbedVaadinConfig} instance.
-     *
-     * @param loadDefault <tt>true</tt> to initialize the builder with the default config
-     * @see EmbedVaadinConfig#load()
+     * Creates a new instance
      */
-    protected EmbedVaadinServerBuilder(boolean loadDefault) {
-        if (loadDefault) {
-            this.config = EmbedVaadinConfig.load();
-        } else {
-            this.config = EmbedVaadinConfig.defaultConfig();
-        }
+    protected EmbedVaadinServerBuilder() {
     }
 
     /**
@@ -57,18 +47,26 @@ public abstract class EmbedVaadinServerBuilder<B extends EmbedVaadinServerBuilde
     public abstract S build();
 
     /**
-     * Applies the content of the specified {@link EmbedVaadinConfig}.
+     * Loads a configuration file from the specified location. Fails if the
+     * specified <tt>path</tt> does not exist.
      *
-     * @param config the configuration to use
+     * @param path the location of a properties file in the classpath
      * @return this
+     * @throws IllegalStateException if no such properties file is found
      */
-    public B withConfig(EmbedVaadinConfig config) {
-        assertNotNull(config, "embed config could not be null.");
-        this.config = new EmbedVaadinConfig(config);
-
+    public B withConfigPath(String path) {
+        withConfigProperties(EmbedVaadinConfig.loadProperties(path));
         return self();
     }
 
+    /**
+     * Loads configuration from the specified {@link Properties}, usually read from a <code>.properties</code> file.
+     *
+     * @param properties configuration properties
+     * @return this
+     */
+    public abstract B withConfigProperties(Properties properties);
+    
     /**
      * Specifies the HTTP port to use.
      *
@@ -76,7 +74,7 @@ public abstract class EmbedVaadinServerBuilder<B extends EmbedVaadinServerBuilde
      * @return this
      */
     public B withHttpPort(int httpPort) {
-        this.config.setPort(httpPort);
+        getConfig().setPort(httpPort);
         return self();
     }
 
@@ -92,11 +90,11 @@ public abstract class EmbedVaadinServerBuilder<B extends EmbedVaadinServerBuilde
 
         // Special handling so that / can be used for the root context as well
         if (contextPath.equals("/") || contextPath.trim().equals("")) {
-            this.config.setContextPath("");
+            getConfig().setContextPath("");
         } else if (!contextPath.startsWith("/")) {
-            this.config.setContextPath("/" + contextPath);
+            getConfig().setContextPath("/" + contextPath);
         } else {
-            this.config.setContextPath(contextPath);
+            getConfig().setContextPath(contextPath);
         }
         return self();
     }
@@ -120,7 +118,7 @@ public abstract class EmbedVaadinServerBuilder<B extends EmbedVaadinServerBuilde
             throw new IllegalArgumentException("the specified value ["
                     + webappRootDirectory.getAbsolutePath() + "] is not a directory!");
         }
-        this.config.setContextRootDirectory(webappRootDirectory);
+        getConfig().setContextRootDirectory(webappRootDirectory);
         return self();
     }
 
@@ -152,7 +150,7 @@ public abstract class EmbedVaadinServerBuilder<B extends EmbedVaadinServerBuilde
      * @return this
      */
     public B withWidgetSet(String widgetSet) {
-        this.config.setWidgetSet(widgetSet);
+        getConfig().setWidgetSet(widgetSet);
         return self();
     }
 
@@ -167,7 +165,7 @@ public abstract class EmbedVaadinServerBuilder<B extends EmbedVaadinServerBuilde
      * @return this
      */
     public B wait(boolean shouldWait) {
-        this.config.setWaiting(shouldWait);
+        getConfig().setWaiting(shouldWait);
         return self();
     }
 
@@ -179,7 +177,7 @@ public abstract class EmbedVaadinServerBuilder<B extends EmbedVaadinServerBuilde
      * @return this
      */
     public B openBrowser(boolean open) {
-        this.config.setOpenBrowser(open);
+        getConfig().setOpenBrowser(open);
         return self();
     }
 
@@ -194,18 +192,15 @@ public abstract class EmbedVaadinServerBuilder<B extends EmbedVaadinServerBuilde
         return server;
     }
 
-
-    // Helpers for concrete builders
-
     /**
      * Returns the underling {@link EmbedVaadinConfig} that this instance is managing.
+     * Must be implemented by a concrete builder because the type of configuration can be different.
      *
      * @return the configuration
      */
-    protected EmbedVaadinConfig getConfig() {
-        return config;
-    }
+    protected abstract EmbedVaadinConfig getConfig();
 
+    // Helpers for concrete builders
 
     protected void assertNotNull(Object value, String message) {
         if (value == null) {

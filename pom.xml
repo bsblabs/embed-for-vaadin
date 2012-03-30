@@ -32,6 +32,10 @@
             <id>snicoll</id>
             <name>Stephane Nicoll</name>
         </developer>
+        <developer>
+            <id>wco</id>
+            <name>Wouter Coekaerts</name>
+        </developer>
     </developers>
 
     <properties>

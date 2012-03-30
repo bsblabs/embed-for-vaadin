@@ -36,9 +36,8 @@ public abstract class AbstractEmbedTest {
         assertEquals("Wrong waiting flag", waiting, config.isWaiting());
     }
 
-    protected void assertVaadinConfig(EmbedVaadinConfig config, String theme, String widgetSet) {
+    protected void assertVaadinConfig(EmbedVaadinConfig config, String widgetSet) {
         assertConfigIsNotNull(config);
-        assertEquals("Wrong theme", theme, config.getTheme());
         assertEquals("Wrong widgetSet", widgetSet, config.getWidgetSet());
     }
 
@@ -69,7 +68,7 @@ public abstract class AbstractEmbedTest {
         }
     }
 
-    private void assertConfigIsNotNull(EmbedVaadinConfig config) {
+    protected void assertConfigIsNotNull(EmbedVaadinConfig config) {
         assertNotNull("config could not be null.", config);
     }
 }
