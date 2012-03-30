@@ -32,6 +32,11 @@ public class EmbedVaadinApplication extends EmbedVaadinServerBuilder<EmbedVaadin
     private final Class<? extends Application> applicationClass;
     private EmbedVaadinConfig config;
 
+    /**
+     * Creates a new instance for the specified application.
+     *
+     * @param applicationClass the class of the application to deploy
+     */
     public EmbedVaadinApplication(Class<? extends Application> applicationClass) {
         super();
         assertNotNull(applicationClass, "applicationClass could not be null.");

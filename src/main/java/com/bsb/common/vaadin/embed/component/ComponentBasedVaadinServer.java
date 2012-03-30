@@ -24,6 +24,13 @@ import com.bsb.common.vaadin.embed.EmbedVaadinServer;
  */
 public interface ComponentBasedVaadinServer extends EmbedVaadinServer {
 
+    /**
+     * Returns the {@link EmbedComponentConfig configuration} that was used to create
+     * this instance.
+     *
+     * @return the configuration
+     */
     // overriding, narrowing return type
     EmbedComponentConfig getConfig();
+
 }

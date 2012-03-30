@@ -32,6 +32,11 @@ public class EmbedVaadinComponent extends EmbedVaadinServerBuilder<EmbedVaadinCo
     private final Component component;
     private EmbedComponentConfig config;
 
+    /**
+     * Creates a new instance for the specified {@link Component}.
+     *
+     * @param component the component to deploy
+     */
     public EmbedVaadinComponent(Component component) {
         super();
         assertNotNull(component, "component could not be null.");

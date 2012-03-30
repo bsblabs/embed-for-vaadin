@@ -72,9 +72,11 @@ And this showcase how the API can be used to customize these settings
 
 ## 0.2 (_not released yet_)
 
- - Custom WidgetSet can be specified
- - Clearer separation between an embed server deploying a single component and one deploying a full application
- - Development header: ability to shutdown the server and close the tab from the user interface itself
+* Custom WidgetSet can be specified
+* Clearer separation between an embed server deploying a single component and one deploying a full application
+* Development header: ability to shutdown the server and close the tab from the user interface
+* Improved browser support
+* A custom implementation can now expose a custom properties configuration more easily
 
 ## 0.1
 
