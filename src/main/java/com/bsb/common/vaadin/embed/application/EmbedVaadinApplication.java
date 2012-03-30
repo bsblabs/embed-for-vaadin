@@ -44,7 +44,7 @@ public class EmbedVaadinApplication extends EmbedVaadinServerBuilder<EmbedVaadin
     }
 
     @Override
-    public EmbedVaadinApplication withConfigProperties(Properties properties) {
+    public final EmbedVaadinApplication withConfigProperties(Properties properties) {
         this.config = new EmbedVaadinConfig(properties);
         return self();
     }

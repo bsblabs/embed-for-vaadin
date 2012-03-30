@@ -29,6 +29,7 @@ import org.apache.catalina.Wrapper;
  *
  * @author Stephane Nicoll
  */
+@SuppressWarnings("serial")
 public class ApplicationBasedEmbedVaadinTomcat extends AbstractEmbedVaadinTomcat {
 
     private final Class<? extends Application> applicationClass;

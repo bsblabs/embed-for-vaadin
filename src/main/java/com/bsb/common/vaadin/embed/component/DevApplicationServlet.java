@@ -32,6 +32,7 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @author Stephane Nicoll
  */
+@SuppressWarnings("serial")
 public class DevApplicationServlet extends ApplicationServlet {
 
     private final Application application;

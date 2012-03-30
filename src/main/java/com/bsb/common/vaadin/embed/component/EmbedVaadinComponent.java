@@ -56,7 +56,7 @@ public class EmbedVaadinComponent extends EmbedVaadinServerBuilder<EmbedVaadinCo
     }
 
     @Override
-    public EmbedVaadinComponent withConfigProperties(Properties properties) {
+    public final EmbedVaadinComponent withConfigProperties(Properties properties) {
         this.config = new EmbedComponentConfig(properties);
         return self();
     }

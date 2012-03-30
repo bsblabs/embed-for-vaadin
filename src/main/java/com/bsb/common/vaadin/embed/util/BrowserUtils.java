@@ -120,9 +120,10 @@ public final class BrowserUtils {
             return new String[]{"/usr/bin/open", url};
         } else if (IS_LINUX) {
             String[] browsers = { "google-chrome", "firefox", "opera", "konqueror", "epiphany", "mozilla", "netscape" };
-            for (String browser : browsers)
-            if (Runtime.getRuntime().exec(new String[] { "which", browser }).waitFor() == 0) {
-                return new String[]{browser, url};
+            for (String browser : browsers) {
+                if (Runtime.getRuntime().exec(new String[] { "which", browser }).waitFor() == 0) {
+                    return new String[]{browser, url};
+                }
             }
             throw new UnsupportedOperationException("Cannot find a browser");
         } else {

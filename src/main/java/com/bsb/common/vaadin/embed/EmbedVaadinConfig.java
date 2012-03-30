@@ -42,6 +42,7 @@ import java.util.Properties;
  *
  * @author Stephane Nicoll
  */
+@SuppressWarnings("serial")
 public class EmbedVaadinConfig implements Serializable {
 
     private static final Logger logger = LoggerFactory.getLogger(EmbedVaadinConfig.class);

@@ -23,6 +23,7 @@ import com.vaadin.ui.Window;
  *
  * @author Stephane Nicoll
  */
+@SuppressWarnings("serial")
 public class DevApplication extends Application {
 
     private final transient ComponentBasedVaadinServer server;

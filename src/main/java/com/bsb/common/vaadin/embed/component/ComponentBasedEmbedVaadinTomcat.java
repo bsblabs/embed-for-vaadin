@@ -27,6 +27,7 @@ import org.apache.catalina.Wrapper;
  *
  * @author Stephane Nicoll
  */
+@SuppressWarnings("serial")
 public class ComponentBasedEmbedVaadinTomcat extends AbstractEmbedVaadinTomcat implements ComponentBasedVaadinServer {
 
     private final EmbedComponentConfig config;

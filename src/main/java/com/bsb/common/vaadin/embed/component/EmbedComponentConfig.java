@@ -16,6 +16,7 @@ import java.util.Properties;
  * 
  * @author Wouter Coekaerts
  */
+@SuppressWarnings("serial")
 public final class EmbedComponentConfig extends EmbedVaadinConfig {
     /**
      * The default theme if none is set.
