@@ -32,8 +32,9 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @author Stephane Nicoll
  */
-@SuppressWarnings("serial")
 public class DevApplicationServlet extends ApplicationServlet {
+
+    private static final long serialVersionUID = -5557485761575067731L;
 
     private final Application application;
 

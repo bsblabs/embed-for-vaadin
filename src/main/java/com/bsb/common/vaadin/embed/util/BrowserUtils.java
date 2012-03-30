@@ -68,7 +68,7 @@ public final class BrowserUtils {
         logger.debug("Launching browser at [" + url + "]");
 
         try {
-            if (! openBrowserJava6(url)) {
+            if (!openBrowserJava6(url)) {
                 final String[] command = getOpenBrowserCommand(url);
 
                 if (logger.isTraceEnabled()) {
@@ -83,25 +83,25 @@ public final class BrowserUtils {
 
     /**
      * Tries to open the browser using java.awt.Desktop.
-     * 
+     *
      * @param url the url to open
      * @return true if succeeded, false if java.awt.Desktop is not available not or not supported.
      * @throws Exception if the feature is supported but opening a browser failed
      */
     private static boolean openBrowserJava6(String url) throws Exception {
-            final Class<?> desktopClass;
-            try {
-                desktopClass = Class.forName("java.awt.Desktop");
-            } catch (ClassNotFoundException e) {
-                return false;
-            }
-            Boolean supported = (Boolean) desktopClass.getMethod("isDesktopSupported", new Class[0]).invoke(null);
-            if (supported) {
-                Object desktop = desktopClass.getMethod("getDesktop", new Class[0]).invoke(null);
-                desktopClass.getMethod("browse", new Class[]{ URI.class }).invoke(desktop, new URI(url));
-                return true;
-            }
+        final Class<?> desktopClass;
+        try {
+            desktopClass = Class.forName("java.awt.Desktop");
+        } catch (ClassNotFoundException e) {
             return false;
+        }
+        Boolean supported = (Boolean) desktopClass.getMethod("isDesktopSupported", new Class[0]).invoke(null);
+        if (supported) {
+            Object desktop = desktopClass.getMethod("getDesktop", new Class[0]).invoke(null);
+            desktopClass.getMethod("browse", new Class[]{URI.class}).invoke(desktop, new URI(url));
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -119,9 +119,9 @@ public final class BrowserUtils {
         } else if (IS_MAC) {
             return new String[]{"/usr/bin/open", url};
         } else if (IS_LINUX) {
-            String[] browsers = { "google-chrome", "firefox", "opera", "konqueror", "epiphany", "mozilla", "netscape" };
+            String[] browsers = {"google-chrome", "firefox", "opera", "konqueror", "epiphany", "mozilla", "netscape"};
             for (String browser : browsers) {
-                if (Runtime.getRuntime().exec(new String[] { "which", browser }).waitFor() == 0) {
+                if (Runtime.getRuntime().exec(new String[]{"which", browser}).waitFor() == 0) {
                     return new String[]{browser, url};
                 }
             }

@@ -29,11 +29,13 @@ import java.io.File;
 import java.io.Serializable;
 
 /**
- * A based {@link EmbedVaadinServer} implementation based on Apache Tomcat.
+ * A base {@link EmbedVaadinServer} implementation based on Apache Tomcat.
  *
  * @author Stephane Nicoll
  */
 public abstract class AbstractEmbedVaadinTomcat implements EmbedVaadinServer, Serializable {
+
+    private static final long serialVersionUID = 8211718040277785632L;
 
     private static final Logger logger = LoggerFactory.getLogger(AbstractEmbedVaadinTomcat.class);
 

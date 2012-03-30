@@ -27,8 +27,9 @@ import org.apache.catalina.Wrapper;
  *
  * @author Stephane Nicoll
  */
-@SuppressWarnings("serial")
 public class ComponentBasedEmbedVaadinTomcat extends AbstractEmbedVaadinTomcat implements ComponentBasedVaadinServer {
+
+    private static final long serialVersionUID = 8860471913726871476L;
 
     private final EmbedComponentConfig config;
     private final Component component;

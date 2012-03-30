@@ -42,8 +42,9 @@ import java.util.Properties;
  *
  * @author Stephane Nicoll
  */
-@SuppressWarnings("serial")
 public class EmbedVaadinConfig implements Serializable {
+
+    private static final long serialVersionUID = 2171821427648037241L;
 
     private static final Logger logger = LoggerFactory.getLogger(EmbedVaadinConfig.class);
 
@@ -82,7 +83,7 @@ public class EmbedVaadinConfig implements Serializable {
 
     /**
      * Creates a new instance using the configuration in the given {@link Properties}
-     * 
+     *
      * @param properties configuration properties
      */
     public EmbedVaadinConfig(Properties properties) {
@@ -254,7 +255,7 @@ public class EmbedVaadinConfig implements Serializable {
     public static Properties loadProperties(String path) {
         return loadProperties(path, true);
     }
-    
+
     private static Properties loadProperties(String path, boolean failIfNotFound) {
         try {
             final Properties properties = new Properties();

@@ -29,6 +29,12 @@ import com.vaadin.ui.themes.BaseTheme;
 public class DevApplicationHeader extends HorizontalLayout {
 
 
+    /**
+     * Creates an new instance with the specified {@link EmbedVaadinServer}
+     * to manage.
+     *
+     * @param server the server to manage
+     */
     public DevApplicationHeader(final EmbedVaadinServer server) {
         final Button shutdown = new Button("shutdown");
         shutdown.setStyleName(BaseTheme.BUTTON_LINK);
@@ -40,7 +46,7 @@ public class DevApplicationHeader extends HorizontalLayout {
         shutdown.addListener(new Button.ClickListener() {
             public void buttonClick(Button.ClickEvent event) {
                 // Stop the server in a separate thread.
-                final Thread thread =  new Thread(new Runnable() {
+                final Thread thread = new Thread(new Runnable() {
                     public void run() {
                         server.stop();
                     }

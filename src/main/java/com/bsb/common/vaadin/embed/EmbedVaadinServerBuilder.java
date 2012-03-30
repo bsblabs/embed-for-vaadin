@@ -66,7 +66,7 @@ public abstract class EmbedVaadinServerBuilder<B extends EmbedVaadinServerBuilde
      * @return this
      */
     public abstract B withConfigProperties(Properties properties);
-    
+
     /**
      * Specifies the HTTP port to use.
      *

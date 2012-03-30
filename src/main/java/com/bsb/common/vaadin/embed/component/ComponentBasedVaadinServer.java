@@ -19,7 +19,7 @@ import com.bsb.common.vaadin.embed.EmbedVaadinServer;
 
 /**
  * A {@link EmbedVaadinServer} that deploys a component.
- * 
+ *
  * @author Wouter Coekaerts
  */
 public interface ComponentBasedVaadinServer extends EmbedVaadinServer {

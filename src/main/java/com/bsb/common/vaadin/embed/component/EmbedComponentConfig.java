@@ -21,23 +21,25 @@ import java.util.Properties;
 
 /**
  * Configuration for an embedded server showing a component.
- * <p>
+ * <p/>
  * This extends the {@link EmbedVaadinConfig} and is configured in the same way.
  * The properties file may contain any of the properties documented on {@link EmbedVaadinConfig} and
  * additionally:
  * <ul>
  * <li><tt>vaadin.theme</tt>: to specify the theme to use for the vaadin application</li>
  * </ul>
- * 
+ *
  * @author Wouter Coekaerts
  */
-@SuppressWarnings("serial")
 public final class EmbedComponentConfig extends EmbedVaadinConfig {
+
+    private static final long serialVersionUID = -1058773155435290313L;
+
     /**
      * The default theme if none is set.
      */
     public static final String DEFAULT_THEME = "reindeer";
-    
+
     private String theme;
 
     protected EmbedComponentConfig(Properties properties) {
@@ -49,7 +51,7 @@ public final class EmbedComponentConfig extends EmbedVaadinConfig {
         super(clone);
         theme = clone.theme;
     }
-    
+
     /**
      * Returns the vaadin theme to use for the application. Only taken into account
      * when a wrapper application is created for a component.
