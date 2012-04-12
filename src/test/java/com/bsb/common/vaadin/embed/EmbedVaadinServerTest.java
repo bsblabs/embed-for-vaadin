@@ -1,0 +1,73 @@
+/*
+ * Copyright 2012 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.bsb.common.vaadin.embed;
+
+import com.bsb.common.vaadin.embed.component.EmbedComponentConfig;
+import org.junit.Test;
+
+import java.util.Properties;
+
+import static org.junit.Assert.assertEquals;
+
+/**
+ * @author Stephane Nicoll
+ */
+public class EmbedVaadinServerTest extends AbstractEmbedTest {
+
+    @Test
+    public void getDeployUrlWithDefaultSettings() {
+        final TestableEmbedVaadinServer server = new TestableEmbedVaadinServer(EmbedComponentConfig.defaultConfig());
+        assertEquals("http://localhost:[auto]/", server.getDeployUrl());
+    }
+
+    @Test
+    public void getDeployUrlWithCustomHttpPort() {
+        final TestableEmbedVaadinServer server = new TestableEmbedVaadinServer(createCustomConfig(8080, null));
+        assertEquals("http://localhost:8080/", server.getDeployUrl());
+    }
+
+    @Test
+    public void getDeployUrlWithCustomHttpPortAndContextRoot() {
+        final TestableEmbedVaadinServer server = new TestableEmbedVaadinServer(createCustomConfig(8080, "/foo"));
+        assertEquals("http://localhost:8080/foo", server.getDeployUrl());
+    }
+
+
+    private EmbedVaadinConfig createCustomConfig(Integer httpPort, String contextRoot) {
+        final Properties properties = new Properties();
+        if (httpPort != null) {
+            properties.put(EmbedComponentConfig.KEY_PORT, String.valueOf(httpPort));
+        }
+        if (contextRoot != null) {
+            properties.put(EmbedComponentConfig.KEY_CONTEXT_PATH, contextRoot);
+        }
+        return new EmbedVaadinConfig(properties);
+    }
+
+
+    @SuppressWarnings("serial")
+    private static final class TestableEmbedVaadinServer extends AbstractEmbedVaadinTomcat {
+
+
+        private TestableEmbedVaadinServer(EmbedVaadinConfig config) {
+            super(config);
+        }
+
+        @Override
+        protected void configure() {
+        }
+    }
+}

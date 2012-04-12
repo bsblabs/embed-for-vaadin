@@ -198,12 +198,11 @@ public abstract class AbstractEmbedVaadinTomcat implements EmbedVaadinServer, Se
         final StringBuilder sb = new StringBuilder();
 
         sb.append("http://localhost:");
-        // This may be called while tomcat is not started yet
-        final int localPort = getTomcat().getConnector().getLocalPort();
-        if (localPort == -1) {
+        final int httpPort = getConfig().getPort();
+        if (httpPort == 0) {
             sb.append("[auto]");
         } else {
-            sb.append(localPort);
+            sb.append(httpPort);
         }
         if (config.getContextPath().isEmpty()) {
             sb.append("/");

@@ -51,10 +51,20 @@ public class EmbedVaadinConfig implements Serializable {
     public static final String CONFIG_LOCATION = "/embed-vaadin.properties";
 
     /**
+     * The key defining  the HTTP port to use.
+     */
+    public static final String KEY_PORT = "server.port";
+
+    /**
      * The default HTTP port to use if none is set. By default, an available port
      * is taken
      */
     public static final int DEFAULT_PORT = 0;
+
+    /**
+     * The key defining the context path to use.
+     */
+    public static final String KEY_CONTEXT_PATH = "context.path";
 
     /**
      * The default context path to use, by default uses the root context path.
@@ -87,8 +97,8 @@ public class EmbedVaadinConfig implements Serializable {
      * @param properties configuration properties
      */
     public EmbedVaadinConfig(Properties properties) {
-        port = Integer.valueOf(properties.getProperty("server.port", String.valueOf(DEFAULT_PORT)));
-        contextPath = properties.getProperty("context.path", DEFAULT_CONTEXT_PATH);
+        port = Integer.valueOf(properties.getProperty(KEY_PORT, String.valueOf(DEFAULT_PORT)));
+        contextPath = properties.getProperty(KEY_CONTEXT_PATH, DEFAULT_CONTEXT_PATH);
         final String contextBase = properties.getProperty("context.rootDir");
         if (contextBase == null) {
             contextRootDirectory = Files.createTempDir();

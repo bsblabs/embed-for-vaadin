@@ -81,6 +81,7 @@ public class ComponentWrapperTest {
 
 
     // A testable server that does not need any vaadin component
+    @SuppressWarnings("serial")
     private static final class TestableEmbedVaadinServer extends AbstractEmbedVaadinTomcat
             implements ComponentBasedVaadinServer{
         private final EmbedComponentConfig config;
