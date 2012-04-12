@@ -19,6 +19,8 @@ import org.junit.Test;
 
 import java.io.File;
 
+import static org.junit.Assert.assertEquals;
+
 /**
  * @author Stephane Nicoll
  */
@@ -70,7 +72,18 @@ public class EmbedVaadinConfigTest extends AbstractEmbedTest {
                 EmbedVaadinConfig.DEFAULT_WAITING);
         assertVaadinConfig(clone, null);
         assertBrowserConfig(clone, EmbedVaadinConfig.DEFAULT_START_BROWSER);
+    }
 
+    @Test
+    public void loadCleansContextPath() {
+        final EmbedVaadinConfig config = createCustomConfig(8080, "foo");
+        assertEquals("Context path should have been cleaned", "/foo", config.getContextPath());
+    }
+
+    @Test
+    public void loadCleansRootContextPath() {
+        final EmbedVaadinConfig config = createCustomConfig(8080, "/");
+        assertEquals("Context path '/' should have been detected as root context", "", config.getContextPath());
     }
 
 }

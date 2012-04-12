@@ -18,8 +18,6 @@ package com.bsb.common.vaadin.embed;
 import com.bsb.common.vaadin.embed.component.EmbedComponentConfig;
 import org.junit.Test;
 
-import java.util.Properties;
-
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -44,19 +42,6 @@ public class EmbedVaadinServerTest extends AbstractEmbedTest {
         final TestableEmbedVaadinServer server = new TestableEmbedVaadinServer(createCustomConfig(8080, "/foo"));
         assertEquals("http://localhost:8080/foo", server.getDeployUrl());
     }
-
-
-    private EmbedVaadinConfig createCustomConfig(Integer httpPort, String contextRoot) {
-        final Properties properties = new Properties();
-        if (httpPort != null) {
-            properties.put(EmbedComponentConfig.KEY_PORT, String.valueOf(httpPort));
-        }
-        if (contextRoot != null) {
-            properties.put(EmbedComponentConfig.KEY_CONTEXT_PATH, contextRoot);
-        }
-        return new EmbedVaadinConfig(properties);
-    }
-
 
     @SuppressWarnings("serial")
     private static final class TestableEmbedVaadinServer extends AbstractEmbedVaadinTomcat {

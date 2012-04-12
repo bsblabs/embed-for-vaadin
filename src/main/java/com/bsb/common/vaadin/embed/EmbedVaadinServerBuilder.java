@@ -87,15 +87,8 @@ public abstract class EmbedVaadinServerBuilder<B extends EmbedVaadinServerBuilde
      */
     public B withContextPath(String contextPath) {
         assertNotNull(contextPath, "contextPath  could not be null.");
+        getConfig().setContextPath(contextPath);
 
-        // Special handling so that / can be used for the root context as well
-        if (contextPath.equals("/") || contextPath.trim().equals("")) {
-            getConfig().setContextPath("");
-        } else if (!contextPath.startsWith("/")) {
-            getConfig().setContextPath("/" + contextPath);
-        } else {
-            getConfig().setContextPath(contextPath);
-        }
         return self();
     }
 

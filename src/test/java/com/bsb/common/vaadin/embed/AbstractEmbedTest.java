@@ -15,11 +15,13 @@
  */
 package com.bsb.common.vaadin.embed;
 
+import com.bsb.common.vaadin.embed.component.EmbedComponentConfig;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.methods.GetMethod;
 
 import java.io.IOException;
+import java.util.Properties;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
@@ -70,5 +72,16 @@ public abstract class AbstractEmbedTest {
 
     protected void assertConfigIsNotNull(EmbedVaadinConfig config) {
         assertNotNull("config could not be null.", config);
+    }
+
+    protected EmbedVaadinConfig createCustomConfig(Integer httpPort, String contextRoot) {
+        final Properties properties = new Properties();
+        if (httpPort != null) {
+            properties.put(EmbedComponentConfig.KEY_PORT, String.valueOf(httpPort));
+        }
+        if (contextRoot != null) {
+            properties.put(EmbedComponentConfig.KEY_CONTEXT_PATH, contextRoot);
+        }
+        return new EmbedVaadinConfig(properties);
     }
 }

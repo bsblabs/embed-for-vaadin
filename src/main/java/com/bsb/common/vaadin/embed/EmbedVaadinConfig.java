@@ -98,7 +98,7 @@ public class EmbedVaadinConfig implements Serializable {
      */
     public EmbedVaadinConfig(Properties properties) {
         port = Integer.valueOf(properties.getProperty(KEY_PORT, String.valueOf(DEFAULT_PORT)));
-        contextPath = properties.getProperty(KEY_CONTEXT_PATH, DEFAULT_CONTEXT_PATH);
+        setContextPath(properties.getProperty(KEY_CONTEXT_PATH, DEFAULT_CONTEXT_PATH));
         final String contextBase = properties.getProperty("context.rootDir");
         if (contextBase == null) {
             contextRootDirectory = Files.createTempDir();
@@ -215,8 +215,8 @@ public class EmbedVaadinConfig implements Serializable {
         this.port = port;
     }
 
-    void setContextPath(String contextPath) {
-        this.contextPath = contextPath;
+    final void setContextPath(String contextPath) {
+        this.contextPath = cleanContextPath(contextPath);
     }
 
     void setContextRootDirectory(File contextRootDirectory) {
@@ -264,6 +264,25 @@ public class EmbedVaadinConfig implements Serializable {
      */
     public static Properties loadProperties(String path) {
         return loadProperties(path, true);
+    }
+
+    /**
+     * Cleans the specified context path. Adds a forward slash if one
+     * is missing and make sure to interpret both the empty string and
+     * '/' as the root context.
+     *
+     * @param contextPath the context path to clean
+     * @return the context path to use
+     */
+    static String cleanContextPath(String contextPath) {
+        // Special handling so that / can be used for the root context as well
+        if (contextPath.equals("/") || contextPath.trim().equals("")) {
+            return "";
+        } else if (!contextPath.startsWith("/")) {
+            return "/" + contextPath;
+        } else {
+            return contextPath;
+        }
     }
 
     private static Properties loadProperties(String path, boolean failIfNotFound) {
