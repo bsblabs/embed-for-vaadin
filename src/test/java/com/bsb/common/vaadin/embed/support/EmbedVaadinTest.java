@@ -157,5 +157,11 @@ public class EmbedVaadinTest extends AbstractEmbedTest {
         assertVaadinConfig(config, "com.bsb.foo.MyWidgetSet");
     }
 
+    @Test
+    public void withDevelopmentHeader() {
+        final EmbedVaadinComponent embed = EmbedVaadin.forComponent(component).withDevelopmentHeader(true);
+        assertEquals("was not detected as expected", true, embed.build().getConfig().isDevelopmentHeader());
+    }
+
 
 }

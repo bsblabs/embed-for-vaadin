@@ -40,16 +40,25 @@ public final class EmbedComponentConfig extends EmbedVaadinConfig {
      */
     public static final String DEFAULT_THEME = "reindeer";
 
+    /**
+     * By default the development header is added to the application.
+     */
+    public static final boolean DEFAULT_DEVELOPMENT_HEADER = true;
+
     private String theme;
+    private boolean developmentHeader;
 
     protected EmbedComponentConfig(Properties properties) {
         super(properties);
         theme = properties.getProperty("vaadin.theme", DEFAULT_THEME);
+        developmentHeader = Boolean.valueOf(properties.getProperty("development.header",
+                String.valueOf(DEFAULT_DEVELOPMENT_HEADER)));
     }
 
     protected EmbedComponentConfig(EmbedComponentConfig clone) {
         super(clone);
         theme = clone.theme;
+        developmentHeader = clone.developmentHeader;
     }
 
     /**
@@ -65,6 +74,20 @@ public final class EmbedComponentConfig extends EmbedVaadinConfig {
 
     void setTheme(String theme) {
         this.theme = theme;
+    }
+
+    /**
+     * Specifies if the development header is added automatically to the
+     * created application.
+     *
+     * @return <tt>true</tt> if the development header is added
+     */
+    public boolean isDevelopmentHeader() {
+        return developmentHeader;
+    }
+
+    void setDevelopmentHeader(boolean developmentHeader) {
+        this.developmentHeader = developmentHeader;
     }
 
     /**

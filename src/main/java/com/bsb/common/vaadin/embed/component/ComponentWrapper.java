@@ -77,18 +77,23 @@ public class ComponentWrapper {
         // TODO: add bookmark to set the style
         final Window mainWindow = new Window("Dev");
 
-        final VerticalSplitPanel mainLayout = new VerticalSplitPanel();
-        mainLayout.setSizeFull();
-        mainLayout.setSplitPosition(20, Sizeable.UNITS_PIXELS);
-        mainLayout.setLocked(true);
+        if (server.getConfig().isDevelopmentHeader()) {
+            final VerticalSplitPanel mainLayout = new VerticalSplitPanel();
+            mainLayout.setSizeFull();
+            mainLayout.setSplitPosition(20, Sizeable.UNITS_PIXELS);
+            mainLayout.setLocked(true);
 
-        final DevApplicationHeader header = new DevApplicationHeader(server);
-        header.setSpacing(true);
-        mainLayout.setFirstComponent(header);
+            final DevApplicationHeader header = new DevApplicationHeader(server);
+            header.setSpacing(true);
+            mainLayout.setFirstComponent(header);
 
-        mainLayout.setSecondComponent(layout);
+            mainLayout.setSecondComponent(layout);
 
-        mainWindow.setContent(mainLayout);
+            mainWindow.setContent(mainLayout);
+        } else {
+            mainWindow.setContent(layout);
+        }
+
 
         return new DevApplication(server, mainWindow);
     }

@@ -57,6 +57,19 @@ public class EmbedVaadinComponent extends EmbedVaadinServerBuilder<EmbedVaadinCo
     }
 
     /**
+     * Specifies if the development header is added automatically to the
+     * created application.
+     *
+     * @param useHeader <tt>true</tt> if the development header should be added
+     * @return this
+     */
+    public EmbedVaadinComponent withDevelopmentHeader(boolean useHeader) {
+        getConfig().setDevelopmentHeader(useHeader);
+        return self();
+    }
+
+
+    /**
      * Returns the {@link Component} that was used to initialize this instance, if any.
      *
      * @return the component or <tt>null</tt> if an application was set

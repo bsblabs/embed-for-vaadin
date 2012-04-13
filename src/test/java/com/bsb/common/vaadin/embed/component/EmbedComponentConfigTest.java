@@ -31,7 +31,8 @@ public class EmbedComponentConfigTest extends AbstractEmbedTest {
         final EmbedComponentConfig config = EmbedComponentConfig.defaultConfig();
         assertServerConfig(config, EmbedVaadinConfig.DEFAULT_PORT, EmbedVaadinConfig.DEFAULT_CONTEXT_PATH,
                 EmbedVaadinConfig.DEFAULT_WAITING);
-        assertComponentConfig(config, EmbedComponentConfig.DEFAULT_THEME);
+        assertComponentConfig(config, EmbedComponentConfig.DEFAULT_THEME,
+                EmbedComponentConfig.DEFAULT_DEVELOPMENT_HEADER);
         assertVaadinConfig(config, null);
         assertBrowserConfig(config, EmbedVaadinConfig.DEFAULT_START_BROWSER);
     }
@@ -42,7 +43,7 @@ public class EmbedComponentConfigTest extends AbstractEmbedTest {
                 EmbedVaadinConfig.loadProperties("/config/simple-embed-vaadin.properties"));
         assertServerConfig(config, 12345, "/foo", false);
         assertVaadinConfig(config, "com.bsb.foo.MyWidgetSet");
-        assertComponentConfig(config, "myTheme");
+        assertComponentConfig(config, "myTheme", false);
         assertBrowserConfig(config, true);
     }
 
@@ -53,13 +54,16 @@ public class EmbedComponentConfigTest extends AbstractEmbedTest {
 
         // Change stuff
         config.setTheme("fooBarTheme");
+        config.setDevelopmentHeader(false);
 
         // Now validate the clone has not changed
-        assertComponentConfig(clone, EmbedComponentConfig.DEFAULT_THEME);
+        assertComponentConfig(clone, EmbedComponentConfig.DEFAULT_THEME,
+                EmbedComponentConfig.DEFAULT_DEVELOPMENT_HEADER);
     }
 
-    protected void assertComponentConfig(EmbedComponentConfig config, String theme) {
+    protected void assertComponentConfig(EmbedComponentConfig config, String theme, boolean developmentHeader) {
         assertConfigIsNotNull(config);
         assertEquals("Wrong theme", theme, config.getTheme());
+        assertEquals("Wrong development header flag", developmentHeader, config.isDevelopmentHeader());
     }
 }

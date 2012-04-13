@@ -34,8 +34,7 @@ import static org.junit.Assert.assertNotNull;
  */
 public class ComponentWrapperTest {
 
-    private final ComponentWrapper instance = new ComponentWrapper(
-            new TestableEmbedVaadinServer(EmbedComponentConfig.defaultConfig()));
+    private final ComponentWrapper instance = createWrapper(EmbedComponentConfig.defaultConfig());
 
     @Test
     public void wrapWindow() {
@@ -45,13 +44,28 @@ public class ComponentWrapperTest {
     }
 
     @Test
-    public void wrapLayout() {
+    public void wrapLayoutWithDevelopmentHeader() {
         final HorizontalLayout layout = new HorizontalLayout();
         final Application app = instance.wrap(layout);
 
         final Layout l = assertWrappingLayout(app);
 
         assertEquals("Layout was not set properly", layout, l);
+    }
+
+    @Test
+    public void wrapLayoutWithoutDevelopmentHeader() {
+        final EmbedComponentConfig config = EmbedComponentConfig.defaultConfig();
+        config.setDevelopmentHeader(false);
+        final ComponentWrapper wrapper = createWrapper(config);
+
+        final HorizontalLayout layout = new HorizontalLayout();
+        // Wrap without development header should just set the layout as the main content of the window
+        final Application app = wrapper.wrap(layout);
+
+        assertNotNull("Main window must not be null", app.getMainWindow());
+        assertEquals("Layout should be set as the main layout since no header was expected", layout,
+                app.getMainWindow().getContent());
     }
 
     @Test
@@ -79,11 +93,15 @@ public class ComponentWrapperTest {
         return (Layout) mainLayout.getSecondComponent();
     }
 
+    private ComponentWrapper createWrapper(EmbedComponentConfig config) {
+        return new ComponentWrapper(new TestableEmbedVaadinServer(config));
+    }
+
 
     // A testable server that does not need any vaadin component
     @SuppressWarnings("serial")
     private static final class TestableEmbedVaadinServer extends AbstractEmbedVaadinTomcat
-            implements ComponentBasedVaadinServer{
+            implements ComponentBasedVaadinServer {
         private final EmbedComponentConfig config;
 
         private TestableEmbedVaadinServer(EmbedComponentConfig config) {
