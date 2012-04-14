@@ -21,6 +21,9 @@ import com.bsb.common.vaadin.embed.support.EmbedVaadin;
 import com.vaadin.ui.Button;
 import org.junit.Test;
 
+import static junit.framework.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+
 /**
  * @author Stephane Nicoll
  */
@@ -29,21 +32,29 @@ public class ComponentBasedEmbedVaadinTomcatTest extends AbstractEmbedTest {
     @Test
     public void startWithDefaultSettings() {
         final EmbedVaadinServer server = EmbedVaadin.forComponent(new Button("Hello"))
-                .wait(false).withHttpPort(18001).start();
+                .wait(false).build();
 
-        // HTTP get on the root directory
-        checkVaadinIsDeployed(18001, "");
+        // No HTTP port allocated
+        assertEquals("Wrong default value for http port", 0, server.getConfig().getPort());
+        assertDeployUrl(server.getConfig(), "http://localhost:[auto]/");
+
+        server.start();
+
+        // Once the server has started, the port should be set in the config
+        assertTrue("A port should have been allocated automatically", server.getConfig().getPort() != 0);
+        assertDeployUrl(server.getConfig(), "http://localhost:" + server.getConfig().getPort() + "/");
+
+        checkVaadinIsDeployed(server.getConfig().getPort(), "");
 
         server.stop();
     }
 
     @Test
-    public void startWithCustomWidgetSet() {
+    public void startWithCustomWidgetSetAndCustomPort() {
         final EmbedVaadinServer server = EmbedVaadin.forComponent(new Button("Hello"))
                 .wait(false).withHttpPort(18002)
                 .withWidgetSet("com.vaadin.terminal.gwt.DefaultWidgetSet").start();
 
-        // HTTP get on the root directory
         checkVaadinIsDeployed(18002, "");
 
         server.stop();

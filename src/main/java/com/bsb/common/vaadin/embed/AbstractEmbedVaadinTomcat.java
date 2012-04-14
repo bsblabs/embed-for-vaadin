@@ -164,11 +164,17 @@ public abstract class AbstractEmbedVaadinTomcat implements EmbedVaadinServer, Se
      * @throws LifecycleException if tomcat failed to start
      */
     private void doStart() throws LifecycleException {
-        logger.info("Deploying application to [" + getDeployUrl() + "]");
+        logger.info("Deploying application to [" + getConfig().getDeployUrl() + "]");
         tomcat.start();
-        logger.info("Application has been deployed to [" + getDeployUrl() + "]");
+
+        // Let's set the port that was used to actually start the application if necessary
+        if (getConfig().getPort() == EmbedVaadinConfig.DEFAULT_PORT) {
+            getConfig().setPort(getTomcat().getConnector().getLocalPort());
+        }
+
+        logger.info("Application has been deployed to [" + getConfig().getDeployUrl() + "]");
         if (config.shouldOpenBrowser()) {
-            BrowserUtils.openBrowser(getDeployUrl());
+            BrowserUtils.openBrowser(getConfig().getDeployUrl());
         }
         if (isWaiting()) {
             tomcat.getServer().await();
@@ -186,30 +192,6 @@ public abstract class AbstractEmbedVaadinTomcat implements EmbedVaadinServer, Se
         tomcat.stop();
         long duration = System.currentTimeMillis() - startTime;
         logger.info("Tomcat shutdown finished in " + duration + " ms.");
-    }
-
-    /**
-     * Returns the full url of the application, according to the port and
-     * context path.
-     *
-     * @return the url of the web application
-     */
-    protected String getDeployUrl() {
-        final StringBuilder sb = new StringBuilder();
-
-        sb.append("http://localhost:");
-        final int httpPort = getConfig().getPort();
-        if (httpPort == 0) {
-            sb.append("[auto]");
-        } else {
-            sb.append(httpPort);
-        }
-        if (config.getContextPath().isEmpty()) {
-            sb.append("/");
-        } else {
-            sb.append(config.getContextPath());
-        }
-        return sb.toString();
     }
 
     /**

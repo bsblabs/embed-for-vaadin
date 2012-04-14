@@ -31,6 +31,7 @@ public class EmbedVaadinConfigTest extends AbstractEmbedTest {
         final EmbedVaadinConfig config = EmbedVaadinConfig.defaultConfig();
         assertServerConfig(config, EmbedVaadinConfig.DEFAULT_PORT, EmbedVaadinConfig.DEFAULT_CONTEXT_PATH,
                 EmbedVaadinConfig.DEFAULT_WAITING);
+        assertDeployUrl(config, "http://localhost:[auto]/");
         assertVaadinConfig(config, null);
         assertBrowserConfig(config, EmbedVaadinConfig.DEFAULT_START_BROWSER);
     }
@@ -45,6 +46,7 @@ public class EmbedVaadinConfigTest extends AbstractEmbedTest {
         final EmbedVaadinConfig config = new EmbedVaadinConfig(
                 EmbedVaadinConfig.loadProperties("/config/simple-embed-vaadin.properties"));
         assertServerConfig(config, 12345, "/foo", false);
+        assertDeployUrl(config, "http://localhost:12345/foo");
         assertVaadinConfig(config, "com.bsb.foo.MyWidgetSet");
         assertBrowserConfig(config, true);
     }

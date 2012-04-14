@@ -28,19 +28,19 @@ public class EmbedVaadinServerTest extends AbstractEmbedTest {
     @Test
     public void getDeployUrlWithDefaultSettings() {
         final TestableEmbedVaadinServer server = new TestableEmbedVaadinServer(EmbedComponentConfig.defaultConfig());
-        assertEquals("http://localhost:[auto]/", server.getDeployUrl());
+        assertEquals("http://localhost:[auto]/", server.getConfig().getDeployUrl());
     }
 
     @Test
     public void getDeployUrlWithCustomHttpPort() {
         final TestableEmbedVaadinServer server = new TestableEmbedVaadinServer(createCustomConfig(8080, null));
-        assertEquals("http://localhost:8080/", server.getDeployUrl());
+        assertEquals("http://localhost:8080/", server.getConfig().getDeployUrl());
     }
 
     @Test
     public void getDeployUrlWithCustomHttpPortAndContextRoot() {
         final TestableEmbedVaadinServer server = new TestableEmbedVaadinServer(createCustomConfig(8080, "/foo"));
-        assertEquals("http://localhost:8080/foo", server.getDeployUrl());
+        assertEquals("http://localhost:8080/foo", server.getConfig().getDeployUrl());
     }
 
     @SuppressWarnings("serial")

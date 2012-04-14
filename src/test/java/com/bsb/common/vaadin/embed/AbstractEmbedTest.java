@@ -38,6 +38,10 @@ public abstract class AbstractEmbedTest {
         assertEquals("Wrong waiting flag", waiting, config.isWaiting());
     }
 
+    protected void assertDeployUrl(EmbedVaadinConfig config, String deployUrl) {
+        assertEquals("Wrong deploy url", deployUrl, config.getDeployUrl());
+    }
+
     protected void assertVaadinConfig(EmbedVaadinConfig config, String widgetSet) {
         assertConfigIsNotNull(config);
         assertEquals("Wrong widgetSet", widgetSet, config.getWidgetSet());

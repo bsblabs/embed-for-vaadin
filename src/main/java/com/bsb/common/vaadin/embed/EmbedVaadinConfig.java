@@ -145,6 +145,10 @@ public class EmbedVaadinConfig implements Serializable {
      * Returns the port to run the HTTP server on. If none is set
      * an available port is used. If you want a fixed port, please
      * specify a port.
+     * <p/>
+     * When the server has been started and an available port should
+     * be allocated, this would return the actual port being used
+     * by the server.
      *
      * @return the http port to use
      * @see #DEFAULT_PORT
@@ -209,6 +213,34 @@ public class EmbedVaadinConfig implements Serializable {
      */
     public boolean shouldOpenBrowser() {
         return openBrowser;
+    }
+
+    /**
+     * Returns the full url of the application, according to the port and
+     * context path.
+     * <p/>
+     * Note that if the application has not been started yet and an available
+     * port should be automatically allocated, this would not return a usable
+     * url.
+     *
+     * @return the url of the web application
+     */
+    public String getDeployUrl() {
+        final StringBuilder sb = new StringBuilder();
+
+        sb.append("http://localhost:");
+        final int httpPort = getPort();
+        if (httpPort == 0) {
+            sb.append("[auto]");
+        } else {
+            sb.append(httpPort);
+        }
+        if (getContextPath().isEmpty()) {
+            sb.append("/");
+        } else {
+            sb.append(getContextPath());
+        }
+        return sb.toString();
     }
 
     void setPort(int port) {
