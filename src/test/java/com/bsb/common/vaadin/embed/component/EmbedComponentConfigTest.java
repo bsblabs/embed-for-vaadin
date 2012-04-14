@@ -34,7 +34,7 @@ public class EmbedComponentConfigTest extends AbstractEmbedTest {
         assertComponentConfig(config, EmbedComponentConfig.DEFAULT_THEME,
                 EmbedComponentConfig.DEFAULT_DEVELOPMENT_HEADER);
         assertVaadinConfig(config, null, EmbedComponentConfig.DEFAULT_PRODUCTION_MODE);
-        assertBrowserConfig(config, EmbedVaadinConfig.DEFAULT_START_BROWSER);
+        assertBrowserConfig(config, EmbedVaadinConfig.DEFAULT_OPEN_BROWSER);
     }
 
     @Test

@@ -27,6 +27,7 @@ import java.util.Properties;
  * additionally:
  * <ul>
  * <li><tt>vaadin.theme</tt>: to specify the theme to use for the vaadin application</li>
+ * <li><tt>development.header</tt>: to specify if a development header should be added to the application</li>
  * </ul>
  *
  * @author Wouter Coekaerts
@@ -36,9 +37,19 @@ public final class EmbedComponentConfig extends EmbedVaadinConfig {
     private static final long serialVersionUID = -1058773155435290313L;
 
     /**
+     * The key defining the theme to use for the created vaadin application.
+     */
+    public static final String KEY_THEME = "vaadin.theme";
+
+    /**
      * The default theme if none is set.
      */
     public static final String DEFAULT_THEME = "reindeer";
+
+    /**
+     * The key defining if the development header should be displayed. Holds a boolean.
+     */
+    public static final String KEY_DEVELOPMENT_HEADER = "development.header";
 
     /**
      * By default the development header is added to the application.
@@ -50,8 +61,8 @@ public final class EmbedComponentConfig extends EmbedVaadinConfig {
 
     protected EmbedComponentConfig(Properties properties) {
         super(properties);
-        theme = properties.getProperty("vaadin.theme", DEFAULT_THEME);
-        developmentHeader = Boolean.valueOf(properties.getProperty("development.header",
+        theme = properties.getProperty(KEY_THEME, DEFAULT_THEME);
+        developmentHeader = Boolean.valueOf(properties.getProperty(KEY_DEVELOPMENT_HEADER,
                 String.valueOf(DEFAULT_DEVELOPMENT_HEADER)));
     }
 

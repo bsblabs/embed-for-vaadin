@@ -39,6 +39,8 @@ import java.util.Properties;
  * <li><tt>context.rootDir</tt>: to specify the root directory of the web application</li>
  * <li><tt>server.await</tt>: to specify if the thread should block when the server has started</li>
  * <li><tt>vaadin.widgetSet</tt>: to specify the widgetSet to use for the vaadin application</li>
+ * <li><tt>vaadin.productionMode</tt>: to specify if the production mode should be enabled or not</li>
+ * <li><tt>open.browser</tt>: to specify if the browser should be opened automatically</li>
  * </ul>
  *
  * @author Stephane Nicoll
@@ -73,9 +75,24 @@ public class EmbedVaadinConfig implements Serializable {
     public static final String DEFAULT_CONTEXT_PATH = "";
 
     /**
+     * The key defining the root directory to use for the web application.
+     */
+    public static final String KEY_CONTEXT_ROOT_DIR = "context.rootDir";
+
+    /**
+     * The key defining if the thread that started the server should be blocked. Holds a boolean
+     */
+    public static final String KEY_WAITING = "server.await";
+
+    /**
      * Blocks the thread that has started the server by default.
      */
     public static final boolean DEFAULT_WAITING = true;
+
+    /**
+     * The key defining a custom widget set to use.
+     */
+    public static final String KEY_WIDGET_SET = "vaadin.widgetSet";
 
     /**
      * The key defining the production mode. Holds a boolean.
@@ -88,9 +105,14 @@ public class EmbedVaadinConfig implements Serializable {
     public static final boolean DEFAULT_PRODUCTION_MODE = false;
 
     /**
+     * The key defining if the browser should be opened once the server has started. Holds a boolean.
+     */
+    public static final String KEY_OPEN_BROWSER = "open.browser";
+
+    /**
      * Do not start the browser by default.
      */
-    public static final boolean DEFAULT_START_BROWSER = false;
+    public static final boolean DEFAULT_OPEN_BROWSER = false;
 
 
     private int port;
@@ -112,18 +134,18 @@ public class EmbedVaadinConfig implements Serializable {
         final PropertiesHelper helper = new PropertiesHelper(properties);
         port = helper.getIntProperty(KEY_PORT, DEFAULT_PORT);
         setContextPath(properties.getProperty(KEY_CONTEXT_PATH, DEFAULT_CONTEXT_PATH));
-        final String contextBase = properties.getProperty("context.rootDir");
+        final String contextBase = properties.getProperty(KEY_CONTEXT_ROOT_DIR);
         if (contextBase == null) {
             contextRootDirectory = Files.createTempDir();
         } else {
             contextRootDirectory = new File(contextBase);
         }
-        waiting = helper.getBooleanProperty("server.await", DEFAULT_WAITING);
+        waiting = helper.getBooleanProperty(KEY_WAITING, DEFAULT_WAITING);
 
-        widgetSet = properties.getProperty("vaadin.widgetSet");
+        widgetSet = properties.getProperty(KEY_WIDGET_SET);
         productionMode = helper.getBooleanProperty(KEY_PRODUCTION_MODE, DEFAULT_PRODUCTION_MODE);
 
-        openBrowser = helper.getBooleanProperty("open.browser", DEFAULT_START_BROWSER);
+        openBrowser = helper.getBooleanProperty(KEY_OPEN_BROWSER, DEFAULT_OPEN_BROWSER);
 
         logger.debug("Using " + this);
 

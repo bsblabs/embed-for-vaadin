@@ -33,7 +33,7 @@ public class EmbedVaadinConfigTest extends AbstractEmbedTest {
                 EmbedVaadinConfig.DEFAULT_WAITING);
         assertDeployUrl(config, "http://localhost:[auto]/");
         assertVaadinConfig(config, null, EmbedVaadinConfig.DEFAULT_PRODUCTION_MODE);
-        assertBrowserConfig(config, EmbedVaadinConfig.DEFAULT_START_BROWSER);
+        assertBrowserConfig(config, EmbedVaadinConfig.DEFAULT_OPEN_BROWSER);
     }
 
     @Test(expected = IllegalStateException.class)
@@ -74,7 +74,7 @@ public class EmbedVaadinConfigTest extends AbstractEmbedTest {
         assertServerConfig(clone, EmbedVaadinConfig.DEFAULT_PORT, EmbedVaadinConfig.DEFAULT_CONTEXT_PATH,
                 EmbedVaadinConfig.DEFAULT_WAITING);
         assertVaadinConfig(clone, null, EmbedVaadinConfig.DEFAULT_PRODUCTION_MODE);
-        assertBrowserConfig(clone, EmbedVaadinConfig.DEFAULT_START_BROWSER);
+        assertBrowserConfig(clone, EmbedVaadinConfig.DEFAULT_OPEN_BROWSER);
     }
 
     @Test
