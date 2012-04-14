@@ -90,6 +90,7 @@ public class EmbedVaadinComponent extends EmbedVaadinServerBuilder<EmbedVaadinCo
 
     @Override
     public final EmbedVaadinComponent withConfigProperties(Properties properties) {
+        assertNotNull(properties, "properties could not be null.");
         this.config = new EmbedComponentConfig(properties);
         return self();
     }

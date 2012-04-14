@@ -18,6 +18,9 @@ package com.bsb.common.vaadin.embed;
 import com.bsb.common.vaadin.embed.component.EmbedComponentConfig;
 import org.junit.Test;
 
+import java.util.Properties;
+
+import static junit.framework.Assert.assertNotNull;
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -43,6 +46,32 @@ public class EmbedVaadinServerTest extends AbstractEmbedTest {
         assertEquals("http://localhost:8080/foo", server.getConfig().getDeployUrl());
     }
 
+    @Test
+    public void productionModeWithDefaultSettings() {
+        final TestableEmbedVaadinServer server = createConfiguredServer(EmbedComponentConfig.defaultConfig());
+        assertContextParameter(server, AbstractEmbedVaadinTomcat.PRODUCTION_MODE_PARAM, "false");
+    }
+
+    @Test
+    public void productionModeEnabled() {
+        final Properties properties = new Properties();
+        properties.put(EmbedVaadinConfig.KEY_PRODUCTION_MODE, "true");
+        final TestableEmbedVaadinServer server = createConfiguredServer(new EmbedVaadinConfig(properties));
+        assertContextParameter(server, AbstractEmbedVaadinTomcat.PRODUCTION_MODE_PARAM, "true");
+    }
+
+    private void assertContextParameter(TestableEmbedVaadinServer server, String key, String expectedValue) {
+        final String actual = server.getContext().findParameter(key);
+        assertNotNull("Context parameter [" + key + "] should have been found", actual);
+        assertEquals("Wrong value for context parameter [" + key + "]", expectedValue, actual);
+    }
+
+    private TestableEmbedVaadinServer createConfiguredServer(EmbedVaadinConfig config) {
+        final TestableEmbedVaadinServer result = new TestableEmbedVaadinServer(config);
+        result.configure();
+        return result;
+    }
+
     @SuppressWarnings("serial")
     private static final class TestableEmbedVaadinServer extends AbstractEmbedVaadinTomcat {
 
@@ -53,6 +82,7 @@ public class EmbedVaadinServerTest extends AbstractEmbedTest {
 
         @Override
         protected void configure() {
+            initConfiguration();
         }
     }
 }

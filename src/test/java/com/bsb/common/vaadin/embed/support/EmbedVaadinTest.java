@@ -50,12 +50,12 @@ public class EmbedVaadinTest extends AbstractEmbedTest {
         EmbedVaadin.forComponent(component).withContextRootDirectory((String) null);
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void withNullConfigPath() {
         EmbedVaadin.forComponent(component).withConfigPath(null);
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void withNullConfigProperties() {
         EmbedVaadin.forComponent(component).withConfigProperties(null);
     }
@@ -142,6 +142,12 @@ public class EmbedVaadinTest extends AbstractEmbedTest {
     }
 
     @Test
+    public void withProductionMode() {
+        final EmbedVaadinComponent embed = EmbedVaadin.forComponent(component).withProductionMode(true);
+        assertEquals("was not detected as expected", true, embed.build().getConfig().isProductionMode());
+    }
+
+    @Test
     public void withOpenBrowser() {
         final EmbedVaadinComponent embed = EmbedVaadin.forComponent(component).openBrowser(true);
         assertEquals("was not detected as expected", true, embed.build().getConfig().shouldOpenBrowser());
@@ -154,7 +160,7 @@ public class EmbedVaadinTest extends AbstractEmbedTest {
 
         final EmbedComponentConfig config = embed.build().getConfig();
         assertServerConfig(config, 12345, "/foo", false);
-        assertVaadinConfig(config, "com.bsb.foo.MyWidgetSet");
+        assertVaadinConfig(config, "com.bsb.foo.MyWidgetSet", true);
     }
 
     @Test

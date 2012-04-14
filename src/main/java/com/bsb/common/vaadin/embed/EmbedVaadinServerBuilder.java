@@ -55,6 +55,7 @@ public abstract class EmbedVaadinServerBuilder<B extends EmbedVaadinServerBuilde
      * @throws IllegalStateException if no such properties file is found
      */
     public B withConfigPath(String path) {
+        assertNotNull(path, "path could not be null.");
         withConfigProperties(EmbedVaadinConfig.loadProperties(path));
         return self();
     }
@@ -144,6 +145,19 @@ public abstract class EmbedVaadinServerBuilder<B extends EmbedVaadinServerBuilde
      */
     public B withWidgetSet(String widgetSet) {
         getConfig().setWidgetSet(widgetSet);
+        return self();
+    }
+
+    /**
+     * Specifies if the vaadin application should run with production mode
+     * enabled or not. When production mode is enabled, debug features are
+     * not available for the application.
+     *
+     * @param productionMode <tt>true</tt> to enable production mode
+     * @return this
+     */
+    public B withProductionMode(boolean productionMode) {
+        getConfig().setProductionMode(productionMode);
         return self();
     }
 

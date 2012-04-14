@@ -42,9 +42,10 @@ public abstract class AbstractEmbedTest {
         assertEquals("Wrong deploy url", deployUrl, config.getDeployUrl());
     }
 
-    protected void assertVaadinConfig(EmbedVaadinConfig config, String widgetSet) {
+    protected void assertVaadinConfig(EmbedVaadinConfig config, String widgetSet, boolean productionMode) {
         assertConfigIsNotNull(config);
         assertEquals("Wrong widgetSet", widgetSet, config.getWidgetSet());
+        assertEquals("Wrong production mode", productionMode, config.isProductionMode());
     }
 
     protected void assertBrowserConfig(EmbedVaadinConfig config, boolean openBrowser) {

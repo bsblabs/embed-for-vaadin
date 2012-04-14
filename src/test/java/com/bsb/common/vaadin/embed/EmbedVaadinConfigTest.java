@@ -32,7 +32,7 @@ public class EmbedVaadinConfigTest extends AbstractEmbedTest {
         assertServerConfig(config, EmbedVaadinConfig.DEFAULT_PORT, EmbedVaadinConfig.DEFAULT_CONTEXT_PATH,
                 EmbedVaadinConfig.DEFAULT_WAITING);
         assertDeployUrl(config, "http://localhost:[auto]/");
-        assertVaadinConfig(config, null);
+        assertVaadinConfig(config, null, EmbedVaadinConfig.DEFAULT_PRODUCTION_MODE);
         assertBrowserConfig(config, EmbedVaadinConfig.DEFAULT_START_BROWSER);
     }
 
@@ -47,7 +47,7 @@ public class EmbedVaadinConfigTest extends AbstractEmbedTest {
                 EmbedVaadinConfig.loadProperties("/config/simple-embed-vaadin.properties"));
         assertServerConfig(config, 12345, "/foo", false);
         assertDeployUrl(config, "http://localhost:12345/foo");
-        assertVaadinConfig(config, "com.bsb.foo.MyWidgetSet");
+        assertVaadinConfig(config, "com.bsb.foo.MyWidgetSet", true);
         assertBrowserConfig(config, true);
     }
 
@@ -66,13 +66,14 @@ public class EmbedVaadinConfigTest extends AbstractEmbedTest {
         config.setContextPath("/foo/bar");
         config.setContextRootDirectory(new File("."));
         config.setWidgetSet("com.bar.MyAnotherWidgetSet");
+        config.setProductionMode(true);
         config.setWaiting(true);
         config.setOpenBrowser(true);
 
         // Now validate the clone has not changed
         assertServerConfig(clone, EmbedVaadinConfig.DEFAULT_PORT, EmbedVaadinConfig.DEFAULT_CONTEXT_PATH,
                 EmbedVaadinConfig.DEFAULT_WAITING);
-        assertVaadinConfig(clone, null);
+        assertVaadinConfig(clone, null, EmbedVaadinConfig.DEFAULT_PRODUCTION_MODE);
         assertBrowserConfig(clone, EmbedVaadinConfig.DEFAULT_START_BROWSER);
     }
 

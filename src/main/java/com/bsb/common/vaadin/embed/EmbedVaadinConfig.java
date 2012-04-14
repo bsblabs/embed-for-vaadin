@@ -15,6 +15,7 @@
  */
 package com.bsb.common.vaadin.embed;
 
+import com.bsb.common.vaadin.embed.util.PropertiesHelper;
 import com.google.common.base.Objects;
 import com.google.common.io.Files;
 import org.slf4j.Logger;
@@ -57,7 +58,7 @@ public class EmbedVaadinConfig implements Serializable {
 
     /**
      * The default HTTP port to use if none is set. By default, an available port
-     * is taken
+     * is taken. Holds an integer
      */
     public static final int DEFAULT_PORT = 0;
 
@@ -77,6 +78,16 @@ public class EmbedVaadinConfig implements Serializable {
     public static final boolean DEFAULT_WAITING = true;
 
     /**
+     * The key defining the production mode. Holds a boolean.
+     */
+    public static final String KEY_PRODUCTION_MODE = "vaadin.productionMode";
+
+    /**
+     * Do not set production mode by default.
+     */
+    public static final boolean DEFAULT_PRODUCTION_MODE = false;
+
+    /**
      * Do not start the browser by default.
      */
     public static final boolean DEFAULT_START_BROWSER = false;
@@ -88,6 +99,7 @@ public class EmbedVaadinConfig implements Serializable {
     private boolean waiting;
 
     private String widgetSet;
+    private boolean productionMode;
 
     private boolean openBrowser;
 
@@ -97,7 +109,8 @@ public class EmbedVaadinConfig implements Serializable {
      * @param properties configuration properties
      */
     public EmbedVaadinConfig(Properties properties) {
-        port = Integer.valueOf(properties.getProperty(KEY_PORT, String.valueOf(DEFAULT_PORT)));
+        final PropertiesHelper helper = new PropertiesHelper(properties);
+        port = helper.getIntProperty(KEY_PORT, DEFAULT_PORT);
         setContextPath(properties.getProperty(KEY_CONTEXT_PATH, DEFAULT_CONTEXT_PATH));
         final String contextBase = properties.getProperty("context.rootDir");
         if (contextBase == null) {
@@ -105,11 +118,12 @@ public class EmbedVaadinConfig implements Serializable {
         } else {
             contextRootDirectory = new File(contextBase);
         }
-        waiting = Boolean.valueOf(properties.getProperty("server.await", String.valueOf(DEFAULT_WAITING)));
+        waiting = helper.getBooleanProperty("server.await", DEFAULT_WAITING);
 
         widgetSet = properties.getProperty("vaadin.widgetSet");
+        productionMode = helper.getBooleanProperty(KEY_PRODUCTION_MODE, DEFAULT_PRODUCTION_MODE);
 
-        openBrowser = Boolean.valueOf(properties.getProperty("open.browser", String.valueOf(DEFAULT_START_BROWSER)));
+        openBrowser = helper.getBooleanProperty("open.browser", DEFAULT_START_BROWSER);
 
         logger.debug("Using " + this);
 
@@ -128,6 +142,7 @@ public class EmbedVaadinConfig implements Serializable {
         this.contextRootDirectory = clone.contextRootDirectory;
         this.waiting = clone.waiting;
         this.widgetSet = clone.widgetSet;
+        this.productionMode = clone.productionMode;
         this.openBrowser = clone.openBrowser;
     }
 
@@ -207,6 +222,16 @@ public class EmbedVaadinConfig implements Serializable {
     }
 
     /**
+     * Specifies if the production mode should be enabled or not.
+     *
+     * @return <tt>true</tt> to enable production mode
+     * @see #DEFAULT_PRODUCTION_MODE
+     */
+    public boolean isProductionMode() {
+        return productionMode;
+    }
+
+    /**
      * Specifies if the browser should be opened on startup or not.
      *
      * @return <tt>true</tt> to open the browser once the server has been started
@@ -261,6 +286,10 @@ public class EmbedVaadinConfig implements Serializable {
 
     void setWidgetSet(String widgetSet) {
         this.widgetSet = widgetSet;
+    }
+
+    void setProductionMode(boolean productionMode) {
+        this.productionMode = productionMode;
     }
 
     void setOpenBrowser(boolean openBrowser) {
@@ -337,7 +366,9 @@ public class EmbedVaadinConfig implements Serializable {
     public String toString() {
         return Objects.toStringHelper(this).add("port", port)
                 .add("context", contextPath).add("webapp dir", contextRootDirectory)
-                .toString();
+                .add("waiting", waiting).add("widgetSet", widgetSet)
+                .add("productionMode", productionMode)
+                .add("openBrowser", openBrowser).toString();
     }
 
 }

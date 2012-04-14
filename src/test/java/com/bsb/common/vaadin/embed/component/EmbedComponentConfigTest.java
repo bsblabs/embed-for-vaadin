@@ -33,7 +33,7 @@ public class EmbedComponentConfigTest extends AbstractEmbedTest {
                 EmbedVaadinConfig.DEFAULT_WAITING);
         assertComponentConfig(config, EmbedComponentConfig.DEFAULT_THEME,
                 EmbedComponentConfig.DEFAULT_DEVELOPMENT_HEADER);
-        assertVaadinConfig(config, null);
+        assertVaadinConfig(config, null, EmbedComponentConfig.DEFAULT_PRODUCTION_MODE);
         assertBrowserConfig(config, EmbedVaadinConfig.DEFAULT_START_BROWSER);
     }
 
@@ -42,7 +42,7 @@ public class EmbedComponentConfigTest extends AbstractEmbedTest {
         final EmbedComponentConfig config = new EmbedComponentConfig(
                 EmbedVaadinConfig.loadProperties("/config/simple-embed-vaadin.properties"));
         assertServerConfig(config, 12345, "/foo", false);
-        assertVaadinConfig(config, "com.bsb.foo.MyWidgetSet");
+        assertVaadinConfig(config, "com.bsb.foo.MyWidgetSet", true);
         assertComponentConfig(config, "myTheme", false);
         assertBrowserConfig(config, true);
     }

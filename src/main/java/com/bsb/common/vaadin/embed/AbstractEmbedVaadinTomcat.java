@@ -35,6 +35,8 @@ import java.io.Serializable;
  */
 public abstract class AbstractEmbedVaadinTomcat implements EmbedVaadinServer, Serializable {
 
+    public static final String PRODUCTION_MODE_PARAM = "productionMode";
+
     private static final long serialVersionUID = 8211718040277785632L;
 
     private static final Logger logger = LoggerFactory.getLogger(AbstractEmbedVaadinTomcat.class);
@@ -66,12 +68,14 @@ public abstract class AbstractEmbedVaadinTomcat implements EmbedVaadinServer, Se
      * Configures the current {@link Tomcat} instance with the current
      * {@link EmbedVaadinConfig config}.
      * <p/>
-     * Port, context and servlet configuration(s) are added here. By default,
-     * the vaadin servlet is added and mapped to the root context.
+     * Port, context and servlet configuration(s) should be added here. Consider
+     * calling {@link #initConfiguration()} to perform a basic initialization
+     * of the tomcat server.
      *
      * @see #getTomcat()
      * @see #getConfig()
      * @see #initConfiguration()
+     * @see #initializeVaadinServlet(com.vaadin.terminal.gwt.server.AbstractApplicationServlet)
      */
     protected abstract void configure();
 
@@ -133,6 +137,9 @@ public abstract class AbstractEmbedVaadinTomcat implements EmbedVaadinServer, Se
 
         // Setup HTTP port listening
         getTomcat().setPort(getConfig().getPort());
+
+        // Setup vaadin production mode
+        getContext().addParameter(PRODUCTION_MODE_PARAM, String.valueOf(getConfig().isProductionMode()));
     }
 
     /**
