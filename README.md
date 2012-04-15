@@ -26,7 +26,7 @@ To use the Vaadin embed in your own projects, add the jar to your project's clas
     <dependency>
         <groupId>com.bsb.common.vaadin</groupId>
         <artifactId>com.bsb.common.vaadin.embed</artifactId>
-        <version>0.2</version>
+        <version>0.3</version>
     </dependency>
 
 To visualize a component that you have built, simply pass it to the `EmbedVaadin` builder.
@@ -85,7 +85,7 @@ Custom extension can be added very easily by extending from the `EmbedVaadinServ
 
 # Release notes
 
-## 0.3 (not released yet)
+## 0.3
 
 - #5: support of Vaadin production mode
 - #4: the development header is no longer added by default. Added an option to enable it
