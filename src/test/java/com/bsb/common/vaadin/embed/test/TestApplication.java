@@ -26,6 +26,7 @@ import com.vaadin.ui.Window;
  *
  * @author Stephane Nicoll
  */
+@SuppressWarnings("serial")
 public class TestApplication extends Application {
 
     @Override

@@ -26,8 +26,8 @@ import com.vaadin.ui.themes.BaseTheme;
  *
  * @author Stephane Nicoll
  */
+@SuppressWarnings("serial")
 public class DevApplicationHeader extends HorizontalLayout {
-
 
     /**
      * Creates an new instance with the specified {@link EmbedVaadinServer}
