@@ -29,7 +29,7 @@ To use the Vaadin embed in your own projects, add the jar to your project's clas
         <version>0.2</version>
     </dependency>
 
-To visualize a component that you have built, simply pass it to the `VaadinEmbed` builder.
+To visualize a component that you have built, simply pass it to the `EmbedVaadin` builder.
 
     EmbedVaadin.forComponent(new Button("Hello")).start();
 
@@ -37,13 +37,17 @@ And if you want to open the default browser automatically at the proper URL, you
 
     EmbedVaadin.forComponent(new Button("Hello")).openBrowser(true).start();
 
-You can as easily embed a Layout or a Window. Note that this mode is purely for development purpose as you pass an initialized component to the application. Multi-sessions are therefore not supported. By default, a development header is added to the application that allows you to shutdown the server and close the browser tab.
+You can as easily embed a Layout or a Window. Note that this mode is purely for development purpose as you pass an initialized component to the application. Multi-sessions are therefore not supported. You could also add a development header that allows you to shutdown the server and close the browser tab.
+
+    EmbedVaadin.forComponent(new Button("Hello")).openBrowser(true).withDevelopmentHeader(true).start();
 
 It is also possible to specify the `Class` of an `Application`. In that case, the server starts closer to the full thing.
 
     EmbedVaadin.forApplication(MyVaadinApplication.class).start();
 
 # Configuration
+
+`EmbedVaadinConfig` is base configuration object holding the properties that any server should fulfill. We also provide `EmbedComponentConfig`, an extension when embedding a component since it has a few extra options. You could decide to extend from any of these if you need to support extra options.
 
 There are two ways to change the default values of the embed server:
 
@@ -52,13 +56,20 @@ There are two ways to change the default values of the embed server:
 
 At this stage the following can be customized:
 
- - `http.port`: the HTTP port the server listens to (an available port is taken by default)
+ - `server.port`: the HTTP port the server listens to (an available port is taken by default)
  - `context.path`: the context of the generated web application (by default, the *root* context)
  - `context.rootDir`: the root directory of the generated web application to serve static files such as CSS and images (not necessary, unless you want to use themes or static resources)
  - `server.await`: to block the thread that started the server (by default, *true*)
- - `vaadin.theme`: the vaadin theme to apply to the generated application. Ignored if an application class is used (by default, *reindeer*)
+ - `vaadin.widgetSet`: the name of a custom _WidgetSet_ to use for the application
+ - `vaadin.productionMode`: to enable or disable the production mode. Disabled by default so that debug features are available
+ - `open.browser`: to open the browser automatically at the proper url once the server has started
 
-And this showcase how the API can be used to customize these settings
+When embedding a _component_, these extra options are also available:
+
+- `vaadin.theme`: the vaadin theme to apply to the generated application. Ignored if an application class is used (by default, *reindeer*)
+- `development.header`: to add a development header to the generated application. Right now, the development header allows you to shutdown the server and close the tab
+
+This showcase how the API can be used to customize some of these settings:
 
         EmbedVaadin.forComponent(new Label("Hello World!"))
             .withContextPath("/foo")
@@ -73,6 +84,14 @@ And this showcase how the API can be used to customize these settings
 Custom extension can be added very easily by extending from the `EmbedVaadinServerBuilder`. These extensions can specify a custom configuration object, extending from `EmbedVaadinConfig`.
 
 # Release notes
+
+## 0.3 (not released yet)
+
+- #5: support of Vaadin production mode
+- #4: the development header is no longer added by default. Added an option to enable it
+- #3: context path is handled the same when it is specifies through the API or loaded from a properties file
+- EmbedVaadinConfig now exposes the deploy URL of the application. This takes into account the actual port that was allocated once the server has started
+- #2: wrong startup log when a custom HTTP port is specified
 
 ## 0.2
 
