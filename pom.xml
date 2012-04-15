@@ -8,7 +8,7 @@
     </parent>
     <groupId>com.bsb.common.vaadin</groupId>
     <artifactId>com.bsb.common.vaadin.embed</artifactId>
-    <version>0.3</version>
+    <version>0.4-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>Embed for Vaadin</name>
     <url>https://github.com/bsblabs/embed-for-vaadin</url>
