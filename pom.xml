@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.sonatype.oss</groupId>
@@ -10,7 +11,7 @@
     <artifactId>com.bsb.common.vaadin.embed-parent</artifactId>
     <version>0.4-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>Embed for Vaadin Parent</name>
+    <name>Embed for Vaadin parent</name>
     <url>https://github.com/bsblabs/embed-for-vaadin</url>
     <description>
         A library to run vaadin directly within the IDE by starting an embedded tomcat container.
@@ -45,9 +46,10 @@
         <slf4j.version>1.6.1</slf4j.version>
         <tomcat.version>7.0.26</tomcat.version>
     </properties>
-    
+
     <modules>
         <module>com.bsb.common.vaadin.embed</module>
+        <module>com.bsb.common.vaadin.embed-simple-archetype</module>
     </modules>
 
     <dependencyManagement>
@@ -118,7 +120,7 @@
                     <target>1.5</target>
                 </configuration>
             </plugin>
-                    </plugins>
+        </plugins>
 
         <pluginManagement>
             <plugins>

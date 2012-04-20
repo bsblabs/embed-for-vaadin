@@ -10,8 +10,6 @@
     <artifactId>com.bsb.common.vaadin.embed</artifactId>
     <packaging>jar</packaging>
     <name>Embed for Vaadin</name>
-    <url>https://github.com/bsblabs/embed-for-vaadin</url>
-    
 
     <dependencies>
         <dependency>
