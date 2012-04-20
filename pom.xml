@@ -7,10 +7,10 @@
         <version>7</version>
     </parent>
     <groupId>com.bsb.common.vaadin</groupId>
-    <artifactId>com.bsb.common.vaadin.embed</artifactId>
+    <artifactId>com.bsb.common.vaadin.embed-parent</artifactId>
     <version>0.4-SNAPSHOT</version>
-    <packaging>jar</packaging>
-    <name>Embed for Vaadin</name>
+    <packaging>pom</packaging>
+    <name>Embed for Vaadin Parent</name>
     <url>https://github.com/bsblabs/embed-for-vaadin</url>
     <description>
         A library to run vaadin directly within the IDE by starting an embedded tomcat container.
@@ -45,51 +45,10 @@
         <slf4j.version>1.6.1</slf4j.version>
         <tomcat.version>7.0.26</tomcat.version>
     </properties>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.apache.tomcat</groupId>
-            <artifactId>tomcat-catalina</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.tomcat</groupId>
-            <artifactId>tomcat-jasper</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.tomcat.embed</groupId>
-            <artifactId>tomcat-embed-core</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>vaadin</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>commons-httpclient</groupId>
-            <artifactId>commons-httpclient</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
+    
+    <modules>
+        <module>com.bsb.common.vaadin.embed</module>
+    </modules>
 
     <dependencyManagement>
         <dependencies>
@@ -159,21 +118,7 @@
                     <target>1.5</target>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <configuration>
-                    <archive>
-                        <manifestEntries>
-                            <Implementation-Title>Embed for Vaadin</Implementation-Title>
-                            <Implementation-Version>${project.version}</Implementation-Version>
-                            <Vaadin-Package-Version>1</Vaadin-Package-Version>
-                            <License-Title>Apache License 2.0</License-Title>
-                        </manifestEntries>
-                    </archive>
-                </configuration>
-            </plugin>
-        </plugins>
+                    </plugins>
 
         <pluginManagement>
             <plugins>
