@@ -5,9 +5,9 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
-public class TestLayout extends VerticalLayout {
+public class DemoLayout extends VerticalLayout {
 
-    public TestLayout() {
+    public DemoLayout() {
         setSpacing(true);
         setMargin(true);
         setSizeFull();

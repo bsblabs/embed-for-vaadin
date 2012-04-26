@@ -67,7 +67,7 @@
                         <argument>-Xmx256m</argument>
                         <argument>-cp</argument>
                         <classpath/>
-                        <argument>${package}.TestApp</argument>
+                        <argument>${package}.DemoApp</argument>
                     </arguments>
                     <classpathScope>test</classpathScope>
                 </configuration>
