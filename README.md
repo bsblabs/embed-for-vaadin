@@ -2,7 +2,9 @@
 
 Embed for Vaadin is a library allowing you to quickly initialize Vaadin from your IDE. It provides an easy-to-use API to initialize an embed Tomcat container running a particular component or Vaadin application.
 
-The API also allows you to open the default browser automatically and allocates an available HTTP port is none is provided. The API is extensible so that you can it you to your own needs.
+The API also allows you to open the default browser automatically and allocates an available HTTP port if none is provided. The API is extensible so that you can suit it you to your own needs.
+
+Embed for Vaadin works best when used with a build tool such as Maven as it requires Tomcat to operate. Make sure to add this dependency in scope `test` or make it optional such as these libraries do not get transmitted in your project.
 
 # Building from Source
 
@@ -37,7 +39,7 @@ There are two ways to experience with the project once it has been created:
 
 # Usage
 
-To use the Vaadin embed in your own projects, add the jar to your project's classpath or simply add the following dependency to your Maven project:
+To use this library in your own projects, add a dependency to it using you favorite build tool. For instance, with Apache Maven:
 
     <dependency>
         <groupId>com.bsb.common.vaadin</groupId>
