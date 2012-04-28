@@ -17,8 +17,8 @@ package com.bsb.common.vaadin.embed.application;
 
 import com.bsb.common.vaadin.embed.AbstractEmbedVaadinTomcat;
 import com.bsb.common.vaadin.embed.EmbedVaadinConfig;
-import com.vaadin.Application;
 import com.vaadin.terminal.gwt.server.ApplicationServlet;
+import com.vaadin.ui.Root;
 import org.apache.catalina.Wrapper;
 
 /**
@@ -32,18 +32,18 @@ import org.apache.catalina.Wrapper;
 @SuppressWarnings("serial")
 public class ApplicationBasedEmbedVaadinTomcat extends AbstractEmbedVaadinTomcat {
 
-    private final Class<? extends Application> applicationClass;
+    private final Class<? extends Root> rootClass;
 
     /**
      * Creates a new instance.
      *
      * @param config the config to use
-     * @param applicationClass the class of the application to handle
+     * @param rootClass the class of the application to handle
      */
     public ApplicationBasedEmbedVaadinTomcat(EmbedVaadinConfig config,
-                                             Class<? extends Application> applicationClass) {
+                                             Class<? extends Root> rootClass) {
         super(config);
-        this.applicationClass = applicationClass;
+        this.rootClass = rootClass;
     }
 
     @Override
@@ -51,6 +51,6 @@ public class ApplicationBasedEmbedVaadinTomcat extends AbstractEmbedVaadinTomcat
         initConfiguration();
         // Setup vaadin servlet
         final Wrapper wrapper = initializeVaadinServlet(new ApplicationServlet());
-        wrapper.addInitParameter("application", applicationClass.getName());
+        wrapper.addInitParameter("root", rootClass.getName());
     }
 }

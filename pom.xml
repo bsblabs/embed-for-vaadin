@@ -8,10 +8,10 @@
         <version>7</version>
     </parent>
     <groupId>com.bsb.common.vaadin</groupId>
-    <artifactId>com.bsb.common.vaadin.embed-parent</artifactId>
+    <artifactId>com.bsb.common.vaadin7.embed-parent</artifactId>
     <version>0.4-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>Embed for Vaadin parent</name>
+    <name>Embed for Vaadin7 parent</name>
     <url>https://github.com/bsblabs/embed-for-vaadin</url>
     <description>
         A library to run vaadin directly within the IDE by starting an embedded tomcat container.
@@ -42,7 +42,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <vaadin.version>6.7.6</vaadin.version>
+        <vaadin.version>7.0.0.alpha2</vaadin.version>
         <slf4j.version>1.6.1</slf4j.version>
         <tomcat.version>7.0.26</tomcat.version>
     </properties>

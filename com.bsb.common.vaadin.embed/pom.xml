@@ -3,13 +3,13 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
          <groupId>com.bsb.common.vaadin</groupId>
-         <artifactId>com.bsb.common.vaadin.embed-parent</artifactId>
+         <artifactId>com.bsb.common.vaadin7.embed-parent</artifactId>
         <version>0.4-SNAPSHOT</version>
     </parent>
     <groupId>com.bsb.common.vaadin</groupId>
-    <artifactId>com.bsb.common.vaadin.embed</artifactId>
+    <artifactId>com.bsb.common.vaadin7.embed</artifactId>
     <packaging>jar</packaging>
-    <name>Embed for Vaadin</name>
+    <name>Embed for Vaadin7</name>
 
     <dependencies>
         <dependency>

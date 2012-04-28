@@ -17,8 +17,8 @@ package com.bsb.common.vaadin.embed.support;
 
 import com.bsb.common.vaadin.embed.application.EmbedVaadinApplication;
 import com.bsb.common.vaadin.embed.component.EmbedVaadinComponent;
-import com.vaadin.Application;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.Root;
 
 /**
  * Embeds vaadin in a web application deployed in the current VM.
@@ -49,17 +49,17 @@ public final class EmbedVaadin {
     }
 
     /**
-     * Creates a new instance to manage a vaadin {@link Application} defined by the
+     * Creates a new instance to manage a vaadin {@link Root} defined by the
      * specified class.
      * <p/>
      * This is an easy way to deploy a complete vaadin application locally from the
      * IDE.
      *
-     * @param applicationClass the application class
+     * @param rootClass the root class
      * @return an instance handling that component
      */
-    public static EmbedVaadinApplication forApplication(Class<? extends Application> applicationClass) {
-        return new EmbedVaadinApplication(applicationClass);
+    public static EmbedVaadinApplication forRoot(Class<? extends Root> rootClass) {
+        return new EmbedVaadinApplication(rootClass);
     }
 
 }

@@ -16,7 +16,10 @@
 package com.bsb.common.vaadin.embed.component;
 
 import com.vaadin.Application;
-import com.vaadin.ui.Window;
+import com.vaadin.RootRequiresMoreInformationException;
+import com.vaadin.terminal.WrappedRequest;
+import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.Root;
 
 /**
  * A development application that displays a simple layout.
@@ -26,33 +29,46 @@ import com.vaadin.ui.Window;
 @SuppressWarnings("serial")
 public class DevApplication extends Application {
 
-    private final transient ComponentBasedVaadinServer server;
-    private final Window mainWindow;
+    private final String theme;
+    private final Root root;
 
     /**
      * Creates a new instance.
      *
      * @param server the server handling this application
-     * @param mainWindow the main window
+     * @param root the root
      */
-    public DevApplication(ComponentBasedVaadinServer server, Window mainWindow) {
-        this.server = server;
-        this.mainWindow = mainWindow;
+    public DevApplication(ComponentBasedVaadinServer server, Root root) {
+        this.theme = server.getConfig().getTheme();
+        this.root = root;
     }
 
     @Override
-    public void init() {
-        setTheme(server.getConfig().getTheme());
+    protected Root getRoot(WrappedRequest request) throws RootRequiresMoreInformationException {
+        return root;
+    }
 
-        setMainWindow(mainWindow);
+    @Override
+    public String getThemeForRoot(Root root) {
+        return theme;
     }
 
     /**
-     * Returns the main {@link Window} that is used by this application.
+     * Returns the {@link Root} used by the application.
      *
-     * @return the main window
+     * @return the root
      */
-    public Window getMainWindow() {
-        return mainWindow;
+    public Root getRoot() {
+        return root;
     }
+
+    /**
+     * Returns the main content that is used by the application.
+     *
+     * @return the main content
+     */
+    public ComponentContainer getMainContent() {
+        return getRoot().getContent();
+    }
+
 }

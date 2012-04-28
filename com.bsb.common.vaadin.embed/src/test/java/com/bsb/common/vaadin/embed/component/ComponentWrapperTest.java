@@ -16,13 +16,13 @@
 package com.bsb.common.vaadin.embed.component;
 
 import com.bsb.common.vaadin.embed.AbstractEmbedVaadinTomcat;
-import com.vaadin.Application;
+import com.vaadin.terminal.WrappedRequest;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Layout;
+import com.vaadin.ui.Root;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.VerticalSplitPanel;
-import com.vaadin.ui.Window;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertTrue;
@@ -32,21 +32,27 @@ import static org.junit.Assert.assertNotNull;
 /**
  * @author Stephane Nicoll
  */
+@SuppressWarnings("serial")
 public class ComponentWrapperTest {
 
     private final ComponentWrapper instance = createWrapper(EmbedComponentConfig.defaultConfig());
 
     @Test
-    public void wrapWindow() {
-        final Window w = new Window("Test");
-        final Application app = instance.wrap(w);
-        assertEquals("Main window was not set properly", w, app.getMainWindow());
+    public void wrapRoot() {
+        final Root root = new Root() {
+            @Override
+            protected void init(WrappedRequest request) {
+                setContent(new VerticalLayout());
+            }
+        };
+        final DevApplication app = instance.wrap(root);
+        assertEquals("root was not set properly", root, app.getRoot());
     }
 
     @Test
     public void wrapLayoutWithDevelopmentHeader() {
         final HorizontalLayout layout = new HorizontalLayout();
-        final Application app = instance.wrap(layout);
+        final DevApplication app = instance.wrap(layout);
 
         final Layout l = assertWrappingLayout(app);
 
@@ -61,17 +67,17 @@ public class ComponentWrapperTest {
 
         final HorizontalLayout layout = new HorizontalLayout();
         // Wrap without development header should just set the layout as the main content of the window
-        final Application app = wrapper.wrap(layout);
+        final DevApplication app = wrapper.wrap(layout);
 
-        assertNotNull("Main window must not be null", app.getMainWindow());
+        assertNotNull("Main content must not be null", app.getMainContent());
         assertEquals("Layout should be set as the main layout since no header was expected", layout,
-                app.getMainWindow().getContent());
+                app.getMainContent());
     }
 
     @Test
     public void wrapSimpleComponent() {
         final Button component = new Button("Hello");
-        final Application app = instance.wrap(component);
+        final DevApplication app = instance.wrap(component);
 
         final Layout l = assertWrappingLayout(app);
         assertEquals("Main content must be vertical layout", VerticalLayout.class,
@@ -81,11 +87,11 @@ public class ComponentWrapperTest {
         assertEquals("Component was not set properly", component, layout.getComponent(0));
     }
 
-    private Layout assertWrappingLayout(Application app) {
-        assertNotNull("Main window must not be null", app.getMainWindow());
+    private Layout assertWrappingLayout(DevApplication app) {
+        assertNotNull("Main content must not be null", app.getMainContent());
         assertEquals("VerticalSplitPanel with header was expected", VerticalSplitPanel.class,
-                app.getMainWindow().getContent().getClass());
-        final VerticalSplitPanel mainLayout = (VerticalSplitPanel) app.getMainWindow().getContent();
+                app.getMainContent().getClass());
+        final VerticalSplitPanel mainLayout = (VerticalSplitPanel) app.getMainContent();
         assertEquals("Two components were expected, header and actual layout", 2, mainLayout.getComponentCount());
         assertEquals("Header was not set properly", DevApplicationHeader.class, mainLayout.getFirstComponent().getClass());
         assertTrue("Layout to display was not set properly [" + mainLayout.getSecondComponent() + "]",

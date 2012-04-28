@@ -16,6 +16,7 @@
 package com.bsb.common.vaadin.embed.component;
 
 import com.vaadin.Application;
+import com.vaadin.terminal.gwt.server.AbstractApplicationServlet;
 import com.vaadin.terminal.gwt.server.ApplicationServlet;
 import com.vaadin.ui.Component;
 
@@ -32,7 +33,7 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @author Stephane Nicoll
  */
-public class DevApplicationServlet extends ApplicationServlet {
+public class DevApplicationServlet extends AbstractApplicationServlet {
 
     private static final long serialVersionUID = -5557485761575067731L;
 

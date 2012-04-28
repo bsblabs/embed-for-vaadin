@@ -8,7 +8,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <vaadin.version>6.7.6</vaadin.version>
+        <vaadin.version>7.0.0.alpha2</vaadin.version>
     </properties>
 
     <dependencies>
@@ -19,7 +19,7 @@
 
         <dependency>
             <groupId>com.bsb.common.vaadin</groupId>
-            <artifactId>com.bsb.common.vaadin.embed</artifactId>
+            <artifactId>com.bsb.common.vaadin7.embed</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -38,7 +38,7 @@
             </dependency>
             <dependency>
                 <groupId>com.bsb.common.vaadin</groupId>
-                <artifactId>com.bsb.common.vaadin.embed</artifactId>
+                <artifactId>com.bsb.common.vaadin7.embed</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

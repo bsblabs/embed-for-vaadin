@@ -15,11 +15,12 @@
  */
 package com.bsb.common.vaadin.embed.test;
 
-import com.vaadin.Application;
+import com.vaadin.terminal.WrappedRequest;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Notification;
+import com.vaadin.ui.Root;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Window;
 
 /**
  * A stupid application with a button
@@ -27,11 +28,10 @@ import com.vaadin.ui.Window;
  * @author Stephane Nicoll
  */
 @SuppressWarnings("serial")
-public class TestApplication extends Application {
+public class TestRoot extends Root {
 
     @Override
-    public void init() {
-        final Window w = new Window();
+    protected void init(WrappedRequest request) {
         final VerticalLayout layout = new VerticalLayout();
         layout.setSizeFull();
         layout.setMargin(true);
@@ -39,15 +39,14 @@ public class TestApplication extends Application {
         final Button hello = new Button("Hello");
         hello.addListener(new Button.ClickListener() {
             public void buttonClick(Button.ClickEvent event) {
-                final Window.Notification n =
-                        new Window.Notification("Yes, hello", Window.Notification.TYPE_HUMANIZED_MESSAGE);
+                final Notification n =
+                        new Notification("Yes, hello", Notification.TYPE_HUMANIZED_MESSAGE);
                 n.setDelayMsec(-1);
-                w.showNotification(n);
+                getRoot().showNotification(n);
             }
         });
         layout.addComponent(hello);
         layout.setComponentAlignment(hello, Alignment.TOP_CENTER);
-        w.setContent(layout);
-        setMainWindow(w);
+        setContent(layout);
     }
 }

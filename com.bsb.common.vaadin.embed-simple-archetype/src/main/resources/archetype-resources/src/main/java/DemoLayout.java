@@ -15,7 +15,7 @@ public class DemoLayout extends VerticalLayout {
         final Button hello = new Button("Say hello");
         hello.addListener(new Button.ClickListener() {
             public void buttonClick(Button.ClickEvent event) {
-                event.getComponent().getWindow().showNotification("Hello World!");
+                event.getComponent().getRoot().showNotification("Hello World!");
             }
         });
         addComponent(hello);

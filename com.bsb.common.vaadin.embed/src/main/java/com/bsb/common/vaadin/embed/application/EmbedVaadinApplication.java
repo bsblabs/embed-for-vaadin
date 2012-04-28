@@ -18,7 +18,7 @@ package com.bsb.common.vaadin.embed.application;
 import com.bsb.common.vaadin.embed.EmbedVaadinConfig;
 import com.bsb.common.vaadin.embed.EmbedVaadinServer;
 import com.bsb.common.vaadin.embed.EmbedVaadinServerBuilder;
-import com.vaadin.Application;
+import com.vaadin.ui.Root;
 
 import java.util.Properties;
 
@@ -29,28 +29,28 @@ import java.util.Properties;
  */
 public class EmbedVaadinApplication extends EmbedVaadinServerBuilder<EmbedVaadinApplication, EmbedVaadinServer> {
 
-    private final Class<? extends Application> applicationClass;
+    private final Class<? extends Root> rootClass;
     private EmbedVaadinConfig config;
 
     /**
-     * Creates a new instance for the specified application.
+     * Creates a new instance for the specified root.
      *
-     * @param applicationClass the class of the application to deploy
+     * @param rootClass the class of the root to deploy
      */
-    public EmbedVaadinApplication(Class<? extends Application> applicationClass) {
+    public EmbedVaadinApplication(Class<? extends Root> rootClass) {
         super();
-        assertNotNull(applicationClass, "applicationClass could not be null.");
-        this.applicationClass = applicationClass;
+        assertNotNull(rootClass, "rootClass could not be null.");
+        this.rootClass = rootClass;
         withConfigProperties(EmbedVaadinConfig.loadProperties());
     }
 
     /**
-     * Returns the {@link Application} type that was used to initialize this instance, if any.
+     * Returns the {@link Root} type that was used to initialize this instance, if any.
      *
-     * @return the application class or <tt>null</tt> if a component was set
+     * @return the root class or <tt>null</tt> if a component was set
      */
-    protected Class<? extends Application> getApplicationClass() {
-        return applicationClass;
+    protected Class<? extends Root> getRootClass() {
+        return rootClass;
     }
 
     @Override
@@ -60,7 +60,7 @@ public class EmbedVaadinApplication extends EmbedVaadinServerBuilder<EmbedVaadin
 
     @Override
     public EmbedVaadinServer build() {
-        return new ApplicationBasedEmbedVaadinTomcat(getConfig(), getApplicationClass());
+        return new ApplicationBasedEmbedVaadinTomcat(getConfig(), getRootClass());
     }
 
     @Override

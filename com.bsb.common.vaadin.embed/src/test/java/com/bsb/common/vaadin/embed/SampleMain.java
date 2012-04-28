@@ -16,6 +16,7 @@
 package com.bsb.common.vaadin.embed;
 
 import com.bsb.common.vaadin.embed.support.EmbedVaadin;
+import com.bsb.common.vaadin.embed.test.TestRoot;
 import com.vaadin.ui.Button;
 
 /**

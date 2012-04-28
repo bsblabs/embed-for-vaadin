@@ -58,7 +58,7 @@ public class DevApplicationHeader extends HorizontalLayout {
                 thread.start();
 
                 // Close the browser tab
-                getWindow().executeJavaScript("close();");
+                getRoot().executeJavaScript("close();");
             }
         });
     }
