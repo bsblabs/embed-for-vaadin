@@ -36,8 +36,10 @@ public final class EmbedVaadin {
      * The specified <tt>component</tt> could be of various types which will be
      * wrapped automatically if necessary as follows:
      * <ul>
-     * <li><tt>Window</tt>: the window becomes the main window of the application</li>
-     * <li><tt>Layout</tt>: a simple window is created using that layout</li>
+     * <li><tt>Root</tt>: the root becomes the root used by the application</li>
+     * <li><tt>Window</tt>: a simple root is created with the window. Note that
+     * this was common with Vaadin6 but you should consider using a <tt>Root</tt> instead</li>
+     * <li><tt>Layout</tt>: a simple root is created using that layout</li>
      * <li>other: a <tt>VerticalLayout</tt> is created to hold the component</li>
      * </ul>
      *

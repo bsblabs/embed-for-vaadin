@@ -23,6 +23,7 @@ import com.vaadin.ui.Layout;
 import com.vaadin.ui.Root;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.VerticalSplitPanel;
+import com.vaadin.ui.Window;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertTrue;
@@ -85,6 +86,15 @@ public class ComponentWrapperTest {
         final VerticalLayout layout = (VerticalLayout) l;
         assertEquals("Should have a single component", 1, layout.getComponentCount());
         assertEquals("Component was not set properly", component, layout.getComponent(0));
+    }
+
+    @Test
+    public void wrapWindow() {
+        final VerticalLayout content = new VerticalLayout();
+        final Window w = new Window("Test", content);
+
+        final DevApplication app = instance.wrap(w);
+        assertEquals("window was not wrapped properly", w, app.getMainContent());
     }
 
     private Layout assertWrappingLayout(DevApplication app) {

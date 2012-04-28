@@ -23,6 +23,7 @@ import com.vaadin.ui.Layout;
 import com.vaadin.ui.Root;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.VerticalSplitPanel;
+import com.vaadin.ui.Window;
 
 /**
  * Wraps a component into an actual application.
@@ -53,6 +54,9 @@ public class ComponentWrapper {
     public DevApplication wrap(Component component) {
         if (component instanceof Root) {
             return wrapRoot((Root) component);
+        }
+        if (component instanceof Window) {
+            return wrapWindow((Window) component);
         }
         if (component instanceof Layout) {
             return wrapLayout((Layout) component);
@@ -94,7 +98,11 @@ public class ComponentWrapper {
             root = new DevRoot(layout);
         }
 
-        return new DevApplication(server, root);
+        return wrapRoot(root);
+    }
+
+    public DevApplication wrapWindow(Window window) {
+        return wrapRoot(new DevRoot(window));
     }
 
     /**
