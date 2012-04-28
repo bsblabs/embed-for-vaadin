@@ -114,6 +114,11 @@ Custom extension can be added very easily by extending from the `EmbedVaadinServ
 
 # Release notes
 
+## 0.4 (not released yet)
+
+- #7: customization of the url to use when opening the browser
+- #6: added simple Maven archetype
+
 ## 0.3
 
 - #5: support of Vaadin production mode
