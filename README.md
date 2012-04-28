@@ -19,6 +19,22 @@ Use Maven, then on the command line:
 
 Make sure you have access to the central repository.
 
+# Getting started
+
+The most easy way to experience with Embed for Vaadin is to use the simple [Maven archetype](http://maven.apache.org/guides/introduction/introduction-to-archetypes.html). The following command line creates a simple project:
+
+    mvn archetype:generate  \
+        -DarchetypeGroupId=com.bsb.common.vaadin \
+        -DarchetypeArtifactId=com.bsb.common.vaadin.embed-simple-archetype \
+        -DarchetypeVersion=0.4-SNAPSHOT
+
+There are two ways to experience with the project once it has been created:
+
+1. Open the project in your IDE and run the `DemoApp` main class
+2. Execute the following command in the project
+
+    mvn package exec:exec
+
 # Usage
 
 To use the Vaadin embed in your own projects, add the jar to your project's classpath or simply add the following dependency to your Maven project:
