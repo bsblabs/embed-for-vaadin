@@ -1,4 +1,4 @@
-# Embed for Vaadin
+# Embed for Vaadin (Vaadin 7)
 
 Embed for Vaadin is a library allowing you to quickly initialize Vaadin from your IDE. It provides an easy-to-use API to initialize an embed Tomcat container running a particular component or Vaadin application.
 
@@ -27,7 +27,7 @@ The most easy way to experience with Embed for Vaadin is to use the simple [Mave
 
     mvn archetype:generate  \
         -DarchetypeGroupId=com.bsb.common.vaadin \
-        -DarchetypeArtifactId=com.bsb.common.vaadin.embed-simple-archetype \
+        -DarchetypeArtifactId=com.bsb.common.vaadin7.embed-simple-archetype \
         -DarchetypeVersion=0.4-SNAPSHOT
 
 There are two ways to experience with the project once it has been created:
@@ -43,8 +43,8 @@ To use this library in your own projects, add a dependency to it using you favor
 
     <dependency>
         <groupId>com.bsb.common.vaadin</groupId>
-        <artifactId>com.bsb.common.vaadin.embed</artifactId>
-        <version>0.3</version>
+        <artifactId>com.bsb.common.vaadin7.embed</artifactId>
+        <version>0.4-SNAPSHOT</version>
     </dependency>
 
 To visualize a component that you have built, simply pass it to the `EmbedVaadin` builder.
@@ -59,9 +59,9 @@ You can as easily embed a Layout or a Window. Note that this mode is purely for 
 
     EmbedVaadin.forComponent(new Button("Hello")).openBrowser(true).withDevelopmentHeader(true).start();
 
-It is also possible to specify the `Class` of an `Application`. In that case, the server starts closer to the full thing.
+It is also possible to specify the `Class` of a `Root`. In that case, the server starts closer to the full thing.
 
-    EmbedVaadin.forApplication(MyVaadinApplication.class).start();
+    EmbedVaadin.forRoot(MyRoot.class).start();
 
 The url that will be used to open the browser can be customized using the builder. For instance, the following would enable the Vaadin debug window:
 
@@ -97,7 +97,7 @@ At this stage the following can be customized:
 
 When embedding a _component_, these extra options are also available:
 
-- `vaadin.theme`: the vaadin theme to apply to the generated application. Ignored if an application class is used (by default, *reindeer*)
+- `vaadin.theme`: the vaadin theme to apply to the generated application. Ignored if a root class is used (by default, *reindeer*)
 - `development.header`: to add a development header to the generated application. Right now, the development header allows you to shutdown the server and close the tab
 
 This showcase how the API can be used to customize some of these settings:
@@ -118,6 +118,7 @@ Custom extension can be added very easily by extending from the `EmbedVaadinServ
 
 ## 0.4 (not released yet)
 
+- #8: Initial support for Vaadin 7
 - #7: customization of the url to use when opening the browser
 - #6: added simple Maven archetype
 
