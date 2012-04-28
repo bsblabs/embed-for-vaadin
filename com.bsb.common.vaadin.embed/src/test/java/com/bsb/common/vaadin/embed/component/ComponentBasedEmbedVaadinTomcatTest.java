@@ -58,7 +58,24 @@ public class ComponentBasedEmbedVaadinTomcatTest extends AbstractEmbedTest {
         checkVaadinIsDeployed(18002, "");
 
         server.stop();
+    }
 
+    @Test
+    public void startWithCustomBrowserUrl() {
+        final EmbedVaadinServer server = EmbedVaadin.forComponent(new Button("Hello"))
+                .openBrowserAt("?debug").openBrowser(false).wait(false).build();
+
+        assertOpenBrowserUrl(server.getConfig(), "http://localhost:[auto]/?debug");
+
+        server.start();
+
+        // Once the server has started, the port should be set in the config
+        assertTrue("A port should have been allocated automatically", server.getConfig().getPort() != 0);
+        assertOpenBrowserUrl(server.getConfig(), "http://localhost:" + server.getConfig().getPort() + "/?debug");
+
+        checkVaadinIsDeployed(server.getConfig().getPort(), "");
+
+        server.stop();
     }
 
 }

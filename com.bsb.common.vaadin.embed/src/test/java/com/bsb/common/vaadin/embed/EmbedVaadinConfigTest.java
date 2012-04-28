@@ -33,7 +33,8 @@ public class EmbedVaadinConfigTest extends AbstractEmbedTest {
                 EmbedVaadinConfig.DEFAULT_WAITING);
         assertDeployUrl(config, "http://localhost:[auto]/");
         assertVaadinConfig(config, null, EmbedVaadinConfig.DEFAULT_PRODUCTION_MODE);
-        assertBrowserConfig(config, EmbedVaadinConfig.DEFAULT_OPEN_BROWSER);
+        assertBrowserConfig(config, EmbedVaadinConfig.DEFAULT_OPEN_BROWSER, null);
+        assertOpenBrowserUrl(config, "http://localhost:[auto]/");
     }
 
     @Test(expected = IllegalStateException.class)
@@ -48,7 +49,8 @@ public class EmbedVaadinConfigTest extends AbstractEmbedTest {
         assertServerConfig(config, 12345, "/foo", false);
         assertDeployUrl(config, "http://localhost:12345/foo");
         assertVaadinConfig(config, "com.bsb.foo.MyWidgetSet", true);
-        assertBrowserConfig(config, true);
+        assertBrowserConfig(config, true, "/foo/bar");
+        assertOpenBrowserUrl(config, "http://localhost:12345/foo/bar");
     }
 
     @Test(expected = IllegalStateException.class)
@@ -69,12 +71,13 @@ public class EmbedVaadinConfigTest extends AbstractEmbedTest {
         config.setProductionMode(true);
         config.setWaiting(true);
         config.setOpenBrowser(true);
+        config.setCustomBrowserUrl("?debug");
 
         // Now validate the clone has not changed
         assertServerConfig(clone, EmbedVaadinConfig.DEFAULT_PORT, EmbedVaadinConfig.DEFAULT_CONTEXT_PATH,
                 EmbedVaadinConfig.DEFAULT_WAITING);
         assertVaadinConfig(clone, null, EmbedVaadinConfig.DEFAULT_PRODUCTION_MODE);
-        assertBrowserConfig(clone, EmbedVaadinConfig.DEFAULT_OPEN_BROWSER);
+        assertBrowserConfig(clone, EmbedVaadinConfig.DEFAULT_OPEN_BROWSER, null);
     }
 
     @Test
@@ -87,6 +90,28 @@ public class EmbedVaadinConfigTest extends AbstractEmbedTest {
     public void loadCleansRootContextPath() {
         final EmbedVaadinConfig config = createCustomConfig(8080, "/");
         assertEquals("Context path '/' should have been detected as root context", "", config.getContextPath());
+    }
+
+    @Test
+    public void openBrowserToUrl() {
+        final EmbedVaadinConfig config = EmbedVaadinConfig.defaultConfig();
+        config.setCustomBrowserUrl("http://www.google.com");
+        assertOpenBrowserUrl(config, "http://www.google.com");
+    }
+
+    @Test
+    public void openBrowserToRelativeRef() {
+        final EmbedVaadinConfig config = EmbedVaadinConfig.defaultConfig();
+        config.setPort(8080);
+        config.setCustomBrowserUrl("?debug");
+        assertOpenBrowserUrl(config, "http://localhost:8080/?debug");
+    }
+
+    @Test
+    public void openBrowserToAbsoluteRef() {
+        final EmbedVaadinConfig config = EmbedVaadinConfig.defaultConfig();
+        config.setCustomBrowserUrl("/bar?debug");
+        assertOpenBrowserUrl(config, "http://localhost:[auto]/bar?debug");
     }
 
 }

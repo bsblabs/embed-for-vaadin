@@ -189,6 +189,34 @@ public abstract class EmbedVaadinServerBuilder<B extends EmbedVaadinServerBuilde
     }
 
     /**
+     * Opens the browser at a custom location. The <tt>reference</tt> parameter can customize the
+     * url to use to open the browser in the following ways:
+     * <ul>
+     * <li>As a <tt>full</tt> URL starting with <em>http://</em> - the url is used as is</li>
+     * <li>As a relative reference, not starting with <em>/</em> - added to the standard deploy url</li>
+     * <li>As an absolute reference, starting with <em>/</em> - specify the context of the url</li>
+     * </ul>
+     * <p/>
+     * For instance, consider the scenario when the application is being deployed on port 7080 with
+     * the <em>my-app</em> context (i.e. <tt>http://localhost:7080/my-app</tt>), the following apply:
+     * <ul>
+     * <li><tt>http://localhost:7080/another-app</tt> just use that url as is to open the browser</li>
+     * <li><tt>?debug#anchor</tt> would use <tt>http://localhost:7080/my-app?debug#anchor</tt></li>
+     * <li><tt>/another-app/foo</tt> would use <tt>http://localhost:7080/another-app/foo</tt></li>
+     * </ul>
+     * Note that this automatically enables the browser if that was not set before so there is no
+     * need to call {@link #openBrowser(boolean)}.
+     *
+     * @param reference a custom url, a relative reference or an absolute reference
+     * @return this
+     */
+    public B openBrowserAt(String reference) {
+        openBrowser(true);
+        getConfig().setCustomBrowserUrl(reference);
+        return self();
+    }
+
+    /**
      * Builds an {@link EmbedVaadinServer} and starts it immediately.
      *
      * @return the created server

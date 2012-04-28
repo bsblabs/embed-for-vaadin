@@ -16,6 +16,7 @@
 package com.bsb.common.vaadin.embed.support;
 
 import com.bsb.common.vaadin.embed.AbstractEmbedTest;
+import com.bsb.common.vaadin.embed.EmbedVaadinServer;
 import com.bsb.common.vaadin.embed.component.EmbedComponentConfig;
 import com.bsb.common.vaadin.embed.component.EmbedVaadinComponent;
 import com.google.common.io.Files;
@@ -151,6 +152,15 @@ public class EmbedVaadinTest extends AbstractEmbedTest {
     public void withOpenBrowser() {
         final EmbedVaadinComponent embed = EmbedVaadin.forComponent(component).openBrowser(true);
         assertEquals("was not detected as expected", true, embed.build().getConfig().shouldOpenBrowser());
+    }
+
+    @Test
+    public void withOpenBrowserAtEnablesOpenBrowser() {
+        final EmbedVaadinComponent embed = EmbedVaadin.forComponent(component).openBrowserAt("?debug");
+        final EmbedVaadinServer server = embed.build();
+        assertEquals("was not detected as expected", "?debug", server.getConfig().getCustomBrowserUrl());
+        assertTrue("openBrowserAt should enable openBrowser flag automatically",
+                server.getConfig().shouldOpenBrowser());
     }
 
     @Test

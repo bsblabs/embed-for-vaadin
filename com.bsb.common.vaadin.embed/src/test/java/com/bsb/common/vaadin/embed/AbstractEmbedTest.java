@@ -48,9 +48,14 @@ public abstract class AbstractEmbedTest {
         assertEquals("Wrong production mode", productionMode, config.isProductionMode());
     }
 
-    protected void assertBrowserConfig(EmbedVaadinConfig config, boolean openBrowser) {
+    protected void assertBrowserConfig(EmbedVaadinConfig config, boolean openBrowser, String customBrowserUrl) {
         assertConfigIsNotNull(config);
         assertEquals("Wrong openBrowser flag", openBrowser, config.shouldOpenBrowser());
+        assertEquals("Wrong custom browser url", customBrowserUrl, config.getCustomBrowserUrl());
+    }
+
+    protected void assertOpenBrowserUrl(EmbedVaadinConfig config, String openBrowserUrl) {
+        assertEquals("Wrong open browser url", openBrowserUrl, config.getOpenBrowserUrl());
     }
 
 

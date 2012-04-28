@@ -181,7 +181,7 @@ public abstract class AbstractEmbedVaadinTomcat implements EmbedVaadinServer, Se
 
         logger.info("Application has been deployed to [" + getConfig().getDeployUrl() + "]");
         if (config.shouldOpenBrowser()) {
-            BrowserUtils.openBrowser(getConfig().getDeployUrl());
+            BrowserUtils.openBrowser(getConfig().getOpenBrowserUrl());
         }
         if (isWaiting()) {
             tomcat.getServer().await();

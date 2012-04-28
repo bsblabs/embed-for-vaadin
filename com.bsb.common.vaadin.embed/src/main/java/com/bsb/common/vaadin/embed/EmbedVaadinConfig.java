@@ -51,6 +51,9 @@ public class EmbedVaadinConfig implements Serializable {
 
     private static final Logger logger = LoggerFactory.getLogger(EmbedVaadinConfig.class);
 
+    private static final int PORT_AUTO = 0;
+
+
     public static final String CONFIG_LOCATION = "/embed-vaadin.properties";
 
     /**
@@ -60,9 +63,9 @@ public class EmbedVaadinConfig implements Serializable {
 
     /**
      * The default HTTP port to use if none is set. By default, an available port
-     * is taken. Holds an integer
+     * is taken. Holds an integer.
      */
-    public static final int DEFAULT_PORT = 0;
+    public static final int DEFAULT_PORT = PORT_AUTO;
 
     /**
      * The key defining the context path to use.
@@ -80,7 +83,7 @@ public class EmbedVaadinConfig implements Serializable {
     public static final String KEY_CONTEXT_ROOT_DIR = "context.rootDir";
 
     /**
-     * The key defining if the thread that started the server should be blocked. Holds a boolean
+     * The key defining if the thread that started the server should be blocked. Holds a boolean.
      */
     public static final String KEY_WAITING = "server.await";
 
@@ -114,6 +117,11 @@ public class EmbedVaadinConfig implements Serializable {
      */
     public static final boolean DEFAULT_OPEN_BROWSER = false;
 
+    /**
+     * The key defining if the browser should be opened at a custom url. Holds a String which could be
+     * either a relative path, an absolute path or a full url.
+     */
+    public static final String KEY_CUSTOM_BROWSER_URL = "browser.customUrl";
 
     private int port;
     private String contextPath;
@@ -124,6 +132,7 @@ public class EmbedVaadinConfig implements Serializable {
     private boolean productionMode;
 
     private boolean openBrowser;
+    private String customBrowserUrl;
 
     /**
      * Creates a new instance using the configuration in the given {@link Properties}
@@ -146,6 +155,7 @@ public class EmbedVaadinConfig implements Serializable {
         productionMode = helper.getBooleanProperty(KEY_PRODUCTION_MODE, DEFAULT_PRODUCTION_MODE);
 
         openBrowser = helper.getBooleanProperty(KEY_OPEN_BROWSER, DEFAULT_OPEN_BROWSER);
+        customBrowserUrl = properties.getProperty(KEY_CUSTOM_BROWSER_URL);
 
         logger.debug("Using " + this);
 
@@ -166,6 +176,7 @@ public class EmbedVaadinConfig implements Serializable {
         this.widgetSet = clone.widgetSet;
         this.productionMode = clone.productionMode;
         this.openBrowser = clone.openBrowser;
+        this.customBrowserUrl = clone.customBrowserUrl;
     }
 
     /**
@@ -263,6 +274,16 @@ public class EmbedVaadinConfig implements Serializable {
     }
 
     /**
+     * Returns any customization made to the url to use to open the browser or
+     * <tt>null</tt> if the default url should be used.
+     *
+     * @return a custom browser url or <tt>null</tt> if none is specified
+     */
+    public String getCustomBrowserUrl() {
+        return customBrowserUrl;
+    }
+
+    /**
      * Returns the full url of the application, according to the port and
      * context path.
      * <p/>
@@ -273,21 +294,31 @@ public class EmbedVaadinConfig implements Serializable {
      * @return the url of the web application
      */
     public String getDeployUrl() {
-        final StringBuilder sb = new StringBuilder();
-
-        sb.append("http://localhost:");
-        final int httpPort = getPort();
-        if (httpPort == 0) {
-            sb.append("[auto]");
-        } else {
-            sb.append(httpPort);
-        }
         if (getContextPath().isEmpty()) {
-            sb.append("/");
+            return buildUrl(getPort(), "/");
         } else {
-            sb.append(getContextPath());
+            return buildUrl(getPort(), getContextPath());
         }
-        return sb.toString();
+    }
+
+    /**
+     * Returns the url to use when the browser opens, according to both the deploy url
+     * and a custom browser url, if set.
+     *
+     * @return the url to use when to open the browser
+     */
+    public String getOpenBrowserUrl() {
+        final String customBrowserUrl = getCustomBrowserUrl();
+        final String deployUrl = getDeployUrl();
+        if (customBrowserUrl == null) {
+            return deployUrl;
+        } else if (customBrowserUrl.startsWith("http://")) {
+            return customBrowserUrl;
+        } else if (customBrowserUrl.startsWith("/")) {
+            return buildUrl(getPort(), customBrowserUrl);
+        } else {
+            return deployUrl + customBrowserUrl;
+        }
     }
 
     void setPort(int port) {
@@ -316,6 +347,10 @@ public class EmbedVaadinConfig implements Serializable {
 
     void setOpenBrowser(boolean openBrowser) {
         this.openBrowser = openBrowser;
+    }
+
+    final void setCustomBrowserUrl(String customBrowserUrl) {
+        this.customBrowserUrl = customBrowserUrl;
     }
 
     private void validate() {
@@ -366,6 +401,30 @@ public class EmbedVaadinConfig implements Serializable {
         } else {
             return contextPath;
         }
+    }
+
+    /**
+     * Build a url for the specified port and context.
+     * <p/>
+     * If the <tt>httpPort</tt> is equal to {@link #PORT_AUTO}, the
+     * returned url is not used as is because no http port has been
+     * allocated yet.
+     *
+     * @param httpPort the http port to use
+     * @param context the context of the url
+     * @return a <tt>localhost</tt> url for the specified port and context
+     */
+    static String buildUrl(int httpPort, String context) {
+        final StringBuilder sb = new StringBuilder();
+
+        sb.append("http://localhost:");
+        if (httpPort == PORT_AUTO) {
+            sb.append("[auto]");
+        } else {
+            sb.append(httpPort);
+        }
+        sb.append(context);
+        return sb.toString();
     }
 
     private static Properties loadProperties(String path, boolean failIfNotFound) {
