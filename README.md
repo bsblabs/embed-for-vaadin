@@ -61,6 +61,18 @@ It is also possible to specify the `Class` of an `Application`. In that case, th
 
     EmbedVaadin.forApplication(MyVaadinApplication.class).start();
 
+The url that will be used to open the browser can be customized using the builder. For instance, the following would enable the Vaadin debug window:
+
+    EmbedVaadin.forComponent(new Button("Hello")).openBrowserAt("?debug").start();
+
+The parameter of the `openBrowserAt` method can be of the following types:
+
+- An absolute url, i.e. starting with `http://`
+- A relative reference, i.e. not starting with `/`
+- An absolute reference, i.e. starting with `/`
+
+References work exactly the same way as the HTML `href`, see the Javadoc of `openBrowserAt` for more details.
+
 # Configuration
 
 `EmbedVaadinConfig` is base configuration object holding the properties that any server should fulfill. We also provide `EmbedComponentConfig`, an extension when embedding a component since it has a few extra options. You could decide to extend from any of these if you need to support extra options.
@@ -79,6 +91,7 @@ At this stage the following can be customized:
  - `vaadin.widgetSet`: the name of a custom _WidgetSet_ to use for the application
  - `vaadin.productionMode`: to enable or disable the production mode. Disabled by default so that debug features are available
  - `open.browser`: to open the browser automatically at the proper url once the server has started
+ - `browser.customUrl`: to customize the url that will be used to open the browser
 
 When embedding a _component_, these extra options are also available:
 
