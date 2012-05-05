@@ -139,6 +139,7 @@
                     <artifactId>maven-release-plugin</artifactId>
                     <version>2.2.2</version>
                     <configuration>
+                        <autoVersionSubmodules>true</autoVersionSubmodules>
                         <tagNameFormat>com.bsb.common.vaadin.embed-@{project.version}.</tagNameFormat>
                     </configuration>
                 </plugin>
