@@ -4,7 +4,7 @@
     <parent>
          <groupId>com.bsb.common.vaadin</groupId>
          <artifactId>com.bsb.common.vaadin.embed-parent</artifactId>
-        <version>0.4-SNAPSHOT</version>
+        <version>0.4</version>
     </parent>
     <groupId>com.bsb.common.vaadin</groupId>
     <artifactId>com.bsb.common.vaadin.embed</artifactId>
