@@ -23,12 +23,25 @@ Make sure you have access to the central repository.
 
 # Getting started
 
+Embed for Vaadin provides support for both Vaadin 6 and Vaadin 7. Since Vaadin 7 introduces a set of backward incompatible changes in the API, there are two separate libraries:
+
+* `com.bsb.common.vaadin.embed` for the Vaadin 6 support
+* `com.bsb.common.vaadin7.embed` for the Vaadin 7 support
+
 The most easy way to experience with Embed for Vaadin is to use the simple [Maven archetype](http://maven.apache.org/guides/introduction/introduction-to-archetypes.html). The following command line creates a simple project:
 
     mvn archetype:generate  \
         -DarchetypeGroupId=com.bsb.common.vaadin \
         -DarchetypeArtifactId=com.bsb.common.vaadin.embed-simple-archetype \
         -DarchetypeVersion=0.4-SNAPSHOT
+
+If you want to experiment with Vaadin 7 instead, just use:
+
+    mvn archetype:generate  \
+        -DarchetypeGroupId=com.bsb.common.vaadin \
+        -DarchetypeArtifactId=com.bsb.common.vaadin7.embed-simple-archetype \
+        -DarchetypeVersion=0.4-SNAPSHOT
+
 
 There are two ways to experience with the project once it has been created:
 
@@ -44,7 +57,15 @@ To use this library in your own projects, add a dependency to it using you favor
     <dependency>
         <groupId>com.bsb.common.vaadin</groupId>
         <artifactId>com.bsb.common.vaadin.embed</artifactId>
-        <version>0.3</version>
+        <version>0.4-SNAPSHOT</version>
+    </dependency>
+
+or, for Vaadin 7 support:
+
+    <dependency>
+        <groupId>com.bsb.common.vaadin</groupId>
+        <artifactId>com.bsb.common.vaadin7.embed</artifactId>
+        <version>0.4-SNAPSHOT</version>
     </dependency>
 
 To visualize a component that you have built, simply pass it to the `EmbedVaadin` builder.
@@ -59,7 +80,7 @@ You can as easily embed a Layout or a Window. Note that this mode is purely for 
 
     EmbedVaadin.forComponent(new Button("Hello")).openBrowser(true).withDevelopmentHeader(true).start();
 
-It is also possible to specify the `Class` of an `Application`. In that case, the server starts closer to the full thing.
+It is also possible to specify the `Class` of an `Application` (`Root` in Vaadin 7). In that case, the server starts closer to the full thing.
 
     EmbedVaadin.forApplication(MyVaadinApplication.class).start();
 
@@ -118,6 +139,7 @@ Custom extension can be added very easily by extending from the `EmbedVaadinServ
 
 ## 0.4 (not released yet)
 
+- #8: Initial support of Vaadin 7
 - #7: customization of the url to use when opening the browser
 - #6: added simple Maven archetype
 
