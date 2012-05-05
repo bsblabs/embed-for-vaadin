@@ -33,14 +33,14 @@ The most easy way to experience with Embed for Vaadin is to use the simple [Mave
     mvn archetype:generate  \
         -DarchetypeGroupId=com.bsb.common.vaadin \
         -DarchetypeArtifactId=com.bsb.common.vaadin.embed-simple-archetype \
-        -DarchetypeVersion=0.4-SNAPSHOT
+        -DarchetypeVersion=0.4
 
 If you want to experiment with Vaadin 7 instead, just use:
 
     mvn archetype:generate  \
         -DarchetypeGroupId=com.bsb.common.vaadin \
         -DarchetypeArtifactId=com.bsb.common.vaadin7.embed-simple-archetype \
-        -DarchetypeVersion=0.4-SNAPSHOT
+        -DarchetypeVersion=0.4
 
 
 There are two ways to experience with the project once it has been created:
@@ -57,7 +57,7 @@ To use this library in your own projects, add a dependency to it using you favor
     <dependency>
         <groupId>com.bsb.common.vaadin</groupId>
         <artifactId>com.bsb.common.vaadin.embed</artifactId>
-        <version>0.4-SNAPSHOT</version>
+        <version>0.4</version>
     </dependency>
 
 or, for Vaadin 7 support:
@@ -65,7 +65,7 @@ or, for Vaadin 7 support:
     <dependency>
         <groupId>com.bsb.common.vaadin</groupId>
         <artifactId>com.bsb.common.vaadin7.embed</artifactId>
-        <version>0.4-SNAPSHOT</version>
+        <version>0.4</version>
     </dependency>
 
 To visualize a component that you have built, simply pass it to the `EmbedVaadin` builder.
@@ -137,7 +137,7 @@ Custom extension can be added very easily by extending from the `EmbedVaadinServ
 
 # Release notes
 
-## 0.4 (not released yet)
+## 0.4
 
 - #8: Initial support of Vaadin 7
 - #7: customization of the url to use when opening the browser
