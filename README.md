@@ -54,39 +54,53 @@ There are two ways to experience with the project once it has been created:
 
 To use this library in your own projects, add a dependency to it using you favorite build tool. For instance, with Apache Maven:
 
-    <dependency>
-        <groupId>com.bsb.common.vaadin</groupId>
-        <artifactId>com.bsb.common.vaadin.embed</artifactId>
-        <version>0.4</version>
-    </dependency>
+```xml
+<dependency>
+    <groupId>com.bsb.common.vaadin</groupId>
+    <artifactId>com.bsb.common.vaadin.embed</artifactId>
+    <version>0.4</version>
+</dependency>
+```
 
 or, for Vaadin 7 support:
 
-    <dependency>
-        <groupId>com.bsb.common.vaadin</groupId>
-        <artifactId>com.bsb.common.vaadin7.embed</artifactId>
-        <version>0.4</version>
-    </dependency>
+```xml
+<dependency>
+    <groupId>com.bsb.common.vaadin</groupId>
+    <artifactId>com.bsb.common.vaadin7.embed</artifactId>
+    <version>0.4</version>
+</dependency>
+```
 
 To visualize a component that you have built, simply pass it to the `EmbedVaadin` builder.
 
-    EmbedVaadin.forComponent(new Button("Hello")).start();
+```java
+EmbedVaadin.forComponent(new Button("Hello")).start();
+```
 
 And if you want to open the default browser automatically at the proper URL, you could just add an extra parameter:
 
-    EmbedVaadin.forComponent(new Button("Hello")).openBrowser(true).start();
+```java
+EmbedVaadin.forComponent(new Button("Hello")).openBrowser(true).start();
+```
 
 You can as easily embed a Layout or a Window. Note that this mode is purely for development purpose as you pass an initialized component to the application. Multi-sessions are therefore not supported. You could also add a development header that allows you to shutdown the server and close the browser tab.
 
-    EmbedVaadin.forComponent(new Button("Hello")).openBrowser(true).withDevelopmentHeader(true).start();
+```java
+EmbedVaadin.forComponent(new Button("Hello")).openBrowser(true).withDevelopmentHeader(true).start();
+```
 
 It is also possible to specify the `Class` of an `Application` (`Root` in Vaadin 7). In that case, the server starts closer to the full thing.
 
-    EmbedVaadin.forApplication(MyVaadinApplication.class).start();
+```java
+EmbedVaadin.forApplication(MyVaadinApplication.class).start();
+```
 
 The url that will be used to open the browser can be customized using the builder. For instance, the following would enable the Vaadin debug window:
 
-    EmbedVaadin.forComponent(new Button("Hello")).openBrowserAt("?debug").start();
+```java
+EmbedVaadin.forComponent(new Button("Hello")).openBrowserAt("?debug").start();
+```
 
 The parameter of the `openBrowserAt` method can be of the following types:
 
@@ -123,13 +137,15 @@ When embedding a _component_, these extra options are also available:
 
 This showcase how the API can be used to customize some of these settings:
 
-        EmbedVaadin.forComponent(new Label("Hello World!"))
-            .withContextPath("/foo")
-            .withHttpPort(7070)
-            .withContextRootDirectory("src/main/webapp")
-            .withTheme("default")
-            .openBrowser(true)
-            .start();
+```java
+EmbedVaadin.forComponent(new Label("Hello World!"))
+    .withContextPath("/foo")
+    .withHttpPort(7070)
+    .withContextRootDirectory("src/main/webapp")
+    .withTheme("default")
+    .openBrowser(true)
+    .start();
+```
 
 # Extending
 
