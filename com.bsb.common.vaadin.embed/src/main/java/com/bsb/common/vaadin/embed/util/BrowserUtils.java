@@ -21,6 +21,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.net.URI;
 import java.util.Arrays;
+import java.util.Locale;
 
 /**
  * A utility to launch a browser.
@@ -38,7 +39,7 @@ public final class BrowserUtils {
      */
     public static final String OS_NAME = System.getProperty("os.name");
 
-    private static final String LOWER_CASE_OS_NAME = OS_NAME.toLowerCase();
+    private static final String LOWER_CASE_OS_NAME = OS_NAME.toLowerCase(Locale.ENGLISH);
 
     /**
      * Specifies if the current OS is Microsoft Windows. Only take recent version of
