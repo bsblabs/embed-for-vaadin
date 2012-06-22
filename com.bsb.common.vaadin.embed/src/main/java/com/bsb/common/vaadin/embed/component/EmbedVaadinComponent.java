@@ -41,7 +41,7 @@ public class EmbedVaadinComponent extends EmbedVaadinServerBuilder<EmbedVaadinCo
         super();
         assertNotNull(component, "component could not be null.");
         this.component = component;
-        withConfigProperties(EmbedVaadinConfig.loadProperties());
+        initializeConfig(EmbedVaadinConfig.loadProperties());
     }
 
     /**
@@ -89,14 +89,23 @@ public class EmbedVaadinComponent extends EmbedVaadinServerBuilder<EmbedVaadinCo
     }
 
     @Override
-    public final EmbedVaadinComponent withConfigProperties(Properties properties) {
-        assertNotNull(properties, "properties could not be null.");
-        this.config = new EmbedComponentConfig(properties);
+    public EmbedVaadinComponent withConfigProperties(Properties properties) {
+        initializeConfig(properties);
         return self();
     }
 
     @Override
     protected EmbedComponentConfig getConfig() {
         return config;
+    }
+
+    /**
+     * Initializes a default configuration.
+     *
+     * @param properties the configuration
+     */
+    private void initializeConfig(Properties properties) {
+        assertNotNull(properties, "properties could not be null.");
+        this.config = new EmbedComponentConfig(properties);
     }
 }
