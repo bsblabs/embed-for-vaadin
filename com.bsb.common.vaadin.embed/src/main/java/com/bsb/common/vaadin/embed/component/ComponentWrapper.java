@@ -15,12 +15,12 @@
  */
 package com.bsb.common.vaadin.embed.component;
 
-import com.vaadin.terminal.Sizeable;
-import com.vaadin.terminal.WrappedRequest;
+import com.vaadin.server.Sizeable;
+import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Layout;
-import com.vaadin.ui.Root;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.VerticalSplitPanel;
 import com.vaadin.ui.Window;
@@ -44,16 +44,15 @@ public class ComponentWrapper {
     }
 
     /**
-     * Wraps the specified {@link Component} into a Vaadin application.
+     * Wraps the specified {@link Component} into a UI
      *
      * @param component the component to wrap
-     * @return an application displaying that component
+     * @return an UI displaying that component
      * @see #wrapLayout(com.vaadin.ui.Layout)
-     * @see #wrapRoot(com.vaadin.ui.Root)
      */
-    public DevApplication wrap(Component component) {
-        if (component instanceof Root) {
-            return wrapRoot((Root) component);
+    public UI wrap(Component component) {
+        if (component instanceof UI) {
+            return (UI) component;
         }
         if (component instanceof Window) {
             return wrapWindow((Window) component);
@@ -77,10 +76,9 @@ public class ComponentWrapper {
      * @param layout the layout to wrap
      * @return an application displaying that layout
      */
-    public DevApplication wrapLayout(Layout layout) {
+    public UI wrapLayout(Layout layout) {
         // TODO: add a header to switch the style, etc
         // TODO: add bookmark to set the style
-        final Root root;
         if (server.getConfig().isDevelopmentHeader()) {
             final VerticalSplitPanel mainLayout = new VerticalSplitPanel();
             mainLayout.setSizeFull();
@@ -93,49 +91,37 @@ public class ComponentWrapper {
 
             mainLayout.setSecondComponent(layout);
 
-            root = new DevRoot(mainLayout);
+            return new DevUI(mainLayout);
         } else {
-            root = new DevRoot(layout);
+            return new DevUI(layout);
         }
-
-        return wrapRoot(root);
     }
 
-    public DevApplication wrapWindow(Window window) {
-        return wrapRoot(new DevRoot(window));
-    }
-
-    /**
-     * Wraps a {@link Root} into a Vaadin application.
-     *
-     * @param root the root to wrap
-     * @return an application using that root as primary root
-     */
-    public DevApplication wrapRoot(Root root) {
-        return new DevApplication(server, root);
+    public UI wrapWindow(Window window) {
+        final UI ui = wrapLayout(new VerticalLayout());
+        ui.addWindow(window);
+        return ui;
     }
 
     /**
-     * A development {@link Root} that displays a simple layout.
+     * A development {@link UI} that displays a simple layout.
      *
      * @author Stephane Nicoll
      */
     @SuppressWarnings("serial")
-    static class DevRoot extends Root {
-
+    static class DevUI extends UI {
 
         /**
          * Creates a new instance.
          *
-         * @param content the content of the root
+         * @param content the content of the UI
          */
-        public DevRoot(ComponentContainer content) {
+        public DevUI(ComponentContainer content) {
             setContent(content);
         }
 
         @Override
-        protected void init(WrappedRequest request) {
-
+        protected void init(VaadinRequest vaadinRequest) {
         }
 
     }

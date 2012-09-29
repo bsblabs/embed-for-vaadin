@@ -17,7 +17,6 @@ package com.bsb.common.vaadin.embed.component;
 
 import com.bsb.common.vaadin.embed.AbstractEmbedVaadinTomcat;
 import com.vaadin.ui.Component;
-import org.apache.catalina.Wrapper;
 
 /**
  * A {@link com.bsb.common.vaadin.embed.EmbedVaadinServer} implementation that
@@ -55,9 +54,6 @@ public class ComponentBasedEmbedVaadinTomcat extends AbstractEmbedVaadinTomcat i
         initConfiguration();
 
         // Setup vaadin servlet
-        final Wrapper wrapper = initializeVaadinServlet(
-                new DevApplicationServlet(this, component));
-        // Silly but otherwise the parent class will complain
-        wrapper.addInitParameter("application", DevApplication.class.getName());
+        initializeVaadinServlet(new DevApplicationServlet(this, component));
     }
 }

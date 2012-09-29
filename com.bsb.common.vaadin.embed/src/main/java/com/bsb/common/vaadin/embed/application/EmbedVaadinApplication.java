@@ -18,7 +18,7 @@ package com.bsb.common.vaadin.embed.application;
 import com.bsb.common.vaadin.embed.EmbedVaadinConfig;
 import com.bsb.common.vaadin.embed.EmbedVaadinServer;
 import com.bsb.common.vaadin.embed.EmbedVaadinServerBuilder;
-import com.vaadin.ui.Root;
+import com.vaadin.ui.UI;
 
 import java.util.Properties;
 
@@ -29,28 +29,28 @@ import java.util.Properties;
  */
 public class EmbedVaadinApplication extends EmbedVaadinServerBuilder<EmbedVaadinApplication, EmbedVaadinServer> {
 
-    private final Class<? extends Root> rootClass;
+    private final Class<? extends UI> uiClass;
     private EmbedVaadinConfig config;
 
     /**
-     * Creates a new instance for the specified root.
+     * Creates a new instance for the specified UI.
      *
-     * @param rootClass the class of the root to deploy
+     * @param uiClass the class of the UI to deploy
      */
-    public EmbedVaadinApplication(Class<? extends Root> rootClass) {
+    public EmbedVaadinApplication(Class<? extends UI> uiClass) {
         super();
-        assertNotNull(rootClass, "rootClass could not be null.");
-        this.rootClass = rootClass;
+        assertNotNull(uiClass, "uiClass could not be null.");
+        this.uiClass = uiClass;
         withConfigProperties(EmbedVaadinConfig.loadProperties());
     }
 
     /**
-     * Returns the {@link Root} type that was used to initialize this instance, if any.
+     * Returns the {@link UI} type that was used to initialize this instance, if any.
      *
-     * @return the root class or <tt>null</tt> if a component was set
+     * @return the UI class or <tt>null</tt> if a component was set
      */
-    protected Class<? extends Root> getRootClass() {
-        return rootClass;
+    protected Class<? extends UI> getUiClass() {
+        return uiClass;
     }
 
     @Override
@@ -60,7 +60,7 @@ public class EmbedVaadinApplication extends EmbedVaadinServerBuilder<EmbedVaadin
 
     @Override
     public EmbedVaadinServer build() {
-        return new ApplicationBasedEmbedVaadinTomcat(getConfig(), getRootClass());
+        return new ApplicationBasedEmbedVaadinTomcat(getConfig(), getUiClass());
     }
 
     @Override

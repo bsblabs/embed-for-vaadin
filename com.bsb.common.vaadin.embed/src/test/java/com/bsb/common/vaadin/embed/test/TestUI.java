@@ -15,11 +15,12 @@
  */
 package com.bsb.common.vaadin.embed.test;
 
-import com.vaadin.terminal.WrappedRequest;
+import com.vaadin.server.Page;
+import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Notification;
-import com.vaadin.ui.Root;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -28,21 +29,21 @@ import com.vaadin.ui.VerticalLayout;
  * @author Stephane Nicoll
  */
 @SuppressWarnings("serial")
-public class TestRoot extends Root {
+public class TestUI extends UI {
 
     @Override
-    protected void init(WrappedRequest request) {
+    protected void init(VaadinRequest request) {
         final VerticalLayout layout = new VerticalLayout();
         layout.setSizeFull();
         layout.setMargin(true);
         layout.setSpacing(true);
         final Button hello = new Button("Hello");
-        hello.addListener(new Button.ClickListener() {
+        hello.addClickListener(new Button.ClickListener() {
             public void buttonClick(Button.ClickEvent event) {
                 final Notification n =
-                        new Notification("Yes, hello", Notification.TYPE_HUMANIZED_MESSAGE);
+                        new Notification("Yes, hello", Notification.Type.HUMANIZED_MESSAGE);
                 n.setDelayMsec(-1);
-                getRoot().showNotification(n);
+                n.show(Page.getCurrent());
             }
         });
         layout.addComponent(hello);

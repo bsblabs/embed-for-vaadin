@@ -2,6 +2,7 @@ package $package;
 
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
@@ -13,9 +14,9 @@ public class DemoLayout extends VerticalLayout {
         setSizeFull();
 
         final Button hello = new Button("Say hello");
-        hello.addListener(new Button.ClickListener() {
+        hello.addClickListener(new Button.ClickListener() {
             public void buttonClick(Button.ClickEvent event) {
-                event.getComponent().getRoot().showNotification("Hello World!");
+                Notification.show("Hello World!");
             }
         });
         addComponent(hello);

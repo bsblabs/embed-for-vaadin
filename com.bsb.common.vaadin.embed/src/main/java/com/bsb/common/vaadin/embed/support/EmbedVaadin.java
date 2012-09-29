@@ -18,7 +18,7 @@ package com.bsb.common.vaadin.embed.support;
 import com.bsb.common.vaadin.embed.application.EmbedVaadinApplication;
 import com.bsb.common.vaadin.embed.component.EmbedVaadinComponent;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.Root;
+import com.vaadin.ui.UI;
 
 /**
  * Embeds vaadin in a web application deployed in the current VM.
@@ -36,10 +36,10 @@ public final class EmbedVaadin {
      * The specified <tt>component</tt> could be of various types which will be
      * wrapped automatically if necessary as follows:
      * <ul>
-     * <li><tt>Root</tt>: the root becomes the root used by the application</li>
-     * <li><tt>Window</tt>: a simple root is created with the window. Note that
-     * this was common with Vaadin6 but you should consider using a <tt>Root</tt> instead</li>
-     * <li><tt>Layout</tt>: a simple root is created using that layout</li>
+     * <li><tt>UI</tt>: the ui is simply used as is</li>
+     * <li><tt>Window</tt>: a simple UI is created with the window attached to it. Note that
+     * in Vaadin6, a Window could be used as an application. In Vaadin7, a window is only a pop-up window</li>
+     * <li><tt>Layout</tt>: a simple UI is created using that layout</li>
      * <li>other: a <tt>VerticalLayout</tt> is created to hold the component</li>
      * </ul>
      *
@@ -51,17 +51,17 @@ public final class EmbedVaadin {
     }
 
     /**
-     * Creates a new instance to manage a vaadin {@link Root} defined by the
+     * Creates a new instance to manage a vaadin {@link UI} defined by the
      * specified class.
      * <p/>
      * This is an easy way to deploy a complete vaadin application locally from the
      * IDE.
      *
-     * @param rootClass the root class
+     * @param uiClass the ui class
      * @return an instance handling that component
      */
-    public static EmbedVaadinApplication forRoot(Class<? extends Root> rootClass) {
-        return new EmbedVaadinApplication(rootClass);
+    public static EmbedVaadinApplication forUI(Class<? extends UI> uiClass) {
+        return new EmbedVaadinApplication(uiClass);
     }
 
 }

@@ -59,9 +59,9 @@ You can as easily embed a Layout or a Window. Note that this mode is purely for 
 
     EmbedVaadin.forComponent(new Button("Hello")).openBrowser(true).withDevelopmentHeader(true).start();
 
-It is also possible to specify the `Class` of a `Root`. In that case, the server starts closer to the full thing.
+It is also possible to specify the `Class` of a `UI`. In that case, the server starts closer to the full thing.
 
-    EmbedVaadin.forRoot(MyRoot.class).start();
+    EmbedVaadin.forUI(MyUI.class).start();
 
 The url that will be used to open the browser can be customized using the builder. For instance, the following would enable the Vaadin debug window:
 
@@ -97,7 +97,7 @@ At this stage the following can be customized:
 
 When embedding a _component_, these extra options are also available:
 
-- `vaadin.theme`: the vaadin theme to apply to the generated application. Ignored if a root class is used (by default, *reindeer*)
+- `vaadin.theme`: the vaadin theme to apply to the generated application. Ignored if a UI class is used (by default, *reindeer*)
 - `development.header`: to add a development header to the generated application. Right now, the development header allows you to shutdown the server and close the tab
 
 This showcase how the API can be used to customize some of these settings:
@@ -115,6 +115,10 @@ This showcase how the API can be used to customize some of these settings:
 Custom extension can be added very easily by extending from the `EmbedVaadinServerBuilder`. These extensions can specify a custom configuration object, extending from `EmbedVaadinConfig`.
 
 # Release notes
+
+## 0.5 (not released yet)
+
+- #11: Updated to Vaadin 7 beta2
 
 ## 0.4
 
