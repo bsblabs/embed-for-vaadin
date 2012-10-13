@@ -28,7 +28,7 @@ The most easy way to experience with Embed for Vaadin is to use the simple [Mave
     mvn archetype:generate  \
         -DarchetypeGroupId=com.bsb.common.vaadin \
         -DarchetypeArtifactId=com.bsb.common.vaadin7.embed-simple-archetype \
-        -DarchetypeVersion=0.4
+        -DarchetypeVersion=0.5
 
 There are two ways to experience with the project once it has been created:
 
@@ -44,7 +44,7 @@ To use this library in your own projects, add a dependency to it using you favor
     <dependency>
         <groupId>com.bsb.common.vaadin</groupId>
         <artifactId>com.bsb.common.vaadin7.embed</artifactId>
-        <version>0.4</version>
+        <version>0.5</version>
     </dependency>
 
 To visualize a component that you have built, simply pass it to the `EmbedVaadin` builder.
@@ -116,8 +116,11 @@ Custom extension can be added very easily by extending from the `EmbedVaadinServ
 
 # Release notes
 
-## 0.5 (not released yet)
+## 0.5
 
+- #15: Fixed development header that enabled by default while doc states it is optional
+- #14: Updated to Tomcat 7.0.32
+- #13: Updated to Vaadin 7 beta3
 - #11: Updated to Vaadin 7 beta2
 
 ## 0.4
