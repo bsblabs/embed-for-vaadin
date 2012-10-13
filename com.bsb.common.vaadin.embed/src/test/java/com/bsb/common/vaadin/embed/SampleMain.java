@@ -25,6 +25,9 @@ import com.vaadin.ui.Button;
  */
 public class SampleMain {
     public static void main(String[] args) {
-        EmbedVaadin.forComponent(new Button("Hello")).openBrowser(true).start();
+        EmbedVaadin.forComponent(new Button("Hello"))
+                .withDevelopmentHeader(true)
+                .openBrowser(true)
+                .start();
     }
 }

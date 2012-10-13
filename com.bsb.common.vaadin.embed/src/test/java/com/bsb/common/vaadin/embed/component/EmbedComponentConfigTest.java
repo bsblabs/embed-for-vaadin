@@ -43,7 +43,7 @@ public class EmbedComponentConfigTest extends AbstractEmbedTest {
                 EmbedVaadinConfig.loadProperties("/config/simple-embed-vaadin.properties"));
         assertServerConfig(config, 12345, "/foo", false);
         assertVaadinConfig(config, "com.bsb.foo.MyWidgetSet", true);
-        assertComponentConfig(config, "myTheme", false);
+        assertComponentConfig(config, "myTheme", true);
         assertBrowserConfig(config, true, "/foo/bar");
     }
 
@@ -54,7 +54,7 @@ public class EmbedComponentConfigTest extends AbstractEmbedTest {
 
         // Change stuff
         config.setTheme("fooBarTheme");
-        config.setDevelopmentHeader(false);
+        config.setDevelopmentHeader(true);
 
         // Now validate the clone has not changed
         assertComponentConfig(clone, EmbedComponentConfig.DEFAULT_THEME,
