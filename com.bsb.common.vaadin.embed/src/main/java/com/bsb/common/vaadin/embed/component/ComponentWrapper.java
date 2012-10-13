@@ -99,6 +99,13 @@ public class ComponentWrapper {
         }
     }
 
+    /**
+     * Wraps the specified {@link Window} into a UI. Adds the specified pop-up
+     * window to a simple, empty vertical layout.
+     *
+     * @param window the pop-up window to wrap
+     * @return an application displaying that pop-up window
+     */
     public UI wrapWindow(Window window) {
         final UI ui = wrapLayout(new VerticalLayout());
         ui.addWindow(window);
