@@ -102,9 +102,6 @@ public abstract class AbstractEmbedVaadinTomcat implements EmbedVaadinServer, Se
             doStop();
         } catch (LifecycleException e) {
             logger.warn("Failed to stop tomcat", e);
-        } finally {
-            // Prevents a second stop when the VM exit since we already stopped it manually
-            removeShutdownHook();
         }
     }
 
@@ -199,6 +196,7 @@ public abstract class AbstractEmbedVaadinTomcat implements EmbedVaadinServer, Se
         tomcat.stop();
         long duration = System.currentTimeMillis() - startTime;
         logger.info("Tomcat shutdown finished in " + duration + " ms.");
+        removeShutdownHook(); // Make sure to clean the shutdown hook here
     }
 
     /**
