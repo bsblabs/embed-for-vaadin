@@ -52,9 +52,9 @@ public final class EmbedComponentConfig extends EmbedVaadinConfig {
     public static final String KEY_DEVELOPMENT_HEADER = "development.header";
 
     /**
-     * By default the development header is added to the application.
+     * By default the development header is not added to the application.
      */
-    public static final boolean DEFAULT_DEVELOPMENT_HEADER = true;
+    public static final boolean DEFAULT_DEVELOPMENT_HEADER = false;
 
     private String theme;
     private boolean developmentHeader;

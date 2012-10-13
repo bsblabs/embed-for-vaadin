@@ -18,6 +18,7 @@ package com.bsb.common.vaadin.embed.component;
 import com.bsb.common.vaadin.embed.AbstractEmbedVaadinTomcat;
 import com.vaadin.Application;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
@@ -45,8 +46,12 @@ public class ComponentWrapperTest {
 
     @Test
     public void wrapLayoutWithDevelopmentHeader() {
+        final EmbedComponentConfig config = EmbedComponentConfig.defaultConfig();
+        config.setDevelopmentHeader(true);
+        final ComponentWrapper wrapper = createWrapper(config);
+
         final HorizontalLayout layout = new HorizontalLayout();
-        final Application app = instance.wrap(layout);
+        final Application app = wrapper.wrap(layout);
 
         final Layout l = assertWrappingLayout(app);
 
@@ -55,13 +60,9 @@ public class ComponentWrapperTest {
 
     @Test
     public void wrapLayoutWithoutDevelopmentHeader() {
-        final EmbedComponentConfig config = EmbedComponentConfig.defaultConfig();
-        config.setDevelopmentHeader(false);
-        final ComponentWrapper wrapper = createWrapper(config);
-
         final HorizontalLayout layout = new HorizontalLayout();
         // Wrap without development header should just set the layout as the main content of the window
-        final Application app = wrapper.wrap(layout);
+        final Application app = instance.wrap(layout);
 
         assertNotNull("Main window must not be null", app.getMainWindow());
         assertEquals("Layout should be set as the main layout since no header was expected", layout,
@@ -73,10 +74,10 @@ public class ComponentWrapperTest {
         final Button component = new Button("Hello");
         final Application app = instance.wrap(component);
 
-        final Layout l = assertWrappingLayout(app);
+        final ComponentContainer content = app.getMainWindow().getContent();
         assertEquals("Main content must be vertical layout", VerticalLayout.class,
-                l.getClass());
-        final VerticalLayout layout = (VerticalLayout) l;
+                content.getClass());
+        final VerticalLayout layout = (VerticalLayout) content;
         assertEquals("Should have a single component", 1, layout.getComponentCount());
         assertEquals("Component was not set properly", component, layout.getComponent(0));
     }
