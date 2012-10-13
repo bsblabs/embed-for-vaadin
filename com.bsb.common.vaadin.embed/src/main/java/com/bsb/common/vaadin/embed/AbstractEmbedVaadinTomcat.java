@@ -19,7 +19,10 @@ import com.bsb.common.vaadin.embed.util.BrowserUtils;
 import com.google.common.io.Files;
 import com.vaadin.server.VaadinServlet;
 import org.apache.catalina.Context;
+import org.apache.catalina.Lifecycle;
+import org.apache.catalina.LifecycleEvent;
 import org.apache.catalina.LifecycleException;
+import org.apache.catalina.LifecycleListener;
 import org.apache.catalina.Wrapper;
 import org.apache.catalina.startup.Tomcat;
 import org.slf4j.Logger;
@@ -168,6 +171,7 @@ public abstract class AbstractEmbedVaadinTomcat implements EmbedVaadinServer, Se
      * @throws LifecycleException if tomcat failed to start
      */
     private void doStart() throws LifecycleException {
+        tomcat.getServer().addLifecycleListener(new TomcatLifecycleListener());
         logger.info("Deploying application to [" + getConfig().getDeployUrl() + "]");
         tomcat.start();
 
@@ -194,7 +198,6 @@ public abstract class AbstractEmbedVaadinTomcat implements EmbedVaadinServer, Se
         logger.info("Stopping tomcat.");
         long startTime = System.currentTimeMillis();
         tomcat.stop();
-        removeShutdownHook(); // Make sure to clean the shutdown hook here
         long duration = System.currentTimeMillis() - startTime;
         logger.info("Tomcat shutdown finished in " + duration + " ms.");
     }
@@ -230,6 +233,21 @@ public abstract class AbstractEmbedVaadinTomcat implements EmbedVaadinServer, Se
                 logger.info("Stopped Tomcat");
             } catch (LifecycleException e) {
                 logger.warn("Failed to stop Tomcat", e);
+            }
+        }
+    }
+
+    private final class TomcatLifecycleListener implements LifecycleListener {
+
+        /**
+         * Listens for stop event only in order to remove the shutdown hook before the VM
+         * actually shuts down.
+         *
+         * @param event the event to listen to.
+         */
+        public void lifecycleEvent(LifecycleEvent event) {
+            if (event.getType().equals(Lifecycle.STOP_EVENT)) {
+                removeShutdownHook();
             }
         }
     }
