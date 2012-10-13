@@ -16,10 +16,13 @@
 package com.bsb.common.vaadin.embed.component;
 
 import com.vaadin.server.DeploymentConfiguration;
+import com.vaadin.server.ServiceException;
 import com.vaadin.server.UIProvider;
+import com.vaadin.server.VaadinRequest;
+import com.vaadin.server.VaadinService;
+import com.vaadin.server.VaadinServiceSession;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.server.VaadinServletService;
-import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.UI;
 
@@ -36,9 +39,8 @@ import java.util.List;
  *
  * @author Stephane Nicoll
  */
+@SuppressWarnings("serial")
 public class DevApplicationServlet extends VaadinServlet {
-
-    private static final long serialVersionUID = -5557485761575067731L;
 
     private final UI ui;
     private final String theme;
@@ -59,19 +61,30 @@ public class DevApplicationServlet extends VaadinServlet {
         return new DevVaadinServletService(this, deploymentConfiguration);
     }
 
-    @SuppressWarnings("serial")
     private final class DevVaadinServletService extends VaadinServletService {
-
-        private final List<UIProvider> uiProviders;
 
         private DevVaadinServletService(VaadinServlet servlet, DeploymentConfiguration deploymentConfiguration) {
             super(servlet, deploymentConfiguration);
+        }
+
+        @Override
+        protected VaadinServiceSession createVaadinSession(VaadinRequest request) throws ServiceException {
+            return new DevVaadinServiceSession(this);
+        }
+    }
+
+    private final class DevVaadinServiceSession extends VaadinServiceSession {
+
+        private final List<UIProvider> uiProviders;
+
+        private DevVaadinServiceSession(VaadinService service) {
+            super(service);
             final UIProvider provider = new DevUIProvider(ui, theme);
             this.uiProviders = Collections.singletonList(provider);
         }
 
         @Override
-        public List<UIProvider> getUIProviders(VaadinSession session) {
+        public List<UIProvider> getUIProviders() {
             return uiProviders;
         }
     }
