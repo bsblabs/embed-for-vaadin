@@ -33,14 +33,14 @@ The most easy way to experience with Embed for Vaadin is to use the simple [Mave
     mvn archetype:generate  \
         -DarchetypeGroupId=com.bsb.common.vaadin \
         -DarchetypeArtifactId=com.bsb.common.vaadin.embed-simple-archetype \
-        -DarchetypeVersion=0.4
+        -DarchetypeVersion=0.5
 
 If you want to experiment with Vaadin 7 instead, just use:
 
     mvn archetype:generate  \
         -DarchetypeGroupId=com.bsb.common.vaadin \
         -DarchetypeArtifactId=com.bsb.common.vaadin7.embed-simple-archetype \
-        -DarchetypeVersion=0.4
+        -DarchetypeVersion=0.5
 
 
 There are two ways to experience with the project once it has been created:
@@ -58,7 +58,7 @@ To use this library in your own projects, add a dependency to it using you favor
 <dependency>
     <groupId>com.bsb.common.vaadin</groupId>
     <artifactId>com.bsb.common.vaadin.embed</artifactId>
-    <version>0.4</version>
+    <version>0.5</version>
 </dependency>
 ```
 
@@ -68,7 +68,7 @@ or, for Vaadin 7 support:
 <dependency>
     <groupId>com.bsb.common.vaadin</groupId>
     <artifactId>com.bsb.common.vaadin7.embed</artifactId>
-    <version>0.4</version>
+    <version>0.5</version>
 </dependency>
 ```
 
@@ -152,6 +152,12 @@ EmbedVaadin.forComponent(new Label("Hello World!"))
 Custom extension can be added very easily by extending from the `EmbedVaadinServerBuilder`. These extensions can specify a custom configuration object, extending from `EmbedVaadinConfig`.
 
 # Release notes
+
+## 0.5
+
+- #15: Fixed development header that was enabled by default while doc states it is optional
+- #14: Updated to Tomcat 7.0.32
+- #10: Updated to Vaadin 6.8.0. Work around a binary incompatible change made in that Vaadin version.
 
 ## 0.4
 
