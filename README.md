@@ -118,7 +118,7 @@ Custom extension can be added very easily by extending from the `EmbedVaadinServ
 
 ## 0.5
 
-- #15: Fixed development header that enabled by default while doc states it is optional
+- #15: Fixed development header that was enabled by default while doc states it is optional
 - #14: Updated to Tomcat 7.0.32
 - #13: Updated to Vaadin 7 beta3
 - #11: Updated to Vaadin 7 beta2
