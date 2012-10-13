@@ -32,6 +32,8 @@ import com.vaadin.ui.Window;
  */
 public class ComponentWrapper {
 
+    private static final int SPLIT_POSITION = 20;
+
     private final ComponentBasedVaadinServer server;
 
     /**
@@ -82,7 +84,7 @@ public class ComponentWrapper {
         if (server.getConfig().isDevelopmentHeader()) {
             final VerticalSplitPanel mainLayout = new VerticalSplitPanel();
             mainLayout.setSizeFull();
-            mainLayout.setSplitPosition(20, Sizeable.Unit.PIXELS);
+            mainLayout.setSplitPosition(SPLIT_POSITION, Sizeable.Unit.PIXELS);
             mainLayout.setLocked(true);
 
             final DevApplicationHeader header = new DevApplicationHeader(server);

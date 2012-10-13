@@ -41,7 +41,7 @@ public class EmbedVaadinApplication extends EmbedVaadinServerBuilder<EmbedVaadin
         super();
         assertNotNull(uiClass, "uiClass could not be null.");
         this.uiClass = uiClass;
-        withConfigProperties(EmbedVaadinConfig.loadProperties());
+        initializeConfig(EmbedVaadinConfig.loadProperties());
     }
 
     /**
@@ -64,13 +64,23 @@ public class EmbedVaadinApplication extends EmbedVaadinServerBuilder<EmbedVaadin
     }
 
     @Override
-    public final EmbedVaadinApplication withConfigProperties(Properties properties) {
-        this.config = new EmbedVaadinConfig(properties);
+    public EmbedVaadinApplication withConfigProperties(Properties properties) {
+        initializeConfig(properties);
         return self();
     }
 
     @Override
     protected EmbedVaadinConfig getConfig() {
         return config;
+    }
+
+    /**
+     * Initializes a default configuration.
+     *
+     * @param properties the configuration
+     */
+    private void initializeConfig(Properties properties) {
+        assertNotNull(properties, "properties could not be null.");
+        this.config = new EmbedVaadinConfig(properties);
     }
 }

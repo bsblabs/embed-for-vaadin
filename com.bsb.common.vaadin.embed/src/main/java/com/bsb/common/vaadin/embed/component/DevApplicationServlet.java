@@ -60,7 +60,7 @@ public class DevApplicationServlet extends VaadinServlet {
     }
 
     @SuppressWarnings("serial")
-    private class DevVaadinServletService extends VaadinServletService {
+    private final class DevVaadinServletService extends VaadinServletService {
 
         private final List<UIProvider> uiProviders;
 

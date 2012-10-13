@@ -308,16 +308,16 @@ public class EmbedVaadinConfig implements Serializable {
      * @return the url to use when to open the browser
      */
     public String getOpenBrowserUrl() {
-        final String customBrowserUrl = getCustomBrowserUrl();
+        final String customUrl = getCustomBrowserUrl();
         final String deployUrl = getDeployUrl();
-        if (customBrowserUrl == null) {
+        if (customUrl == null) {
             return deployUrl;
-        } else if (customBrowserUrl.startsWith("http://")) {
-            return customBrowserUrl;
-        } else if (customBrowserUrl.startsWith("/")) {
-            return buildUrl(getPort(), customBrowserUrl);
+        } else if (customUrl.startsWith("http://")) {
+            return customUrl;
+        } else if (customUrl.startsWith("/")) {
+            return buildUrl(getPort(), customUrl);
         } else {
-            return deployUrl + customBrowserUrl;
+            return deployUrl + customUrl;
         }
     }
 
