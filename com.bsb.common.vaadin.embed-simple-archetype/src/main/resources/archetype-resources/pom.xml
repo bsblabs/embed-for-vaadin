@@ -8,7 +8,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <vaadin.version>7.0.0.beta6</vaadin.version>
+        <vaadin.version>7.0.0</vaadin.version>
     </properties>
 
     <dependencies>

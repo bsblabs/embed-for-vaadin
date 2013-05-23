@@ -18,7 +18,7 @@ package com.bsb.common.vaadin.embed.component;
 import com.bsb.common.vaadin.embed.AbstractEmbedVaadinTomcat;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.UI;
@@ -81,7 +81,7 @@ public class ComponentWrapperTest {
         final Button component = new Button("Hello");
         final UI app = instance.wrap(component);
 
-        final ComponentContainer content = app.getUI().getContent();
+        final Component content = app.getUI().getContent();
         assertEquals("Main content must be vertical layout", VerticalLayout.class,
                 content.getClass());
         final VerticalLayout layout = (VerticalLayout) content;

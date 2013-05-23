@@ -116,6 +116,10 @@ Custom extension can be added very easily by extending from the `EmbedVaadinServ
 
 # Release notes
 
+## 0.6
+
+- #16: Updated to Vaadin 7.0.0
+
 ## 0.5
 
 - #15: Fixed development header that was enabled by default while doc states it is optional
