@@ -15,15 +15,17 @@
  */
 package com.bsb.common.vaadin.embed.component;
 
-import com.vaadin.Application;
-import com.vaadin.terminal.gwt.server.ApplicationServlet;
+import com.vaadin.server.DeploymentConfiguration;
+import com.vaadin.server.ServiceException;
+import com.vaadin.server.SessionInitEvent;
+import com.vaadin.server.SessionInitListener;
+import com.vaadin.server.VaadinServlet;
+import com.vaadin.server.VaadinServletService;
 import com.vaadin.ui.Component;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
+import com.vaadin.ui.UI;
 
 /**
- * A simple development {@link ApplicationServlet} that takes the component
+ * A simple development {@link VaadinServlet} that takes the component
  * to display.
  * <p/>
  * Since this cannot create a new instance of the component, this mode does
@@ -32,11 +34,11 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @author Stephane Nicoll
  */
-public class DevApplicationServlet extends ApplicationServlet {
+@SuppressWarnings("serial")
+public class DevApplicationServlet extends VaadinServlet {
 
-    private static final long serialVersionUID = -5557485761575067731L;
-
-    private final Application application;
+    private final UI ui;
+    private final String theme;
 
     /**
      * Creates a new instance.
@@ -45,16 +47,18 @@ public class DevApplicationServlet extends ApplicationServlet {
      * @param component the component to display
      */
     public DevApplicationServlet(ComponentBasedVaadinServer server, Component component) {
-        this.application = new ComponentWrapper(server).wrap(component);
+        this.ui = new ComponentWrapper(server).wrap(component);
+        this.theme = server.getConfig().getTheme();
     }
 
-    @Override
-    protected Application getNewApplication(HttpServletRequest request) throws ServletException {
-        return application;
-    }
-
-    @Override
-    protected Class<? extends Application> getApplicationClass() throws ClassNotFoundException {
-        return DevApplication.class;
+    protected VaadinServletService createServletService(DeploymentConfiguration deploymentConfiguration)
+			throws ServiceException {
+        final VaadinServletService service = super.createServletService(deploymentConfiguration);
+        service.addSessionInitListener(new SessionInitListener() {
+            public void sessionInit(SessionInitEvent event) throws ServiceException {
+                event.getSession().addUIProvider(new DevUIProvider(ui, theme));
+            }
+        });
+        return service;
     }
 }

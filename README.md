@@ -23,25 +23,15 @@ Make sure you have access to the central repository.
 
 # Getting started
 
-Embed for Vaadin provides support for both Vaadin 6 and Vaadin 7. Since Vaadin 7 introduces a set of backward incompatible changes in the API, there are two separate libraries:
-
-* `com.bsb.common.vaadin.embed` for the Vaadin 6 support
-* `com.bsb.common.vaadin7.embed` for the Vaadin 7 support
+Embed for Vaadin provides support for both Vaadin 6 and Vaadin 7. Since Vaadin 7 introduces a set of backward 
+incompatible changes in the API, vaadin6 is no longer supported as of 0.7
 
 The most easy way to experience with Embed for Vaadin is to use the simple [Maven archetype](http://maven.apache.org/guides/introduction/introduction-to-archetypes.html). The following command line creates a simple project:
 
     mvn archetype:generate  \
         -DarchetypeGroupId=com.bsb.common.vaadin \
         -DarchetypeArtifactId=com.bsb.common.vaadin.embed-simple-archetype \
-        -DarchetypeVersion=0.5
-
-If you want to experiment with Vaadin 7 instead, just use:
-
-    mvn archetype:generate  \
-        -DarchetypeGroupId=com.bsb.common.vaadin \
-        -DarchetypeArtifactId=com.bsb.common.vaadin7.embed-simple-archetype \
-        -DarchetypeVersion=0.5
-
+        -DarchetypeVersion=0.7-SNAPSHOT
 
 There are two ways to experience with the project once it has been created:
 
@@ -54,23 +44,11 @@ There are two ways to experience with the project once it has been created:
 
 To use this library in your own projects, add a dependency to it using you favorite build tool. For instance, with Apache Maven:
 
-```xml
-<dependency>
-    <groupId>com.bsb.common.vaadin</groupId>
-    <artifactId>com.bsb.common.vaadin.embed</artifactId>
-    <version>0.5</version>
-</dependency>
-```
-
-or, for Vaadin 7 support:
-
-```xml
-<dependency>
-    <groupId>com.bsb.common.vaadin</groupId>
-    <artifactId>com.bsb.common.vaadin7.embed</artifactId>
-    <version>0.5</version>
-</dependency>
-```
+    <dependency>
+        <groupId>com.bsb.common.vaadin</groupId>
+        <artifactId>com.bsb.common.vaadin.embed</artifactId>
+        <version>0.3</version>
+    </dependency>
 
 To visualize a component that you have built, simply pass it to the `EmbedVaadin` builder.
 
@@ -90,10 +68,10 @@ You can as easily embed a Layout or a Window. Note that this mode is purely for 
 EmbedVaadin.forComponent(new Button("Hello")).openBrowser(true).withDevelopmentHeader(true).start();
 ```
 
-It is also possible to specify the `Class` of an `Application` (`Root` in Vaadin 7). In that case, the server starts closer to the full thing.
+It is also possible to specify the `Class` of a `UI`. In that case, the server starts closer to the full thing.
 
 ```java
-EmbedVaadin.forApplication(MyVaadinApplication.class).start();
+EmbedVaadin.forUI(MyUI.class).start();
 ```
 
 The url that will be used to open the browser can be customized using the builder. For instance, the following would enable the Vaadin debug window:
@@ -132,7 +110,7 @@ At this stage the following can be customized:
 
 When embedding a _component_, these extra options are also available:
 
-- `vaadin.theme`: the vaadin theme to apply to the generated application. Ignored if an application class is used (by default, *reindeer*)
+- `vaadin.theme`: the vaadin theme to apply to the generated application. Ignored if a UI class is used (by default, *reindeer*)
 - `development.header`: to add a development header to the generated application. Right now, the development header allows you to shutdown the server and close the tab
 
 This showcase how the API can be used to customize some of these settings:
@@ -153,15 +131,21 @@ Custom extension can be added very easily by extending from the `EmbedVaadinServ
 
 # Release notes
 
+## 0.6
+
+- #17: Updated to Vaadin 7.1.0
+- #16: Updated to Vaadin 7.0.0
+
 ## 0.5
 
 - #15: Fixed development header that was enabled by default while doc states it is optional
 - #14: Updated to Tomcat 7.0.32
-- #10: Updated to Vaadin 6.8.0. Work around a binary incompatible change made in that Vaadin version.
+- #13: Updated to Vaadin 7 beta3
+- #11: Updated to Vaadin 7 beta2
 
 ## 0.4
 
-- #8: Initial support of Vaadin 7
+- #8: Initial support for Vaadin 7
 - #7: customization of the url to use when opening the browser
 - #6: added simple Maven archetype
 

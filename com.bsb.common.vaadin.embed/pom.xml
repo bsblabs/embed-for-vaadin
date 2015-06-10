@@ -2,9 +2,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-         <groupId>com.bsb.common.vaadin</groupId>
-         <artifactId>com.bsb.common.vaadin.embed-parent</artifactId>
-        <version>0.6-SNAPSHOT</version>
+        <groupId>com.bsb.common.vaadin</groupId>
+        <artifactId>com.bsb.common.vaadin.embed-parent</artifactId>
+        <version>0.7-SNAPSHOT</version>
     </parent>
     <groupId>com.bsb.common.vaadin</groupId>
     <artifactId>com.bsb.common.vaadin.embed</artifactId>
@@ -27,7 +27,15 @@
 
         <dependency>
             <groupId>com.vaadin</groupId>
-            <artifactId>vaadin</artifactId>
+            <artifactId>vaadin-server</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-client-compiled</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-themes</artifactId>
         </dependency>
 
         <dependency>
@@ -75,6 +83,6 @@
             </plugin>
         </plugins>
 
-          </build>
+  </build>
 
 </project>

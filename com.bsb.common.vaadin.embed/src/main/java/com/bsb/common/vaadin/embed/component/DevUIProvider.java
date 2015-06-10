@@ -15,44 +15,45 @@
  */
 package com.bsb.common.vaadin.embed.component;
 
-import com.vaadin.Application;
-import com.vaadin.ui.Window;
+import com.vaadin.server.UIClassSelectionEvent;
+import com.vaadin.server.UICreateEvent;
+import com.vaadin.server.UIProvider;
+import com.vaadin.ui.UI;
 
 /**
- * A development application that displays a simple layout.
+ * A specialized {@link UIProvider} that returns a configurable UI and theme.
  *
  * @author Stephane Nicoll
  */
 @SuppressWarnings("serial")
-public class DevApplication extends Application {
+final class DevUIProvider extends UIProvider {
 
-    private final transient ComponentBasedVaadinServer server;
-    private final Window mainWindow;
+    private final UI ui;
+    private final String theme;
 
     /**
      * Creates a new instance.
      *
-     * @param server the server handling this application
-     * @param mainWindow the main window
+     * @param ui the ui to use, regardless of the event
+     * @param theme the theme to use, regardless of the event
      */
-    public DevApplication(ComponentBasedVaadinServer server, Window mainWindow) {
-        this.server = server;
-        this.mainWindow = mainWindow;
+    DevUIProvider(UI ui, String theme) {
+        this.ui = ui;
+        this.theme = theme;
     }
 
     @Override
-    public void init() {
-        setTheme(server.getConfig().getTheme());
-
-        setMainWindow(mainWindow);
+    public UI createInstance(UICreateEvent event) {
+        return ui;
     }
 
-    /**
-     * Returns the main {@link Window} that is used by this application.
-     *
-     * @return the main window
-     */
-    public Window getMainWindow() {
-        return mainWindow;
+    @Override
+    public String getTheme(UICreateEvent event) {
+        return theme;
+    }
+
+    @Override
+    public Class<? extends UI> getUIClass(UIClassSelectionEvent event) {
+        return ui.getClass();
     }
 }

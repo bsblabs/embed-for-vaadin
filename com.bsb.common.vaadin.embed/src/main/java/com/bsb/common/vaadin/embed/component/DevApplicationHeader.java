@@ -19,6 +19,7 @@ import com.bsb.common.vaadin.embed.EmbedVaadinServer;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.JavaScript;
 import com.vaadin.ui.themes.BaseTheme;
 
 /**
@@ -43,7 +44,7 @@ public class DevApplicationHeader extends HorizontalLayout {
         setComponentAlignment(shutdown, Alignment.MIDDLE_CENTER);
 
 
-        shutdown.addListener(new Button.ClickListener() {
+        shutdown.addClickListener(new Button.ClickListener() {
             public void buttonClick(Button.ClickEvent event) {
                 // Stop the server in a separate thread.
                 final Thread thread = new Thread(new Runnable() {
@@ -58,7 +59,7 @@ public class DevApplicationHeader extends HorizontalLayout {
                 thread.start();
 
                 // Close the browser tab
-                getWindow().executeJavaScript("close();");
+                JavaScript.getCurrent().execute("close();");
             }
         });
     }

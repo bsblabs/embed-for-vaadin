@@ -18,7 +18,7 @@ package com.bsb.common.vaadin.embed.application;
 import com.bsb.common.vaadin.embed.AbstractEmbedTest;
 import com.bsb.common.vaadin.embed.EmbedVaadinServer;
 import com.bsb.common.vaadin.embed.support.EmbedVaadin;
-import com.bsb.common.vaadin.embed.test.TestApplication;
+import com.bsb.common.vaadin.embed.test.TestUI;
 import org.junit.Test;
 
 /**
@@ -28,8 +28,8 @@ public class ApplicationBasedEmbedVaadinTomcatTest extends AbstractEmbedTest {
 
     @Test
     public void start() {
-        final EmbedVaadinServer server = EmbedVaadin.forApplication(
-                TestApplication.class).wait(false).withHttpPort(18101).start();
+        final EmbedVaadinServer server = EmbedVaadin.forUI(
+                TestUI.class).wait(false).withHttpPort(18101).start();
 
         checkVaadinIsDeployed(18101, "");
 

@@ -17,8 +17,8 @@ package com.bsb.common.vaadin.embed.support;
 
 import com.bsb.common.vaadin.embed.application.EmbedVaadinApplication;
 import com.bsb.common.vaadin.embed.component.EmbedVaadinComponent;
-import com.vaadin.Application;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.UI;
 
 /**
  * Embeds vaadin in a web application deployed in the current VM.
@@ -36,8 +36,10 @@ public final class EmbedVaadin {
      * The specified <tt>component</tt> could be of various types which will be
      * wrapped automatically if necessary as follows:
      * <ul>
-     * <li><tt>Window</tt>: the window becomes the main window of the application</li>
-     * <li><tt>Layout</tt>: a simple window is created using that layout</li>
+     * <li><tt>UI</tt>: the ui is simply used as is</li>
+     * <li><tt>Window</tt>: a simple UI is created with the window attached to it. Note that
+     * in Vaadin6, a Window could be used as an application. In Vaadin7, a window is only a pop-up window</li>
+     * <li><tt>Layout</tt>: a simple UI is created using that layout</li>
      * <li>other: a <tt>VerticalLayout</tt> is created to hold the component</li>
      * </ul>
      *
@@ -49,17 +51,17 @@ public final class EmbedVaadin {
     }
 
     /**
-     * Creates a new instance to manage a vaadin {@link Application} defined by the
+     * Creates a new instance to manage a vaadin {@link UI} defined by the
      * specified class.
      * <p/>
      * This is an easy way to deploy a complete vaadin application locally from the
      * IDE.
      *
-     * @param applicationClass the application class
+     * @param uiClass the ui class
      * @return an instance handling that component
      */
-    public static EmbedVaadinApplication forApplication(Class<? extends Application> applicationClass) {
-        return new EmbedVaadinApplication(applicationClass);
+    public static EmbedVaadinApplication forUI(Class<? extends UI> uiClass) {
+        return new EmbedVaadinApplication(uiClass);
     }
 
 }

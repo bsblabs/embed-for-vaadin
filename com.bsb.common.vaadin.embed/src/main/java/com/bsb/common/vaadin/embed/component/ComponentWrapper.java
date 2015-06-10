@@ -15,10 +15,12 @@
  */
 package com.bsb.common.vaadin.embed.component;
 
-import com.vaadin.Application;
-import com.vaadin.terminal.Sizeable;
+import com.vaadin.server.Sizeable;
+import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Layout;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.VerticalSplitPanel;
 import com.vaadin.ui.Window;
@@ -44,14 +46,16 @@ public class ComponentWrapper {
     }
 
     /**
-     * Wraps the specified {@link Component} into a Vaadin application.
+     * Wraps the specified {@link Component} into a UI
      *
      * @param component the component to wrap
-     * @return an application displaying that component
+     * @return an UI displaying that component
      * @see #wrapLayout(com.vaadin.ui.Layout)
-     * @see #wrapWindow(com.vaadin.ui.Window)
      */
-    public Application wrap(Component component) {
+    public UI wrap(Component component) {
+        if (component instanceof UI) {
+            return (UI) component;
+        }
         if (component instanceof Window) {
             return wrapWindow((Window) component);
         }
@@ -74,15 +78,13 @@ public class ComponentWrapper {
      * @param layout the layout to wrap
      * @return an application displaying that layout
      */
-    public Application wrapLayout(Layout layout) {
+    public UI wrapLayout(Layout layout) {
         // TODO: add a header to switch the style, etc
         // TODO: add bookmark to set the style
-        final Window mainWindow = new Window("Dev");
-
         if (server.getConfig().isDevelopmentHeader()) {
             final VerticalSplitPanel mainLayout = new VerticalSplitPanel();
             mainLayout.setSizeFull();
-            mainLayout.setSplitPosition(SPLIT_POSITION, Sizeable.UNITS_PIXELS);
+            mainLayout.setSplitPosition(SPLIT_POSITION, Sizeable.Unit.PIXELS);
             mainLayout.setLocked(true);
 
             final DevApplicationHeader header = new DevApplicationHeader(server);
@@ -91,23 +93,46 @@ public class ComponentWrapper {
 
             mainLayout.setSecondComponent(layout);
 
-            mainWindow.setContent(mainLayout);
+            return new DevUI(mainLayout);
         } else {
-            mainWindow.setContent(layout);
+            return new DevUI(layout);
         }
-
-
-        return new DevApplication(server, mainWindow);
     }
 
     /**
-     * Wraps a {@link Window} into a Vaadin application.
+     * Wraps the specified {@link Window} into a UI. Adds the specified pop-up
+     * window to a simple, empty vertical layout.
      *
-     * @param window the window to wrap
-     * @return an application using that window as primary window
+     * @param window the pop-up window to wrap
+     * @return an application displaying that pop-up window
      */
-    public Application wrapWindow(Window window) {
-        return new DevApplication(server, window);
+    public UI wrapWindow(Window window) {
+        final UI ui = wrapLayout(new VerticalLayout());
+        ui.addWindow(window);
+        return ui;
+    }
+
+    /**
+     * A development {@link UI} that displays a simple layout.
+     *
+     * @author Stephane Nicoll
+     */
+    @SuppressWarnings("serial")
+    static class DevUI extends UI {
+
+        /**
+         * Creates a new instance.
+         *
+         * @param content the content of the UI
+         */
+        public DevUI(ComponentContainer content) {
+            setContent(content);
+        }
+
+        @Override
+        protected void init(VaadinRequest vaadinRequest) {
+        }
+
     }
 
 }

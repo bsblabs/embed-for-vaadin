@@ -17,7 +17,7 @@ package com.bsb.common.vaadin.embed;
 
 import com.bsb.common.vaadin.embed.util.BrowserUtils;
 import com.google.common.io.Files;
-import com.vaadin.terminal.gwt.server.AbstractApplicationServlet;
+import com.vaadin.server.VaadinServlet;
 import org.apache.catalina.Context;
 import org.apache.catalina.Lifecycle;
 import org.apache.catalina.LifecycleEvent;
@@ -78,7 +78,7 @@ public abstract class AbstractEmbedVaadinTomcat implements EmbedVaadinServer, Se
      * @see #getTomcat()
      * @see #getConfig()
      * @see #initConfiguration()
-     * @see #initializeVaadinServlet(com.vaadin.terminal.gwt.server.AbstractApplicationServlet)
+     * @see #initializeVaadinServlet(VaadinServlet)
      */
     protected abstract void configure();
 
@@ -151,7 +151,7 @@ public abstract class AbstractEmbedVaadinTomcat implements EmbedVaadinServer, Se
      * @param <T> the type of the servlet
      * @return the created wrapper for the servlet
      */
-    protected <T extends AbstractApplicationServlet> Wrapper initializeVaadinServlet(T servlet) {
+    protected <T extends VaadinServlet> Wrapper initializeVaadinServlet(T servlet) {
         // Setup vaadin servlet
         final Wrapper wrapper = Tomcat.addServlet(getContext(),
                 "vaadin", servlet);
