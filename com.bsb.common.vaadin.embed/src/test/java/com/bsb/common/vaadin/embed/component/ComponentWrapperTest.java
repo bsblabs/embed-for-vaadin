@@ -58,7 +58,7 @@ public class ComponentWrapperTest {
         final ComponentWrapper wrapper = createWrapper(config);
 
         final HorizontalLayout layout = new HorizontalLayout();
-        final Application app = instance.wrap(layout);
+        final UI app = wrapper.wrap(layout);
 
         final Layout l = assertWrappingLayout(app);
 
@@ -69,7 +69,7 @@ public class ComponentWrapperTest {
     public void wrapLayoutWithoutDevelopmentHeader() {
         final HorizontalLayout layout = new HorizontalLayout();
         // Wrap without development header should just set the layout as the main content of the window
-        final Application app = wrapper.wrap(layout);
+        final UI app = instance.wrap(layout);
 
         assertNotNull("Main content must not be null", app.getContent());
         assertEquals("Layout should be set as the main layout since no header was expected", layout,
@@ -81,7 +81,7 @@ public class ComponentWrapperTest {
         final Button component = new Button("Hello");
         final UI app = instance.wrap(component);
 
-        final Layout l = assertWrappingLayout(app);
+        final Component content = app.getUI().getContent();
         assertEquals("Main content must be vertical layout", VerticalLayout.class,
                 content.getClass());
         final VerticalLayout layout = (VerticalLayout) content;
