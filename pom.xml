@@ -8,7 +8,7 @@
     </parent>
     <groupId>com.bsb.common.vaadin</groupId>
     <artifactId>com.bsb.common.vaadin7.embed-parent</artifactId>
-    <version>0.6</version>
+    <version>0.7-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Embed for Vaadin7 parent</name>
     <url>https://github.com/bsblabs/embed-for-vaadin</url>
@@ -26,7 +26,7 @@
         <url>git@github.com:bsblabs/embed-for-vaadin.git</url>
         <connection>scm:git:git@github.com/bsblabs/embed-for-vaadin.git</connection>
         <developerConnection>scm:git:git@github.com:bsblabs/embed-for-vaadin.git</developerConnection>
-      <tag>com.bsb.common.vaadin7.embed-0.6</tag>
+      <tag>HEAD</tag>
   </scm>
     <developers>
         <developer>
