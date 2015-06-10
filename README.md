@@ -131,6 +131,8 @@ Custom extension can be added very easily by extending from the `EmbedVaadinServ
 
 # Release notes
 
+## 0.7 (Vaadin7 only)
+
 ## 0.6
 
 - #17: Updated to Vaadin 7.1.0
