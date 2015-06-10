@@ -51,7 +51,8 @@ public class DevApplicationServlet extends VaadinServlet {
         this.theme = server.getConfig().getTheme();
     }
 
-    protected VaadinServletService createServletService(DeploymentConfiguration deploymentConfiguration) {
+    protected VaadinServletService createServletService(DeploymentConfiguration deploymentConfiguration)
+			throws ServiceException {
         final VaadinServletService service = super.createServletService(deploymentConfiguration);
         service.addSessionInitListener(new SessionInitListener() {
             public void sessionInit(SessionInitEvent event) throws ServiceException {
