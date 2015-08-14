@@ -15,9 +15,11 @@
  */
 package com.bsb.common.vaadin.embed.component;
 
+import com.bsb.common.vaadin.embed.component.ComponentWrapper.DevUI;
 import com.vaadin.server.UIClassSelectionEvent;
 import com.vaadin.server.UICreateEvent;
 import com.vaadin.server.UIProvider;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.UI;
 
 /**
@@ -28,8 +30,11 @@ import com.vaadin.ui.UI;
 @SuppressWarnings("serial")
 final class DevUIProvider extends UIProvider {
 
-    private final UI ui;
+
     private final String theme;
+
+	ComponentBasedVaadinServer server;
+	Component component;
 
     /**
      * Creates a new instance.
@@ -37,14 +42,16 @@ final class DevUIProvider extends UIProvider {
      * @param ui the ui to use, regardless of the event
      * @param theme the theme to use, regardless of the event
      */
-    DevUIProvider(UI ui, String theme) {
-        this.ui = ui;
+	DevUIProvider(ComponentBasedVaadinServer server, Component component, String theme) {
+
         this.theme = theme;
+		this.server = server;
+		this.component = component;
     }
 
     @Override
     public UI createInstance(UICreateEvent event) {
-        return ui;
+		return new ComponentWrapper(server).wrap(component);
     }
 
     @Override
@@ -54,6 +61,6 @@ final class DevUIProvider extends UIProvider {
 
     @Override
     public Class<? extends UI> getUIClass(UIClassSelectionEvent event) {
-        return ui.getClass();
+		return DevUI.class;
     }
 }
