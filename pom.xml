@@ -41,7 +41,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <vaadin.version>7.1.0</vaadin.version>
+        <vaadin.version>7.5.3</vaadin.version>
         <slf4j.version>1.6.1</slf4j.version>
         <tomcat.version>7.0.62</tomcat.version>
     </properties>
