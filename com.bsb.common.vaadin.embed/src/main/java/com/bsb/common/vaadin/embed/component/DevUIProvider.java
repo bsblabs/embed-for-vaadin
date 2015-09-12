@@ -19,6 +19,7 @@ import com.bsb.common.vaadin.embed.component.ComponentWrapper.DevUI;
 import com.vaadin.server.UIClassSelectionEvent;
 import com.vaadin.server.UICreateEvent;
 import com.vaadin.server.UIProvider;
+import com.vaadin.shared.communication.PushMode;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.UI;
 
@@ -63,4 +64,9 @@ final class DevUIProvider extends UIProvider {
     public Class<? extends UI> getUIClass(UIClassSelectionEvent event) {
 		return DevUI.class;
     }
+
+	@Override
+	public PushMode getPushMode(UICreateEvent event) {
+		return PushMode.MANUAL;
+	}
 }
