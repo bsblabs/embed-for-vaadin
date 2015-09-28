@@ -21,6 +21,7 @@ import com.vaadin.server.SessionInitEvent;
 import com.vaadin.server.SessionInitListener;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.server.VaadinServletService;
+import com.vaadin.shared.communication.PushMode;
 import com.vaadin.ui.Component;
 
 /**
@@ -37,6 +38,7 @@ import com.vaadin.ui.Component;
 public class DevApplicationServlet extends VaadinServlet {
 
     private final String theme;
+	private final PushMode pushMode;
 
 	ComponentBasedVaadinServer server;
 	Component component;
@@ -51,6 +53,7 @@ public class DevApplicationServlet extends VaadinServlet {
 		this.server = server;
 		this.component = component;
         this.theme = server.getConfig().getTheme();
+		this.pushMode = server.getConfig().getPushMode();
     }
 
     @Override
@@ -60,7 +63,7 @@ public class DevApplicationServlet extends VaadinServlet {
         service.addSessionInitListener(new SessionInitListener() {
             public void sessionInit(SessionInitEvent event) throws ServiceException {
 				event.getSession().addUIProvider(
-						new DevUIProvider(server, component, theme));
+						new DevUIProvider(server, component, theme, pushMode));
             }
         });
         return service;

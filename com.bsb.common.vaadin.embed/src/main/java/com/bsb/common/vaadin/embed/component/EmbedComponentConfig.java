@@ -15,9 +15,10 @@
  */
 package com.bsb.common.vaadin.embed.component;
 
-import com.bsb.common.vaadin.embed.EmbedVaadinConfig;
-
 import java.util.Properties;
+
+import com.bsb.common.vaadin.embed.EmbedVaadinConfig;
+import com.vaadin.shared.communication.PushMode;
 
 /**
  * Configuration for an embedded server showing a component.
@@ -57,6 +58,7 @@ public final class EmbedComponentConfig extends EmbedVaadinConfig {
     public static final boolean DEFAULT_DEVELOPMENT_HEADER = false;
 
     private String theme;
+	private PushMode pushMode;
     private boolean developmentHeader;
 
     protected EmbedComponentConfig(Properties properties) {
@@ -64,6 +66,7 @@ public final class EmbedComponentConfig extends EmbedVaadinConfig {
         theme = properties.getProperty(KEY_THEME, DEFAULT_THEME);
         developmentHeader = Boolean.valueOf(properties.getProperty(KEY_DEVELOPMENT_HEADER,
                 String.valueOf(DEFAULT_DEVELOPMENT_HEADER)));
+		pushMode = PushMode.DISABLED;
     }
 
     protected EmbedComponentConfig(EmbedComponentConfig clone) {
@@ -86,6 +89,14 @@ public final class EmbedComponentConfig extends EmbedVaadinConfig {
     void setTheme(String theme) {
         this.theme = theme;
     }
+
+	public PushMode getPushMode() {
+		return pushMode;
+	}
+
+	public void setPushMode(PushMode pushMode) {
+		this.pushMode = pushMode;
+	}
 
     /**
      * Specifies if the development header is added automatically to the

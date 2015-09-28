@@ -33,6 +33,7 @@ final class DevUIProvider extends UIProvider {
 
 
     private final String theme;
+	private final PushMode pushMode;
 
 	ComponentBasedVaadinServer server;
 	Component component;
@@ -43,11 +44,13 @@ final class DevUIProvider extends UIProvider {
      * @param ui the ui to use, regardless of the event
      * @param theme the theme to use, regardless of the event
      */
-	DevUIProvider(ComponentBasedVaadinServer server, Component component, String theme) {
+	DevUIProvider(ComponentBasedVaadinServer server, Component component, String theme,
+			PushMode pushMode) {
 
         this.theme = theme;
 		this.server = server;
 		this.component = component;
+		this.pushMode = pushMode;
     }
 
     @Override
@@ -67,6 +70,6 @@ final class DevUIProvider extends UIProvider {
 
 	@Override
 	public PushMode getPushMode(UICreateEvent event) {
-		return PushMode.MANUAL;
+		return pushMode;
 	}
 }
