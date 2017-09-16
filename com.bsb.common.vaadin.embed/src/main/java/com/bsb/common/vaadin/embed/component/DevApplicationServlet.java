@@ -21,8 +21,8 @@ import com.vaadin.server.SessionInitEvent;
 import com.vaadin.server.SessionInitListener;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.server.VaadinServletService;
+import com.vaadin.shared.communication.PushMode;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.UI;
 
 /**
  * A simple development {@link VaadinServlet} that takes the component
@@ -37,8 +37,11 @@ import com.vaadin.ui.UI;
 @SuppressWarnings("serial")
 public class DevApplicationServlet extends VaadinServlet {
 
-    private final UI ui;
     private final String theme;
+	private final PushMode pushMode;
+
+	ComponentBasedVaadinServer server;
+	Component component;
 
     /**
      * Creates a new instance.
@@ -47,16 +50,20 @@ public class DevApplicationServlet extends VaadinServlet {
      * @param component the component to display
      */
     public DevApplicationServlet(ComponentBasedVaadinServer server, Component component) {
-        this.ui = new ComponentWrapper(server).wrap(component);
+		this.server = server;
+		this.component = component;
         this.theme = server.getConfig().getTheme();
+		this.pushMode = server.getConfig().getPushMode();
     }
 
-    protected VaadinServletService createServletService(DeploymentConfiguration deploymentConfiguration)
+    @Override
+	protected VaadinServletService createServletService(DeploymentConfiguration deploymentConfiguration)
 			throws ServiceException {
         final VaadinServletService service = super.createServletService(deploymentConfiguration);
         service.addSessionInitListener(new SessionInitListener() {
             public void sessionInit(SessionInitEvent event) throws ServiceException {
-                event.getSession().addUIProvider(new DevUIProvider(ui, theme));
+				event.getSession().addUIProvider(
+						new DevUIProvider(server, component, theme, pushMode));
             }
         });
         return service;

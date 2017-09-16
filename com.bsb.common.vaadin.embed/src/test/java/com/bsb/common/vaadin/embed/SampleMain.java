@@ -26,6 +26,7 @@ import com.vaadin.ui.Button;
 public class SampleMain {
     public static void main(String[] args) {
         EmbedVaadin.forComponent(new Button("Hello"))
+                .withTheme("valo")
                 .withDevelopmentHeader(true)
                 .openBrowser(true)
                 .start();

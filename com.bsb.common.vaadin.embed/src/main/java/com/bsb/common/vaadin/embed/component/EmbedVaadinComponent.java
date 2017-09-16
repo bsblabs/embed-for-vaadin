@@ -15,12 +15,13 @@
  */
 package com.bsb.common.vaadin.embed.component;
 
+import java.util.Properties;
+
 import com.bsb.common.vaadin.embed.EmbedVaadinConfig;
 import com.bsb.common.vaadin.embed.EmbedVaadinServer;
 import com.bsb.common.vaadin.embed.EmbedVaadinServerBuilder;
+import com.vaadin.shared.communication.PushMode;
 import com.vaadin.ui.Component;
-
-import java.util.Properties;
 
 /**
  * A builder for a server embedding a component.
@@ -57,12 +58,26 @@ public class EmbedVaadinComponent extends EmbedVaadinServerBuilder<EmbedVaadinCo
     }
 
     /**
-     * Specifies if the development header is added automatically to the
-     * created application.
-     *
-     * @param useHeader <tt>true</tt> if the development header should be added
-     * @return this
-     */
+	 * Specifies the vaadin theme to use for the application.
+	 *
+	 * @param theme
+	 *            the theme to use
+	 * @return this
+	 */
+	public EmbedVaadinComponent withPushMode(PushMode mode) {
+		assertNotNull(mode, "push mode could not be null.");
+		getConfig().setPushMode(mode);
+		return self();
+	}
+
+	/**
+	 * Specifies if the development header is added automatically to the created
+	 * application.
+	 *
+	 * @param useHeader
+	 *            <tt>true</tt> if the development header should be added
+	 * @return this
+	 */
     public EmbedVaadinComponent withDevelopmentHeader(boolean useHeader) {
         getConfig().setDevelopmentHeader(useHeader);
         return self();
