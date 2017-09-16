@@ -8,7 +8,7 @@
     </parent>
     <groupId>com.bsb.common.vaadin</groupId>
     <artifactId>com.bsb.common.vaadin.embed-parent</artifactId>
-    <version>0.7-SNAPSHOT</version>
+    <version>0.8-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Embed for Vaadin parent</name>
     <url>https://github.com/bsblabs/embed-for-vaadin</url>
@@ -41,7 +41,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <vaadin.version>7.5.3</vaadin.version>
+        <vaadin.version>8.1.4</vaadin.version>
         <slf4j.version>1.6.1</slf4j.version>
         <tomcat.version>7.0.62</tomcat.version>
     </properties>
@@ -125,8 +125,8 @@
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>1.5</source>
-                    <target>1.5</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
         </plugins>
@@ -151,13 +151,6 @@
                         <autoVersionSubmodules>true</autoVersionSubmodules>
                         <tagNameFormat>com.bsb.common.vaadin.embed-@{project.version}</tagNameFormat>
                     </configuration>
-                    <dependencies>
-                        <dependency>
-                            <groupId>org.apache.maven.scm</groupId>
-                            <artifactId>maven-scm-provider-gitexe</artifactId>
-                            <version>1.8.1</version>
-                        </dependency>
-                    </dependencies>
                 </plugin>
             </plugins>
         </pluginManagement>

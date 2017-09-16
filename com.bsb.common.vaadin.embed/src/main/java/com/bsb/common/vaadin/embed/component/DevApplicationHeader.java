@@ -20,7 +20,8 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.JavaScript;
-import com.vaadin.ui.themes.BaseTheme;
+import com.vaadin.ui.themes.ValoTheme;
+
 
 /**
  * A header added to an application to offer various development-related tools.
@@ -38,7 +39,8 @@ public class DevApplicationHeader extends HorizontalLayout {
      */
     public DevApplicationHeader(final EmbedVaadinServer server) {
         final Button shutdown = new Button("shutdown");
-        shutdown.setStyleName(BaseTheme.BUTTON_LINK);
+        shutdown.addStyleName(ValoTheme.BUTTON_LINK);
+        shutdown.addStyleName(ValoTheme.BUTTON_TINY);
         shutdown.setDescription("Shutdown the embed server and close this tab");
         addComponent(shutdown);
         setComponentAlignment(shutdown, Alignment.MIDDLE_CENTER);
